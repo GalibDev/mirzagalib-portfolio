@@ -1,5 +1,4 @@
 import type { Tech } from "@/types/tech";
-
 import {
   SiJavascript,
   SiTypescript,
@@ -14,26 +13,25 @@ import {
   SiPrisma,
   SiGit,
   SiDocker,
+  SiKubernetes,
 } from "react-icons/si";
-
 import { FaAws } from "react-icons/fa";
 
 export const techStack: Tech[] = [
-  { name: "JavaScript", icon: SiJavascript, category: "Frontend" },
-  { name: "TypeScript", icon: SiTypescript, category: "Frontend" },
-  { name: "React", icon: SiReact, category: "Frontend" },
-  { name: "Next.js", icon: SiNextdotjs, category: "Frontend" },
-  { name: "Tailwind CSS", icon: SiTailwindcss, category: "Frontend" },
+  { name: "JavaScript", icon: SiJavascript, color: "#F7DF1E" },
+  { name: "TypeScript", icon: SiTypescript, color: "#3178C6" },
+  { name: "React", icon: SiReact, color: "#61DAFB" },
+  { name: "Next.js", icon: SiNextdotjs, color: "#FFFFFF" },
+  { name: "Node.js", icon: SiNodedotjs, color: "#339933" },
+  { name: "Express", icon: SiExpress, color: "#FFFFFF" },
+  { name: "NestJS", icon: SiNestjs, color: "#E0234E" },
+  { name: "MongoDB", icon: SiMongodb, color: "#47A248" },
 
-  { name: "Node.js", icon: SiNodedotjs, category: "Backend" },
-  { name: "Express", icon: SiExpress, category: "Backend" },
-  { name: "NestJS", icon: SiNestjs, category: "Backend" },
-
-  { name: "MongoDB", icon: SiMongodb, category: "Database" },
-  { name: "PostgreSQL", icon: SiPostgresql, category: "Database" },
-  { name: "Prisma", icon: SiPrisma, category: "Database" },
-
-  { name: "Git", icon: SiGit, category: "Tools" },
-  { name: "Docker", icon: SiDocker, category: "Tools" },
-  { name: "AWS", icon: FaAws, category: "Tools" },
+  { name: "PostgreSQL", icon: SiPostgresql, color: "#4169E1" },
+  { name: "Prisma", icon: SiPrisma, color: "#FFFFFF" },
+  { name: "Docker", icon: SiDocker, color: "#2496ED" },
+  { name: "Kubernetes", icon: SiKubernetes, color: "#326CE5" },
+  { name: "Tailwind CSS", icon: SiTailwindcss, color: "#38BDF8" },
+  { name: "Git", icon: SiGit, color: "#F05032" },
+  { name: "AWS", icon: FaAws, color: "#FF9900" },
 ];

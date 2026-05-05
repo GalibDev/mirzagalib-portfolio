@@ -1,20 +1,49 @@
 export default function Footer() {
   return (
-    <footer className="border-t border-white/10 bg-[#050816] px-6 py-10 text-white">
-      <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 text-center md:flex-row">
-        <h2 className="text-lg font-semibold">Mirza Galib</h2>
+    <footer className="relative mt-20 border-t border-white/10 bg-transparent px-6 py-10 text-white">
+      <div className="mx-auto max-w-5xl">
+        <div className="grid gap-10 md:grid-cols-2">
+          {/* left */}
+          <div>
+            <h3 className="text-lg font-semibold">Mirza Galib</h3>
+            <p className="mt-3 max-w-sm text-sm text-white/60">
+              Full Stack Developer passionate about creating beautiful and
+              functional web experiences.
+            </p>
+          </div>
 
-        <p className="text-sm text-white/50">
-          © {new Date().getFullYear()} All rights reserved
-        </p>
+          {/* right */}
+          <div className="md:text-right">
+            <h4 className="text-sm font-semibold">Quick Links</h4>
 
-        <div className="flex gap-4 text-white/70">
-          <a href="#" className="hover:text-white">
-            GitHub
-          </a>
-          <a href="#" className="hover:text-white">
-            LinkedIn
-          </a>
+            <ul className="mt-3 space-y-2 text-sm text-white/60">
+              <li>
+                <a href="#about" className="hover:text-white">
+                  About
+                </a>
+              </li>
+              <li>
+                <a href="#projects" className="hover:text-white">
+                  Projects
+                </a>
+              </li>
+              <li>
+                <a href="#services" className="hover:text-white">
+                  Services
+                </a>
+              </li>
+              <li>
+                <a href="#contact" className="hover:text-white">
+                  Contact
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        {/* bottom line */}
+        <div className="mt-10 border-t border-white/10 pt-6 text-center text-xs text-white/50">
+          © 2026 Mirza Galib. All rights reserved. Built with Next.js & Tailwind CSS.
         </div>
       </div>
     </footer>

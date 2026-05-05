@@ -1,21 +1,38 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import AnimationProvider from "@/components/AnimationProvider";
+import ClickEffect from "@/components/ClickEffect";
+
+
+
+
+
 import Hero from "@/sections/Hero";
 import About from "@/sections/About";
 import Tech from "@/sections/Tech";
+import Skills from "@/sections/Skills";
 import Services from "@/sections/Services";
 import Projects from "@/sections/Projects";
 import Contact from "@/sections/Contact";
+import Testimonials from "@/sections/Testimonials";
 
+import Qualification from "@/sections/Qualification";
 export default function Home() {
   return (
-    <main className="min-h-screen bg-[#050816] text-white">
+    <main className="min-h-screen bg-transparent text-white">
+      <ClickEffect />
+      <AnimationProvider />
+
       <Navbar />
       <Hero />
       <About />
       <Tech />
+      <Skills />
+
+      <Qualification />
       <Services />
       <Projects />
+      <Testimonials />
       <Contact />
       <Footer />
     </main>

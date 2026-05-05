@@ -1,0 +1,621 @@
+@import "tailwindcss";
+
+/* =========================
+   01. BASE SETUP
+   Whole website default background/text
+========================= */
+
+body {
+  margin: 0;
+  background: #050816;
+  color: white;
+  overflow-x: hidden;
+}
+
+/* =========================
+   02. GLASSMORPHISM
+   Navbar, cards, modals, buttons, inputs
+========================= */
+
+.glass {
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.glass::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.8),
+    transparent
+  );
+  pointer-events: none;
+}
+
+.glass::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 100%;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.8),
+    transparent,
+    rgba(255, 255, 255, 0.3)
+  );
+  pointer-events: none;
+}
+
+.glass-strong {
+  position: relative;
+  overflow: hidden;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.32);
+  box-shadow:
+    0 10px 36px rgba(0, 0, 0, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.55),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.glass-strong::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.85),
+      transparent
+    ) top / 100% 1px no-repeat,
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.85),
+      transparent,
+      rgba(255, 255, 255, 0.3)
+    ) left / 1px 100% no-repeat;
+  pointer-events: none;
+}
+
+.glass-hover {
+  transition:
+    transform 0.3s ease,
+    background 0.3s ease,
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.glass-hover:hover {
+  transform: translateY(-6px);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.42);
+  box-shadow:
+    0 16px 45px rgba(0, 0, 0, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.14);
+}
+
+/* =========================
+   03. STAR BACKGROUND
+   Global moving stars behind all sections
+========================= */
+
+.stars {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.stars::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(white 1px, transparent 1px);
+  background-size: 80px 80px;
+  opacity: 0.6;
+  animation: moveStars 120s linear infinite;
+}
+
+.stars::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(white 1px, transparent 1px);
+  background-size: 140px 140px;
+  opacity: 0.3;
+  animation: moveStars 200s linear infinite;
+}
+
+@keyframes moveStars {
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(-500px);
+  }
+}
+
+/* =========================
+   04. NEBULA BACKGROUND GLOW
+   Blue / purple soft background depth
+========================= */
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      circle at 20% 30%,
+      rgba(59, 130, 246, 0.18),
+      transparent 35%
+    ),
+    radial-gradient(
+      circle at 80% 60%,
+      rgba(168, 85, 247, 0.16),
+      transparent 35%
+    ),
+    radial-gradient(
+      circle at 50% 90%,
+      rgba(16, 185, 129, 0.08),
+      transparent 35%
+    );
+}
+
+/* =========================
+   05. SUBTLE FLOATING PARTICLES
+   Extra small background particles
+========================= */
+
+.particles {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: radial-gradient(
+    rgba(255, 255, 255, 0.15) 1px,
+    transparent 1px
+  );
+  background-size: 120px 120px;
+  animation: particlesMove 200s linear infinite;
+  opacity: 0.3;
+}
+
+@keyframes particlesMove {
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(-400px);
+  }
+}
+
+/* =========================
+   06. SHOOTING STAR
+   Layout.tsx er <div className="shooting-star" />
+========================= */
+
+.shooting-star {
+  position: fixed;
+  top: 18%;
+  left: -10%;
+  z-index: 1;
+  width: 120px;
+  height: 2px;
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent, white, transparent);
+  filter: drop-shadow(0 0 8px white);
+  animation: shootingStar 7s linear infinite;
+}
+
+@keyframes shootingStar {
+  0% {
+    transform: translateX(0) translateY(0) rotate(-25deg);
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  35% {
+    transform: translateX(120vw) translateY(55vh) rotate(-25deg);
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+/* =========================
+   07. HERO FLOATING LINE
+   Hero/services side moving blue line
+========================= */
+
+.floating-line {
+  position: absolute;
+  width: 120px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #38bdf8, transparent);
+  opacity: 0;
+  filter: blur(1px);
+  animation: slideLine 5s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes slideLine {
+  0% {
+    transform: translateX(-160px);
+    opacity: 0;
+  }
+
+  15%,
+  85% {
+    opacity: 0.65;
+  }
+
+  100% {
+    transform: translateX(420px);
+    opacity: 0;
+  }
+}
+
+/* =========================
+   08. HERO FLOATING PARTICLES
+   Purple small square particles
+========================= */
+
+.particle {
+  position: absolute;
+  width: 13px;
+  height: 13px;
+  border-radius: 4px;
+  background: rgba(168, 85, 247, 0.75);
+  box-shadow: 0 0 18px rgba(168, 85, 247, 0.9);
+  animation: particleFloat 5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes particleFloat {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0.35;
+  }
+
+  50% {
+    transform: translateY(-35px) rotate(45deg);
+    opacity: 0.95;
+  }
+}
+
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+
+.animation-delay-4000 {
+  animation-delay: 4s;
+}
+
+/* =========================
+   09. CLEAN NEON ORBIT PROFILE
+   Hero profile image ring - Option 1
+========================= */
+
+.neon-orbit {
+  position: relative;
+  width: 280px;
+  height: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.neon-orbit::before,
+.neon-orbit::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  pointer-events: none;
+}
+
+.neon-orbit::before {
+  inset: 0;
+  border-top-color: rgba(56, 189, 248, 0.9);
+  border-right-color: rgba(168, 85, 247, 0.6);
+  box-shadow: 0 0 25px rgba(56, 189, 248, 0.25);
+  animation: orbitRotate 9s linear infinite;
+}
+
+.neon-orbit::after {
+  inset: 14px;
+  border-bottom-color: rgba(168, 85, 247, 0.9);
+  border-left-color: rgba(56, 189, 248, 0.5);
+  animation: orbitRotateReverse 12s linear infinite;
+}
+
+.profile-image-wrap {
+  position: relative;
+  z-index: 2;
+  width: 220px;
+  height: 220px;
+  overflow: hidden;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow:
+    0 0 40px rgba(99, 102, 241, 0.25),
+    inset 0 0 20px rgba(255, 255, 255, 0.08);
+}
+
+.profile-image-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.orbit-dot {
+  position: absolute;
+  right: 18px;
+  top: 55px;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: rgba(168, 85, 247, 0.95);
+  box-shadow: 0 0 20px rgba(168, 85, 247, 0.9);
+  animation: dotPulse 2s ease-in-out infinite;
+}
+
+@keyframes orbitRotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes orbitRotateReverse {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+@keyframes dotPulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+
+  50% {
+    transform: scale(1.4);
+    opacity: 1;
+  }
+}
+
+/* =========================
+   10. OLD PROFILE RING
+   Keep only if any old component still uses .profile-ring
+========================= */
+
+.profile-ring {
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  animation: profileRingMove 7s ease-in-out infinite;
+}
+
+.profile-ring::before {
+  content: "";
+  position: absolute;
+  inset: -8px;
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  border-top-color: rgba(168, 85, 247, 0.75);
+  border-right-color: rgba(56, 189, 248, 0.35);
+  animation: profileRingRotate 5s linear infinite;
+}
+
+@keyframes profileRingRotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes profileRingMove {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.8;
+  }
+
+  50% {
+    transform: translate(12px, -10px) scale(1.04);
+    opacity: 1;
+  }
+}
+
+/* =========================
+   11. CLICK PARTICLE EFFECT
+   ClickEffect.tsx generated particles
+========================= */
+
+.click-particle {
+  position: fixed;
+  width: 12px;
+  height: 12px;
+  border-radius: 4px;
+  background: rgba(168, 85, 247, 0.9);
+  box-shadow: 0 0 18px rgba(168, 85, 247, 0.9);
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* =========================
+   12. MOUSE GLOW EFFECT
+   MouseGlow.tsx cursor-follow glow
+========================= */
+
+.mouse-glow {
+  position: fixed;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(
+    circle,
+    rgba(80, 120, 255, 0.15),
+    transparent 60%
+  );
+  pointer-events: none;
+  z-index: 0;
+  filter: blur(80px);
+}
+
+/* =========================
+   13. FOOTER GLOW LINE
+   Footer top thin shine line
+========================= */
+
+footer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(255, 255, 255, 0.25),
+    transparent
+  );
+}
+
+/* =========================
+   14. ACCESSIBILITY
+   Reduce animation for users who prefer less motion
+========================= */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+
+
+
+
+
+
+/* =========================
+   HERO PROFILE ORBIT STATS
+   3 stats card circular motion around profile
+========================= */
+
+.profile-orbit-system {
+  position: relative;
+  width: 390px;
+  height: 340px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stats-orbit {
+  position: absolute;
+  inset: 0;
+  animation: statsOrbitRotate 18s linear infinite;
+  pointer-events: none;
+}
+
+.orbit-card {
+  position: absolute;
+  width: 125px;
+  min-height: 58px;
+  padding: 10px 14px;
+  border-radius: 14px;
+  font-size: 12px;
+  line-height: 1.1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  animation: statsCardCounterRotate 18s linear infinite;
+}
+
+.orbit-card strong {
+  font-size: 22px;
+  line-height: 1;
+  color: white;
+}
+
+.orbit-card span {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+/* left card */
+.orbit-card-1 {
+  left: 5px;
+  top: 125px;
+}
+
+/* top right card */
+.orbit-card-2 {
+  right: 0;
+  top: 50px;
+}
+
+/* bottom card */
+.orbit-card-3 {
+  left: 135px;
+  bottom: 22px;
+}
+
+@keyframes statsOrbitRotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes statsCardCounterRotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(-360deg);
+  }
+}

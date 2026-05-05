@@ -1,25 +1,47 @@
-import type { Service } from "@/types/service";
-import { FiCode, FiLayers, FiServer, FiUploadCloud } from "react-icons/fi";
+import {
+  Code2,
+  Palette,
+  Smartphone,
+  Gauge,
+  ShieldCheck,
+  Search,
+} from "lucide-react";
 
-export const services: Service[] = [
+export const services = [
   {
-    title: "Full Stack Development",
-    description: "Complete web apps with frontend, backend, database, and auth.",
-    icon: FiLayers,
+    title: "Web Development",
+    description:
+      "Modern, responsive, and high-performance websites built with React, Next.js, and TypeScript.",
+    icon: Code2,
   },
   {
-    title: "Frontend Development",
-    description: "Responsive, modern, and animated interfaces with React and Next.js.",
-    icon: FiCode,
+    title: "UI/UX Design",
+    description:
+      "Clean, premium, and user-friendly interface design with smooth user experience.",
+    icon: Palette,
   },
   {
-    title: "Backend & API",
-    description: "Secure REST APIs, authentication, database design, and server logic.",
-    icon: FiServer,
+    title: "Responsive Design",
+    description:
+      "Pixel-perfect layouts that work beautifully on mobile, tablet, and desktop.",
+    icon: Smartphone,
   },
   {
-    title: "Deployment",
-    description: "Deploying apps with Vercel, Docker, and cloud-ready workflows.",
-    icon: FiUploadCloud,
+    title: "Performance Optimization",
+    description:
+      "Fast loading, smooth animation, SEO-friendly structure, and optimized assets.",
+    icon: Gauge,
+  },
+  {
+    title: "Secure Development",
+    description:
+      "Best practices for clean, safe, maintainable, and scalable frontend architecture.",
+    icon: ShieldCheck,
+  },
+  {
+    title: "SEO Optimization",
+    description:
+      "Basic technical SEO setup to help your website rank better and load faster.",
+    icon: Search,
   },
 ];

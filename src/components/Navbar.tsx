@@ -1,104 +1,145 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import {
   Home,
-  Code2,
+  Code,
   GraduationCap,
   Briefcase,
   Mail,
-  Grid2X2,
-  ChevronDown,
-  Sparkles,
+  MoreHorizontal,
+  Lock,
   Star,
+  Settings,
 } from "lucide-react";
-
-const mainNavItems = [
-  { label: "Home", href: "#home", icon: Home, color: "text-yellow-400" },
-  { label: "Tech Stack", href: "#tech", icon: Code2, color: "text-cyan-400" },
-  {
-    label: "Qualification",
-    href: "#qualification",
-    icon: GraduationCap,
-    color: "text-purple-400",
-  },
-  { label: "Projects", href: "#projects", icon: Briefcase, color: "text-orange-400" },
-  { label: "Contact Me", href: "#contact", icon: Mail, color: "text-pink-400" },
-];
-
-const moreItems = [
-  { label: "Skills", href: "#skills", icon: Star, color: "text-green-400" },
-  { label: "Services", href: "#services", icon: Grid2X2, color: "text-blue-400" },
-  {
-    label: "Testimonials",
-    href: "#testimonials",
-    icon: Sparkles,
-    color: "text-violet-400",
-  },
-];
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
 
+  // ============================
+  // 🔹 MAIN NAV ITEMS (Top visible menu)
+  // ============================
+  const navItems = [
+    {
+      label: "Home",
+      href: "#home",
+      icon: Home,
+      color: "text-yellow-400",
+    },
+    {
+      label: "Tech Stack",
+      href: "#tech",
+      icon: Code,
+      color: "text-cyan-400",
+    },
+    {
+      label: "Qualification",
+      href: "#qualification",
+      icon: GraduationCap,
+      color: "text-purple-400",
+    },
+    {
+      label: "Projects",
+      href: "#projects",
+      icon: Briefcase,
+      color: "text-orange-400",
+    },
+    {
+      label: "Contact Me",
+      href: "#contact",
+      icon: Mail,
+      color: "text-pink-400",
+    },
+  ];
+
+  // ============================
+  // 🔹 MORE DROPDOWN ITEMS
+  // ============================
+  const moreItems = [
+    {
+      label: "Skills",
+      href: "#skills",
+      icon: Star,
+      color: "text-blue-400",
+    },
+    {
+      label: "Settings",
+      href: "#settings",
+      icon: Settings,
+      color: "text-green-400",
+    },
+    {
+      label: "Admin Login",
+      href: "/admin/login",
+      icon: Lock,
+      color: "text-red-400",
+    },
+  ];
+
   return (
-    <header className="fixed left-1/2 top-6 z-50 -translate-x-1/2">
-      <nav className="glass flex items-center gap-1 rounded-full px-3 py-2 text-xs text-white shadow-2xl">
-        <a
-          href="#home"
-          className="mr-2 rounded-full px-3 py-2 font-bold tracking-wide text-white"
-        >
-          MG
-        </a>
+    <nav className="fixed top-6 left-1/2 z-50 -translate-x-1/2">
+      {/* ============================
+          🔹 GLASS NAVBAR CONTAINER
+      ============================ */}
+      <div className="glass flex items-center gap-6 rounded-full px-6 py-3 shadow-xl">
+        
+        {/* ============================
+            🔹 LOGO PART
+        ============================ */}
+        <span className="font-bold text-white">MG</span>
 
-        {mainNavItems.map((item) => {
+        {/* ============================
+            🔹 MAIN NAV ITEMS
+        ============================ */}
+        {navItems.map((item, i) => {
           const Icon = item.icon;
-
           return (
-            <a
-              key={item.label}
+            <Link
+              key={i}
               href={item.href}
-              className="flex items-center gap-2 rounded-full px-3 py-2 text-white/75 transition hover:bg-white/10 hover:text-white"
+              className="flex items-center gap-2 text-sm text-white/70 transition hover:text-white"
             >
-              <Icon size={15} className={item.color} />
-              <span className="hidden sm:inline">{item.label}</span>
-            </a>
+              <Icon size={16} className={item.color} />
+              {item.label}
+            </Link>
           );
         })}
 
+        {/* ============================
+            🔹 MORE DROPDOWN BUTTON
+        ============================ */}
         <div className="relative">
           <button
-            onClick={() => setOpen((prev) => !prev)}
-            className="flex items-center gap-2 rounded-full px-3 py-2 text-white/75 transition hover:bg-white/10 hover:text-white"
+            onClick={() => setOpen(!open)}
+            className="flex items-center gap-2 text-sm text-white/70 hover:text-white"
           >
-            <Grid2X2 size={15} className="text-indigo-400" />
-            <span className="hidden sm:inline">More</span>
-            <ChevronDown
-              size={14}
-              className={`transition ${open ? "rotate-180" : ""}`}
-            />
+            <MoreHorizontal size={16} className="text-blue-400" />
+            More
           </button>
 
+          {/* ============================
+              🔹 DROPDOWN MENU
+          ============================ */}
           {open && (
-            <div className="glass absolute right-0 top-12 min-w-44 rounded-2xl p-2">
-              {moreItems.map((item) => {
+            <div className="glass absolute right-0 mt-3 w-48 rounded-2xl p-3 shadow-2xl">
+              {moreItems.map((item, i) => {
                 const Icon = item.icon;
-
                 return (
-                  <a
-                    key={item.label}
+                  <Link
+                    key={i}
                     href={item.href}
-                    onClick={() => setOpen(false)}
-                    className="flex items-center gap-3 rounded-xl px-3 py-2 text-white/75 transition hover:bg-white/10 hover:text-white"
+                    className="flex items-center gap-3 rounded-xl px-3 py-2 text-sm text-white/70 transition hover:bg-white/10 hover:text-white"
                   >
-                    <Icon size={15} className={item.color} />
-                    <span>{item.label}</span>
-                  </a>
+                    <Icon size={16} className={item.color} />
+                    {item.label}
+                  </Link>
                 );
               })}
             </div>
           )}
         </div>
-      </nav>
-    </header>
+      </div>
+    </nav>
   );
 }

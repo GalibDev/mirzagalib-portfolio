@@ -1,40 +1,54 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 export async function POST(req: Request) {
   try {
-    const { name, email, message } = await req.json();
+    const body = await req.json();
+    const { name, email, message } = body;
 
     if (!name || !email || !message) {
       return NextResponse.json(
-        { error: "Missing required fields" },
+        { error: "Name, email and message required" },
         { status: 400 }
       );
     }
 
+    const resendApiKey = process.env.RESEND_API_KEY;
+    const adminEmail = process.env.ADMIN_EMAIL;
+
+    if (!resendApiKey || !adminEmail) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Email env missing. Message saved but email not sent.",
+        },
+        { status: 200 }
+      );
+    }
+
+    const resend = new Resend(resendApiKey);
+
     await resend.emails.send({
-      from: "Portfolio <onboarding@resend.dev>",
-      to: process.env.ADMIN_EMAIL!,
+      from: "Portfolio Contact <onboarding@resend.dev>",
+      to: adminEmail,
       subject: `New message from ${name}`,
       replyTo: email,
       html: `
-        <div style="font-family: Arial, sans-serif;">
-          <h2>New Portfolio Message</h2>
-          <p><strong>Name:</strong> ${name}</p>
-          <p><strong>Email:</strong> ${email}</p>
-          <p><strong>Message:</strong></p>
-          <p>${message}</p>
-        </div>
+        <h2>New Portfolio Message</h2>
+        <p><strong>Name:</strong> ${name}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Message:</strong></p>
+        <p>${message}</p>
       `,
     });
 
     return NextResponse.json({ success: true });
-  } catch {
+  } catch (error) {
+    console.log("Contact API error:", error);
+
     return NextResponse.json(
-      { error: "Email send failed" },
-      { status: 500 }
+      { success: false, error: "Email send failed" },
+      { status: 200 }
     );
   }
 }

@@ -1,143 +1,173 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Briefcase, GraduationCap } from "lucide-react";
+import { supabase } from "@/lib/supabase";
 
-const experienceData = [
-  {
-    title: "Frontend Developer",
-    place: "Freelance / Company",
-    year: "2022 - Present",
-  },
-  {
-    title: "Backend Developer",
-    place: "Startup",
-    year: "2021 - 2022",
-  },
-];
+type Qualification = {
+  id: string;
+  type: string;
+  title: string;
+  institution: string;
+  duration: string;
+  sort_order: number;
+};
 
-const educationData = [
+const fallbackItems: Qualification[] = [
   {
+    id: "1",
+    type: "education",
     title: "SSC",
-    place: "Your School",
-    year: "2015 - 2017",
+    institution: "Your School",
+    duration: "2015 - 2017",
+    sort_order: 1,
   },
   {
+    id: "2",
+    type: "education",
     title: "HSC",
-    place: "Your College",
-    year: "2017 - 2019",
+    institution: "Your College",
+    duration: "2017 - 2019",
+    sort_order: 2,
   },
   {
+    id: "3",
+    type: "education",
     title: "BSc in CSE",
-    place: "Your University",
-    year: "2020 - 2024",
+    institution: "Your University",
+    duration: "2020 - 2024",
+    sort_order: 3,
   },
 ];
 
 export default function Qualification() {
-  const [tab, setTab] = useState<"education" | "experience">("education");
+  // =========================
+  // 01. ACTIVE TAB
+  // Experience / Education click korle change hobe
+  // =========================
+  const [activeTab, setActiveTab] = useState<"experience" | "education">(
+    "education"
+  );
 
-  const data = tab === "education" ? educationData : experienceData;
+  // =========================
+  // 02. QUALIFICATION DATA
+  // Dashboard theke data load hobe
+  // =========================
+  const [items, setItems] = useState<Qualification[]>([]);
+
+  // =========================
+  // 03. LOAD DATA FROM SUPABASE
+  // =========================
+  useEffect(() => {
+    const fetchQualifications = async () => {
+      const { data } = await supabase
+        .from("qualifications")
+        .select("*")
+        .order("sort_order", { ascending: true });
+
+      setItems(data || []);
+    };
+
+    fetchQualifications();
+  }, []);
+
+  // =========================
+  // 04. DATA FILTER
+  // activeTab onujayi only experience/education show korbe
+  // =========================
+  const allItems = items.length > 0 ? items : fallbackItems;
+
+  const displayItems = allItems.filter((item) => item.type === activeTab);
 
   return (
     <section
       id="qualification"
-      className="relative overflow-hidden bg-[#050816] px-6 py-28 text-white"
+      className="relative bg-transparent px-6 py-28 text-white"
     >
-      {/* glow bg */}
-      <div className="absolute left-0 top-1/3 h-72 w-72 rounded-full bg-blue-500/10 blur-[120px]" />
-      <div className="absolute right-0 bottom-0 h-72 w-72 rounded-full bg-purple-500/10 blur-[120px]" />
-
-      <div className="mx-auto max-w-4xl text-center">
+      {/* =========================
+          05. SECTION TITLE
+      ========================= */}
+      <div className="mb-12 text-center">
         <h2 className="text-4xl font-bold md:text-5xl">Qualification</h2>
-        <p className="mt-2 text-sm text-white/50">My personal journey</p>
+        <p className="mt-3 text-sm text-white/50">My personal journey</p>
+      </div>
 
-        {/* Tabs */}
-        <div className="mt-10 flex justify-center gap-8">
-          <button
-            onClick={() => setTab("experience")}
-            className={`flex items-center gap-2 text-sm ${
-              tab === "experience" ? "text-white" : "text-white/40"
-            }`}
-          >
-            <Briefcase size={16} /> Experience
-          </button>
+      {/* =========================
+          06. TAB BUTTONS
+          ekhane click korle Experience/Education change hobe
+      ========================= */}
+      <div className="mb-14 flex justify-center gap-6">
+        <button
+          type="button"
+          onClick={() => setActiveTab("experience")}
+          className={`flex items-center gap-2 rounded-full px-5 py-3 text-sm font-semibold transition ${
+            activeTab === "experience"
+              ? "glass text-white"
+              : "text-white/60 hover:text-white"
+          }`}
+        >
+          <Briefcase size={18} />
+          Experience
+        </button>
 
-          <button
-            onClick={() => setTab("education")}
-            className={`flex items-center gap-2 text-sm ${
-              tab === "education" ? "text-white" : "text-white/40"
-            }`}
-          >
-            <GraduationCap size={16} /> Education
-          </button>
-        </div>
+        <button
+          type="button"
+          onClick={() => setActiveTab("education")}
+          className={`flex items-center gap-2 rounded-full px-5 py-3 text-sm font-semibold transition ${
+            activeTab === "education"
+              ? "glass text-white"
+              : "text-white/60 hover:text-white"
+          }`}
+        >
+          <GraduationCap size={18} />
+          Education
+        </button>
+      </div>
 
-        {/* Timeline */}
-        <div className="relative mt-16">
-          {/* center line */}
-          <div className="absolute left-1/2 top-0 h-full w-[2px] -translate-x-1/2 bg-white/20" />
-
-          <div className="space-y-14">
-            {data.map((item, i) => {
-              const isLeft = i % 2 === 0;
-
-              return (
-                <div
-                  key={i}
-                  className="relative grid grid-cols-2 items-center"
-                >
-                  {/* left */}
-                  <div
-                    className={`${
-                      isLeft ? "text-right pr-10" : "opacity-0"
-                    }`}
-                  >
-                    {isLeft && (
-                      <>
-                        <h3 className="text-sm font-semibold">
-                          {item.title}
-                        </h3>
-                        <p className="text-xs text-white/50">
-                          {item.place}
-                        </p>
-                        <span className="text-xs text-white/40">
-                          {item.year}
-                        </span>
-                      </>
-                    )}
-                  </div>
-
-                  {/* dot */}
-                  <div className="relative flex justify-center">
-                    <span className="h-3 w-3 rounded-full bg-white" />
-                  </div>
-
-                  {/* right */}
-                  <div
-                    className={`${
-                      !isLeft ? "pl-10" : "opacity-0"
-                    }`}
-                  >
-                    {!isLeft && (
-                      <>
-                        <h3 className="text-sm font-semibold">
-                          {item.title}
-                        </h3>
-                        <p className="text-xs text-white/50">
-                          {item.place}
-                        </p>
-                        <span className="text-xs text-white/40">
-                          {item.year}
-                        </span>
-                      </>
-                    )}
-                  </div>
-                </div>
-              );
-            })}
+      {/* =========================
+          07. TIMELINE
+      ========================= */}
+      <div className="relative mx-auto max-w-3xl">
+        {displayItems.length === 0 ? (
+          <div className="glass mx-auto max-w-md rounded-3xl p-8 text-center text-sm text-white/60">
+            No {activeTab} data found. Dashboard থেকে add করো।
           </div>
-        </div>
+        ) : (
+          <>
+            <div className="absolute left-1/2 top-0 h-full w-px -translate-x-1/2 bg-white/30" />
+
+            <div className="space-y-14">
+              {displayItems.map((item, index) => (
+                <div
+                  key={item.id}
+                  className="relative grid grid-cols-2 gap-10"
+                >
+                  {/* left/right alternating content */}
+                  <div
+                    className={
+                      index % 2 === 0
+                        ? "pr-8 text-right"
+                        : "col-start-2 pl-8 text-left"
+                    }
+                  >
+                    <h3 className="text-lg font-bold">{item.title}</h3>
+
+                    <p className="mt-1 text-sm text-white/60">
+                      {item.institution}
+                    </p>
+
+                    <p className="mt-2 text-sm text-white/50">
+                      {item.duration}
+                    </p>
+                  </div>
+
+                  {/* timeline dot */}
+                  <span className="absolute left-1/2 top-2 h-4 w-4 -translate-x-1/2 rounded-full bg-white shadow-[0_0_20px_rgba(255,255,255,0.8)]" />
+                </div>
+              ))}
+            </div>
+          </>
+        )}
       </div>
     </section>
   );

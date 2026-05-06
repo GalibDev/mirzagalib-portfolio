@@ -11,6 +11,7 @@ import {
   LogOut,
   MessageSquare,
   Settings,
+   Star,
   Wrench,
 } from "lucide-react";
 
@@ -102,7 +103,16 @@ export default function AdminDashboard() {
             Logout
           </button>
         </div>
-
+              <Link
+  href="/admin/reviews"
+  className="glass glass-hover rounded-3xl p-6"
+>
+  <Star size={28} className="text-yellow-400" />
+  <h2 className="mt-5 text-xl font-semibold">Reviews</h2>
+  <p className="mt-2 text-sm text-white/50">
+    Approve, delete and edit testimonial reviews.
+  </p>
+</Link>
         {/* =========================
             06. DASHBOARD CARDS GRID
         ========================= */}

@@ -654,3 +654,69 @@ footer::before {
     transform: rotate(0deg);
   }
 }
+
+
+
+
+
+
+
+
+/* =========================
+   MOBILE GLASSMORPHISM NAVBAR
+========================= */
+
+.mobile-glass-nav,
+.mobile-glass-menu {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.08),
+    inset 0 0 18px rgba(255, 255, 255, 0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+.mobile-glass-nav::before,
+.mobile-glass-menu::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 18px;
+  right: 18px;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.75),
+    transparent
+  );
+}
+
+.mobile-glass-nav::after,
+.mobile-glass-menu::after {
+  content: "";
+  position: absolute;
+  top: 12px;
+  left: 0;
+  width: 1px;
+  height: calc(100% - 24px);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.65),
+    transparent,
+    rgba(255, 255, 255, 0.25)
+  );
+}
+
+.mobile-glass-nav > *,
+.mobile-glass-menu > * {
+  position: relative;
+  z-index: 2;
+}

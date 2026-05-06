@@ -11,28 +11,18 @@ import {
   MoreHorizontal,
   Lock,
   Star,
-  Settings,
+  MessageSquareHeart,
+  Menu,
+  X,
 } from "lucide-react";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const [moreOpen, setMoreOpen] = useState(false);
 
-  // ============================
-  // 🔹 MAIN NAV ITEMS (Top visible menu)
-  // ============================
   const navItems = [
-    {
-      label: "Home",
-      href: "#home",
-      icon: Home,
-      color: "text-yellow-400",
-    },
-    {
-      label: "Tech Stack",
-      href: "#tech",
-      icon: Code,
-      color: "text-cyan-400",
-    },
+    { label: "Home", href: "#home", icon: Home, color: "text-yellow-400" },
+    { label: "Tech Stack", href: "#tech", icon: Code, color: "text-cyan-400" },
     {
       label: "Qualification",
       href: "#qualification",
@@ -45,28 +35,15 @@ export default function Navbar() {
       icon: Briefcase,
       color: "text-orange-400",
     },
-    {
-      label: "Contact Me",
-      href: "#contact",
-      icon: Mail,
-      color: "text-pink-400",
-    },
+    { label: "Contact Me", href: "#contact", icon: Mail, color: "text-pink-400" },
   ];
 
-  // ============================
-  // 🔹 MORE DROPDOWN ITEMS
-  // ============================
   const moreItems = [
+    { label: "Skills", href: "#skills", icon: Star, color: "text-blue-400" },
     {
-      label: "Skills",
-      href: "#skills",
-      icon: Star,
-      color: "text-blue-400",
-    },
-    {
-      label: "Settings",
-      href: "#settings",
-      icon: Settings,
+      label: "Reviews",
+      href: "#testimonials",
+      icon: MessageSquareHeart,
       color: "text-green-400",
     },
     {
@@ -77,69 +54,122 @@ export default function Navbar() {
     },
   ];
 
+  const mobileItems = [...navItems, ...moreItems];
+
+  const closeMobile = () => setOpen(false);
+
   return (
-    <nav className="fixed top-6 left-1/2 z-50 -translate-x-1/2">
-      {/* ============================
-          🔹 GLASS NAVBAR CONTAINER
-      ============================ */}
-      <div className="glass flex items-center gap-6 rounded-full px-6 py-3 shadow-xl">
-        
-        {/* ============================
-            🔹 LOGO PART
-        ============================ */}
-        <span className="font-bold text-white">MG</span>
+    <>
+      {/* =========================
+          DESKTOP NAVBAR
+          আগের সুন্দর desktop design same রাখা হয়েছে
+      ========================= */}
+      <nav className="fixed left-1/2 top-6 z-50 hidden -translate-x-1/2 lg:block">
+        <div className="glass flex items-center gap-6 rounded-full px-6 py-3 shadow-xl">
+          <Link href="#home" className="font-bold text-white">
+            MG
+          </Link>
 
-        {/* ============================
-            🔹 MAIN NAV ITEMS
-        ============================ */}
-        {navItems.map((item, i) => {
-          const Icon = item.icon;
-          return (
-            <Link
-              key={i}
-              href={item.href}
-              className="flex items-center gap-2 text-sm text-white/70 transition hover:text-white"
+          {navItems.map((item) => {
+            const Icon = item.icon;
+
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="flex items-center gap-2 text-sm text-white/70 transition hover:text-white"
+              >
+                <Icon size={16} className={item.color} />
+                {item.label}
+              </Link>
+            );
+          })}
+
+          <div className="relative">
+            <button
+              type="button"
+              onClick={() => setMoreOpen((prev) => !prev)}
+              className="flex items-center gap-2 text-sm text-white/70 hover:text-white"
             >
-              <Icon size={16} className={item.color} />
-              {item.label}
-            </Link>
-          );
-        })}
+              <MoreHorizontal size={16} className="text-blue-400" />
+              More
+            </button>
 
-        {/* ============================
-            🔹 MORE DROPDOWN BUTTON
-        ============================ */}
-        <div className="relative">
-          <button
-            onClick={() => setOpen(!open)}
-            className="flex items-center gap-2 text-sm text-white/70 hover:text-white"
+            {moreOpen && (
+              <div className="glass absolute right-0 mt-3 w-48 rounded-2xl p-3 shadow-2xl">
+                {moreItems.map((item) => {
+                  const Icon = item.icon;
+
+                  return (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      onClick={() => setMoreOpen(false)}
+                      className="flex items-center gap-3 rounded-xl px-3 py-2 text-sm text-white/70 transition hover:bg-white/10 hover:text-white"
+                    >
+                      <Icon size={16} className={item.color} />
+                      {item.label}
+                    </Link>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        </div>
+      </nav>
+
+      {/* =========================
+          MOBILE NAVBAR
+          MG + Mirza Galib + Menu button
+      ========================= */}
+      <nav className="fixed left-0 top-0 z-50 w-full px-4 pt-4 lg:hidden">
+        <div className="mobile-glass-nav flex items-center justify-between px-5 py-4">
+          <Link
+            href="#home"
+            onClick={closeMobile}
+            className="flex items-center gap-3"
           >
-            <MoreHorizontal size={16} className="text-blue-400" />
-            More
-          </button>
+            <span className="flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-sm font-bold text-white shadow-[0_0_25px_rgba(255,255,255,0.15)]">
+              MG
+            </span>
 
-          {/* ============================
-              🔹 DROPDOWN MENU
-          ============================ */}
-          {open && (
-            <div className="glass absolute right-0 mt-3 w-48 rounded-2xl p-3 shadow-2xl">
-              {moreItems.map((item, i) => {
+            <span className="text-lg font-bold text-white">Mirza Galib</span>
+          </Link>
+
+          <button
+            type="button"
+            onClick={() => setOpen((prev) => !prev)}
+            className="flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/20"
+          >
+            {open ? <X size={23} /> : <Menu size={25} />}
+          </button>
+        </div>
+
+        {/* =========================
+            MOBILE DROPDOWN MENU
+        ========================= */}
+        {open && (
+          <div className="mobile-glass-menu mt-3 p-4">
+            <div className="grid gap-2">
+              {mobileItems.map((item) => {
                 const Icon = item.icon;
+
                 return (
                   <Link
-                    key={i}
+                    key={item.href}
                     href={item.href}
-                    className="flex items-center gap-3 rounded-xl px-3 py-2 text-sm text-white/70 transition hover:bg-white/10 hover:text-white"
+                    onClick={closeMobile}
+                    className="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium text-white/75 transition hover:bg-white/10 hover:text-white"
                   >
-                    <Icon size={16} className={item.color} />
+                    <Icon size={18} className={item.color} />
                     {item.label}
                   </Link>
                 );
               })}
             </div>
-          )}
-        </div>
-      </div>
-    </nav>
+          </div>
+        )}
+      </nav>
+    </>
   );
 }

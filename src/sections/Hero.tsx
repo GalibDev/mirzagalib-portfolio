@@ -5,30 +5,25 @@ import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
 
-/* =========================
-   01. TYPING TEXT WORDS
-========================= */
 const words = ["Full Stack Developer", "Problem Solver", "Web Designer"];
 
+type HeroStat = {
+  id: string;
+  label: string;
+  sub_label: string | null;
+  value: string;
+  sort_order: number;
+};
+
 export default function Hero() {
-  /* =========================
-     02. TYPING ANIMATION STATE
-  ========================= */
   const [wordIndex, setWordIndex] = useState(0);
   const [text, setText] = useState("");
   const [deleting, setDeleting] = useState(false);
 
-  /* =========================
-     03. HERO DYNAMIC DATA
-     Dashboard theke name + image load hobe
-  ========================= */
   const [heroName, setHeroName] = useState("Mirza Galib");
   const [heroImage, setHeroImage] = useState("");
+  const [heroStats, setHeroStats] = useState<HeroStat[]>([]);
 
-  /* =========================
-     04. LOAD HERO NAME FROM SUPABASE
-     site_settings table er hero_name key
-  ========================= */
   useEffect(() => {
     const loadHeroName = async () => {
       const { data } = await supabase
@@ -37,18 +32,12 @@ export default function Hero() {
         .eq("key", "hero_name")
         .single();
 
-      if (data?.value) {
-        setHeroName(data.value);
-      }
+      if (data?.value) setHeroName(data.value);
     };
 
     loadHeroName();
   }, []);
 
-  /* =========================
-     05. LOAD HERO IMAGE FROM SUPABASE
-     site_assets table er hero_profile key
-  ========================= */
   useEffect(() => {
     const loadHeroImage = async () => {
       const { data } = await supabase
@@ -57,17 +46,25 @@ export default function Hero() {
         .eq("key", "hero_profile")
         .single();
 
-      if (data?.image) {
-        setHeroImage(data.image);
-      }
+      if (data?.image) setHeroImage(data.image);
     };
 
     loadHeroImage();
   }, []);
 
-  /* =========================
-     06. TYPING ANIMATION LOGIC
-  ========================= */
+  useEffect(() => {
+    const loadHeroStats = async () => {
+      const { data } = await supabase
+        .from("hero_stats")
+        .select("*")
+        .order("sort_order", { ascending: true });
+
+      if (data) setHeroStats(data);
+    };
+
+    loadHeroStats();
+  }, []);
+
   useEffect(() => {
     const word = words[wordIndex];
 
@@ -91,41 +88,51 @@ export default function Hero() {
     return () => clearTimeout(timer);
   }, [text, deleting, wordIndex]);
 
+  const displayStats =
+    heroStats.length > 0
+      ? heroStats.slice(0, 3)
+      : [
+          {
+            id: "1",
+            value: "3",
+            label: "Year of",
+            sub_label: "Experience",
+            sort_order: 1,
+          },
+          {
+            id: "2",
+            value: "120",
+            label: "Problem",
+            sub_label: "Solving",
+            sort_order: 2,
+          },
+          {
+            id: "3",
+            value: "150",
+            label: "Finished",
+            sub_label: "Projects",
+            sort_order: 3,
+          },
+        ];
+
   return (
     <section
       id="home"
       className="relative min-h-screen overflow-hidden bg-transparent px-6 pt-28 text-white"
     >
-      {/* =========================
-          07. HERO BACKGROUND GLOW
-      ========================= */}
       <div className="absolute left-0 top-20 h-80 w-80 rounded-full bg-blue-500/15 blur-[130px]" />
       <div className="absolute right-24 top-40 h-80 w-80 rounded-full bg-purple-500/15 blur-[130px]" />
 
-      {/* =========================
-          08. MOVING LINE
-      ========================= */}
       <div className="floating-line left-[8%] top-[32%]" />
-
-      {/* =========================
-          09. FLOATING PARTICLES
-      ========================= */}
       <div className="particle right-[20%] top-[30%]" />
       <div className="particle right-[15%] top-[45%] animation-delay-2000" />
       <div className="particle right-[28%] top-[55%] animation-delay-4000" />
 
-      {/* =========================
-          10. HERO MAIN GRID
-      ========================= */}
-      <div className="relative mx-auto grid min-h-[78vh] max-w-6xl grid-cols-1 items-center gap-14 md:grid-cols-2">
-        {/* =========================
-            11. LEFT CONTENT
-            Name, typing text, button, social icons
-        ========================= */}
-        <div className="md:pl-8">
+      <div className="relative mx-auto grid min-h-screen max-w-6xl grid-cols-1 items-center gap-10 pt-24 md:min-h-[78vh] md:grid-cols-2 md:gap-14 md:pt-0">
+        <div className="text-center md:pl-8 md:text-left">
           <p className="mb-4 text-sm text-white/70">Hey, I'm</p>
 
-          <h1 className="text-4xl font-bold leading-tight md:text-6xl">
+          <h1 className="text-5xl font-bold leading-tight sm:text-6xl md:text-6xl">
             {heroName} <span className="wave-hand">👋</span>
           </h1>
 
@@ -134,7 +141,7 @@ export default function Hero() {
             <span className="animate-pulse">|</span>
           </h2>
 
-          <p className="mt-4 max-w-md text-sm leading-7 text-white/60">
+          <p className="mx-auto mt-4 max-w-md text-sm leading-7 text-white/60 md:mx-0">
             🚀 Turning ideas into stunning websites <br />
             | Available for projects and collaborations ✨
           </p>
@@ -146,10 +153,7 @@ export default function Hero() {
             Say Hello <Send size={16} />
           </a>
 
-          {/* =========================
-              12. SOCIAL ICONS
-          ========================= */}
-          <div className="mt-8 flex items-center gap-5 text-white/60">
+          <div className="mt-8 flex items-center justify-center gap-5 text-white/60 md:justify-start">
             <a href="#" className="transition hover:text-white">
               <FaGithub size={24} />
             </a>
@@ -162,52 +166,32 @@ export default function Hero() {
           <p className="mt-10 text-xs text-white/60">Scroll Down ↓</p>
         </div>
 
-        {/* =========================
-            13. RIGHT PROFILE AREA
-            Neon orbit + uploaded image + rotating stats
-        ========================= */}
         <div className="relative flex justify-center md:justify-end">
-          <div className="profile-orbit-system">
-            {/* =========================
-                14. NEON PROFILE RING
-            ========================= */}
-            <div className="neon-orbit">
-              <span className="orbit-dot" />
+          <div className="scale-[0.78] sm:scale-[0.9] md:scale-100">
+            <div className="profile-orbit-system">
+              <div className="neon-orbit">
+                <span className="orbit-dot" />
 
-              {/* =========================
-                  15. HERO PROFILE IMAGE
-                  Dashboard image thakle seta show korbe
-                  na thakle /profile.jpg fallback
-              ========================= */}
-              <div className="profile-image-wrap">
-                <img
-                  src={heroImage || "/profile.jpg"}
-                  alt={heroName}
-                  className="h-full w-full object-cover"
-                />
-              </div>
-            </div>
-
-            {/* =========================
-                16. ROTATING STATS CARDS
-            ========================= */}
-            <div className="stats-orbit">
-              <div className="orbit-card orbit-card-1 glass">
-                <strong>3</strong>
-                <span>Year of</span>
-                <span>Experience</span>
+                <div className="profile-image-wrap">
+                  <img
+                    src={heroImage || "/profile.jpg"}
+                    alt={heroName}
+                    className="h-full w-full object-cover"
+                  />
+                </div>
               </div>
 
-              <div className="orbit-card orbit-card-2 glass">
-                <strong>120</strong>
-                <span>Problem</span>
-                <span>Solving</span>
-              </div>
-
-              <div className="orbit-card orbit-card-3 glass">
-                <strong>150</strong>
-                <span>Finished</span>
-                <span>Projects</span>
+              <div className="stats-orbit">
+                {displayStats.map((stat, index) => (
+                  <div
+                    key={stat.id}
+                    className={`orbit-card orbit-card-${index + 1} glass`}
+                  >
+                    <strong>{stat.value}</strong>
+                    <span>{stat.label}</span>
+                    {stat.sub_label && <span>{stat.sub_label}</span>}
+                  </div>
+                ))}
               </div>
             </div>
           </div>

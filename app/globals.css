@@ -720,3 +720,89 @@ footer::before {
   position: relative;
   z-index: 2;
 }
+
+
+
+
+
+
+
+
+/* =========================
+   HERO STATS ORBIT FIX
+   Orbit ghurbe, card soja thakbe
+========================= */
+
+.stats-orbit {
+  position: absolute;
+  inset: 0;
+  animation: statsOrbitRotate 18s linear infinite;
+}
+
+.orbit-card {
+  position: absolute;
+  min-width: 125px;
+  padding: 14px 18px;
+  border-radius: 18px;
+  z-index: 20;
+  animation: statsCardCounterRotate 18s linear infinite;
+}
+
+.orbit-card strong {
+  display: block;
+  font-size: 28px;
+  line-height: 1;
+}
+
+.orbit-card span {
+  display: block;
+  font-size: 12px;
+  line-height: 1.2;
+}
+
+.orbit-card-1 {
+  left: 0;
+  top: 55px;
+}
+
+.orbit-card-2 {
+  right: -10px;
+  top: 140px;
+}
+
+.orbit-card-3 {
+  left: 55px;
+  bottom: 25px;
+}
+
+@keyframes statsOrbitRotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes statsCardCounterRotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+/* Mobile size fix */
+@media (max-width: 768px) {
+  .profile-orbit-system {
+    transform: scale(0.78);
+  }
+
+  .orbit-card {
+    min-width: 115px;
+    padding: 12px 14px;
+  }
+}

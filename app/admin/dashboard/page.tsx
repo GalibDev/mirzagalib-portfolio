@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-
 import {
   BadgePlus,
   FolderKanban,
@@ -11,26 +10,71 @@ import {
   LogOut,
   MessageSquare,
   Settings,
-   Star,
+  Star,
   Wrench,
 } from "lucide-react";
-
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
+
+const cards = [
+  {
+    title: "Reviews",
+    desc: "Approve, delete and edit testimonial reviews.",
+    href: "/admin/reviews",
+    icon: Star,
+    color: "text-yellow-400",
+  },
+  {
+    title: "Projects",
+    desc: "Add, edit, upload, and delete projects.",
+    href: "/admin/projects",
+    icon: FolderKanban,
+    color: "text-blue-400",
+  },
+  {
+    title: "Website Images",
+    desc: "Upload Hero/About section images.",
+    href: "/admin/assets",
+    icon: Image,
+    color: "text-cyan-400",
+  },
+  {
+    title: "Qualifications",
+    desc: "Manage education and experience timeline.",
+    href: "/admin/qualifications",
+    icon: GraduationCap,
+    color: "text-purple-400",
+  },
+  {
+    title: "Hero Stats",
+    desc: "Edit floating hero profile stats.",
+    href: "/admin/hero-stats",
+    icon: BadgePlus,
+    color: "text-orange-400",
+  },
+  {
+    title: "Settings",
+    desc: "Edit hero name and website content.",
+    href: "/admin/settings",
+    icon: Settings,
+    color: "text-green-400",
+  },
+  {
+    title: "Messages",
+    desc: "Read, delete, and manage contact messages.",
+    href: "/admin/messages",
+    icon: MessageSquare,
+    color: "text-pink-400",
+  },
+];
 
 export default function AdminDashboard() {
   const router = useRouter();
 
-  /* =========================
-     01. STATES
-  ========================= */
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(true);
   const [unreadCount, setUnreadCount] = useState(0);
 
-  /* =========================
-     02. CHECK ADMIN LOGIN
-  ========================= */
   useEffect(() => {
     const checkAdmin = async () => {
       const { data, error } = await supabase.auth.getUser();
@@ -42,59 +86,41 @@ export default function AdminDashboard() {
 
       setEmail(data.user.email || "");
 
-      // unread messages count
       const { count } = await supabase
         .from("messages")
         .select("*", { count: "exact", head: true })
         .eq("is_read", false);
 
       setUnreadCount(count || 0);
-
       setLoading(false);
     };
 
     checkAdmin();
   }, [router]);
 
-  /* =========================
-     03. LOGOUT
-  ========================= */
   const handleLogout = async () => {
     await supabase.auth.signOut();
     router.replace("/admin/login");
   };
 
-  /* =========================
-     04. LOADING SCREEN
-  ========================= */
   if (loading) {
     return (
-      <section className="flex min-h-screen items-center justify-center bg-transparent text-white">
-        <div className="glass rounded-3xl px-8 py-6">
-          Loading Dashboard...
-        </div>
+      <section className="flex min-h-screen items-center justify-center bg-transparent px-6 text-white">
+        <div className="glass rounded-3xl px-8 py-6">Loading Dashboard...</div>
       </section>
     );
   }
 
   return (
-    <section className="min-h-screen bg-transparent px-6 py-28 text-white">
+    <section className="min-h-screen bg-transparent px-5 py-28 text-white">
       <div className="mx-auto max-w-6xl">
-        {/* =========================
-            05. DASHBOARD HEADER
-        ========================= */}
+        {/* HEADER */}
         <div className="glass mb-8 flex flex-wrap items-center justify-between gap-4 rounded-3xl p-6">
           <div>
-            <h1 className="text-3xl font-bold">
-              Admin Dashboard
-            </h1>
-
-            <p className="mt-2 text-sm text-white/50">
-              Logged in as {email}
-            </p>
+            <h1 className="text-2xl font-bold md:text-3xl">Admin Dashboard</h1>
+            <p className="mt-2 text-sm text-white/50">Logged in as {email}</p>
           </div>
 
-          {/* Logout Button */}
           <button
             onClick={handleLogout}
             className="glass glass-hover flex items-center gap-2 rounded-2xl px-5 py-3 text-sm"
@@ -103,172 +129,43 @@ export default function AdminDashboard() {
             Logout
           </button>
         </div>
+
+        {/* CARDS */}
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+          {cards.map((card) => {
+            const Icon = card.icon;
+
+            return (
               <Link
-  href="/admin/reviews"
-  className="glass glass-hover rounded-3xl p-6"
->
-  <Star size={28} className="text-yellow-400" />
-  <h2 className="mt-5 text-xl font-semibold">Reviews</h2>
-  <p className="mt-2 text-sm text-white/50">
-    Approve, delete and edit testimonial reviews.
-  </p>
-</Link>
-        {/* =========================
-            06. DASHBOARD CARDS GRID
-        ========================= */}
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {/* =========================
-              PROJECTS CARD
-          ========================= */}
-          <Link
-            href="/admin/projects"
-            className="glass glass-hover rounded-3xl p-6"
-          >
-            <FolderKanban
-              size={28}
-              className="text-blue-400"
-            />
+                key={card.href}
+                href={card.href}
+                className="glass glass-hover relative block min-h-[165px] rounded-3xl p-6"
+              >
+                {card.title === "Messages" && unreadCount > 0 && (
+                  <span className="absolute right-5 top-5 rounded-full bg-pink-500 px-3 py-1 text-xs font-semibold text-white">
+                    {unreadCount} New
+                  </span>
+                )}
 
-            <h2 className="mt-5 text-xl font-semibold">
-              Projects
-            </h2>
+                <Icon size={30} className={card.color} />
 
-            <p className="mt-2 text-sm text-white/50">
-              Add, edit, upload, and delete projects.
-            </p>
-          </Link>
+                <h2 className="mt-5 text-xl font-semibold">{card.title}</h2>
 
-          {/* =========================
-              WEBSITE IMAGES CARD
-          ========================= */}
-          <Link
-            href="/admin/assets"
-            className="glass glass-hover rounded-3xl p-6"
-          >
-            <Image
-              size={28}
-              className="text-cyan-400"
-            />
+                <p className="mt-2 max-w-xs text-sm leading-6 text-white/50">
+                  {card.desc}
+                </p>
+              </Link>
+            );
+          })}
 
-            <h2 className="mt-5 text-xl font-semibold">
-              Website Images
-            </h2>
-
-            <p className="mt-2 text-sm text-white/50">
-              Upload Hero/About section images.
-            </p>
-          </Link>
-
-          {/* =========================
-              QUALIFICATIONS CARD
-          ========================= */}
-          <Link
-            href="/admin/qualifications"
-            className="glass glass-hover rounded-3xl p-6"
-          >
-            <GraduationCap
-              size={28}
-              className="text-purple-400"
-            />
-
-            <h2 className="mt-5 text-xl font-semibold">
-              Qualifications
-            </h2>
-
-            <p className="mt-2 text-sm text-white/50">
-              Manage education and experience timeline.
-            </p>
-          </Link>
-
-          {/* =========================
-              HERO STATS CARD
-              3 / 120 / 150 cards
-          ========================= */}
-          <Link
-            href="/admin/hero-stats"
-            className="glass glass-hover rounded-3xl p-6"
-          >
-            <BadgePlus
-              size={28}
-              className="text-yellow-400"
-            />
-
-            <h2 className="mt-5 text-xl font-semibold">
-              Hero Stats
-            </h2>
-
-            <p className="mt-2 text-sm text-white/50">
-              Edit floating hero profile stats.
-            </p>
-          </Link>
-
-          {/* =========================
-              SETTINGS CARD
-              Hero name edit etc
-          ========================= */}
-          <Link
-            href="/admin/settings"
-            className="glass glass-hover rounded-3xl p-6"
-          >
-            <Settings
-              size={28}
-              className="text-green-400"
-            />
-
-            <h2 className="mt-5 text-xl font-semibold">
-              Settings
-            </h2>
-
-            <p className="mt-2 text-sm text-white/50">
-              Edit hero name and website content.
-            </p>
-          </Link>
-
-          {/* =========================
-              SERVICES CARD
-          ========================= */}
-          <div className="glass glass-hover rounded-3xl p-6">
-            <Wrench
-              size={28}
-              className="text-orange-400"
-            />
-
-            <h2 className="mt-5 text-xl font-semibold">
-              Services
-            </h2>
-
-            <p className="mt-2 text-sm text-white/50">
+          {/* SERVICES FUTURE CARD */}
+          <div className="glass glass-hover block min-h-[165px] rounded-3xl p-6 opacity-80">
+            <Wrench size={30} className="text-orange-400" />
+            <h2 className="mt-5 text-xl font-semibold">Services</h2>
+            <p className="mt-2 max-w-xs text-sm leading-6 text-white/50">
               Manage services section later.
             </p>
           </div>
-
-          {/* =========================
-              MESSAGES CARD
-          ========================= */}
-          <Link
-            href="/admin/messages"
-            className="glass glass-hover relative rounded-3xl p-6"
-          >
-            {/* unread badge */}
-            {unreadCount > 0 && (
-              <span className="absolute right-5 top-5 rounded-full bg-pink-500 px-3 py-1 text-xs font-semibold text-white">
-                {unreadCount} New
-              </span>
-            )}
-
-            <MessageSquare
-              size={28}
-              className="text-pink-400"
-            />
-
-            <h2 className="mt-5 text-xl font-semibold">
-              Messages
-            </h2>
-
-            <p className="mt-2 text-sm text-white/50">
-              Read, delete, and manage contact messages.
-            </p>
-          </Link>
         </div>
       </div>
     </section>

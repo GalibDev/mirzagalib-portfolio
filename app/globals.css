@@ -116,6 +116,10 @@ body {
     inset 0 -1px 0 rgba(255, 255, 255, 0.14);
 }
 
+.about-photo-frame {
+  border-radius: 50%;
+}
+
 /* =========================
    03. STAR BACKGROUND
    Global moving stars behind all sections

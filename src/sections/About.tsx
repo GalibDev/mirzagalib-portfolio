@@ -51,7 +51,7 @@ export default function About() {
             na thakle MG fallback show korbe
         ========================= */}
         <div className="flex justify-center">
-          <div className="glass flex aspect-square w-full max-w-[360px] items-center justify-center overflow-hidden rounded-full">
+          <div className="about-photo-frame glass flex aspect-square w-full max-w-[360px] items-center justify-center overflow-hidden">
             {aboutImage ? (
               <img
                 src={aboutImage}

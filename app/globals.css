@@ -127,6 +127,10 @@ body {
   animation: aboutPhotoGlow 3.2s ease-in-out infinite;
 }
 
+.about-photo-frame img {
+  transform: scale(1.015);
+}
+
 @keyframes aboutPhotoGlow {
   0%,
   100% {

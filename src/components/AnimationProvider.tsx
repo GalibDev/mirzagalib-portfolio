@@ -22,8 +22,14 @@ export default function AnimationProvider() {
 
     requestAnimationFrame(raf);
 
+    const cursorGlow = document.querySelector(".cursor-glow");
+    const heroLeft = gsap.utils.toArray<HTMLElement>(".hero-left");
+    const heroRight = gsap.utils.toArray<HTMLElement>(".hero-right");
+
     const moveCursor = (e: MouseEvent) => {
-      gsap.to(".cursor-glow", {
+      if (!cursorGlow) return;
+
+      gsap.to(cursorGlow, {
         x: e.clientX - 150,
         y: e.clientY - 150,
         duration: 0.4,
@@ -33,29 +39,33 @@ export default function AnimationProvider() {
 
     window.addEventListener("mousemove", moveCursor);
 
-    gsap.fromTo(
-      ".hero-left",
-      { opacity: 0, x: -120 },
-      {
-        opacity: 1,
-        x: 0,
-        duration: 1.1,
-        ease: "power3.out",
-        stagger: 0.15,
-      }
-    );
+    if (heroLeft.length) {
+      gsap.fromTo(
+        heroLeft,
+        { opacity: 0, x: -120 },
+        {
+          opacity: 1,
+          x: 0,
+          duration: 1.1,
+          ease: "power3.out",
+          stagger: 0.15,
+        }
+      );
+    }
 
-    gsap.fromTo(
-      ".hero-right",
-      { opacity: 0, x: 120 },
-      {
-        opacity: 1,
-        x: 0,
-        duration: 1.1,
-        ease: "power3.out",
-        delay: 0.25,
-      }
-    );
+    if (heroRight.length) {
+      gsap.fromTo(
+        heroRight,
+        { opacity: 0, x: 120 },
+        {
+          opacity: 1,
+          x: 0,
+          duration: 1.1,
+          ease: "power3.out",
+          delay: 0.25,
+        }
+      );
+    }
 
     gsap.utils.toArray<HTMLElement>(".scroll-reveal").forEach((el) => {
       gsap.fromTo(

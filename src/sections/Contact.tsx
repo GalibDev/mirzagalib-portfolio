@@ -89,10 +89,10 @@ export default function Contact() {
                 </div>
                 <h4 className="text-sm font-semibold tracking-widest">EMAIL</h4>
                 <p className="mt-2 text-xs text-white/60">
-                  mirzagalib@email.com
+                  mirza.galib.palash@gmail.com
                 </p>
                 <a
-                  href="mailto:mirzagalib@email.com"
+                  href="mailto:mirza.galib.palash@gmail.com"
                   className="mt-4 inline-block text-xs text-white/70 hover:text-white"
                 >
                   Write me →
@@ -106,9 +106,11 @@ export default function Contact() {
                 <h4 className="text-sm font-semibold tracking-widest">
                   LINKEDIN
                 </h4>
-                <p className="mt-2 text-xs text-white/60">mirza-galib</p>
+                <p className="mt-2 text-xs text-white/60">md-mirza-galib-palash</p>
                 <a
-                  href="#"
+                  href="https://www.linkedin.com/in/md-mirza-galib-palash"
+                  target="_blank"
+                  rel="noreferrer"
                   className="mt-4 inline-block text-xs text-white/70 hover:text-white"
                 >
                   Write me →

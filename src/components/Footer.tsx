@@ -41,9 +41,13 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* bottom line */}
-        <div className="mt-10 border-t border-white/10 pt-6 text-center text-xs text-white/50">
-          © 2026 Mirza Galib. All rights reserved. Built with Next.js & Tailwind CSS.
+        <div className="mt-10 border-t border-white/10 pt-6 text-center text-xs leading-5 text-white/50">
+          <p>mirza.galib.palash@gmail.com</p>
+          <p>Dhaka, Mohammadpur</p>
+          <p className="mt-2">
+            &copy; 2026 Mirza Galib. All rights reserved. Built with Next.js &
+            Tailwind CSS.
+          </p>
         </div>
       </div>
     </footer>

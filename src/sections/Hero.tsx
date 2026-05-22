@@ -158,7 +158,13 @@ export default function Hero() {
               <FaGithub size={24} />
             </a>
 
-            <a href="#" className="transition hover:text-white">
+            <a
+              href="https://www.linkedin.com/in/md-mirza-galib-palash"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="LinkedIn"
+              className="transition hover:text-white"
+            >
               <FaLinkedin size={24} />
             </a>
           </div>

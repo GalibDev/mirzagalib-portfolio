@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { Download, Briefcase, Code2, Headphones } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 
@@ -34,13 +35,13 @@ export default function About() {
   return (
     <section
       id="about"
-      className="relative bg-transparent px-6 py-28 text-white"
+      className="relative bg-transparent px-4 py-20 text-white sm:px-6 sm:py-24 lg:py-28"
     >
       {/* =========================
           03. SECTION TITLE
       ========================= */}
-      <div className="mb-16 text-center">
-        <h2 className="text-4xl font-bold md:text-5xl">About</h2>
+        <div className="mb-12 text-center sm:mb-16">
+          <h2 className="text-3xl font-bold sm:text-4xl md:text-5xl">About</h2>
         <p className="mt-3 text-sm text-white/50">My Introduction</p>
       </div>
 
@@ -53,9 +54,11 @@ export default function About() {
         <div className="flex justify-center">
           <div className="about-photo-frame glass relative flex aspect-square w-full max-w-[360px] items-center justify-center overflow-hidden">
             {aboutImage ? (
-              <img
+              <Image
                 src={aboutImage}
                 alt="About Mirza Galib"
+                fill
+                sizes="360px"
                 className="h-full w-full object-cover"
               />
             ) : (
@@ -69,7 +72,7 @@ export default function About() {
             Stats + description + resume button
         ========================= */}
         <div>
-          <div className="mb-8 grid grid-cols-3 gap-4">
+          <div className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
             <div className="glass rounded-2xl p-5 text-center">
               <Briefcase className="mx-auto mb-3" size={22} />
               <h3 className="text-sm font-semibold">Experience</h3>
@@ -89,12 +92,24 @@ export default function About() {
             </div>
           </div>
 
-          <p className="max-w-xl text-sm leading-7 text-white/65">
-            Proficient in React.js, Next.js, TypeScript, Node.js, MongoDB and
-            modern web development. I build scalable, high-performance
-            applications with clean user experience, responsive design, and
-            maintainable code.
-          </p>
+          <div className="max-w-xl space-y-4 text-sm leading-7 text-white/65">
+            <p>
+              I am MD Mirza Galib Palash, a full stack web developer from
+              Dhaka. My programming journey started with curiosity about how
+              real websites work, then grew into building responsive interfaces,
+              dashboards, ecommerce flows, and complete web applications with
+              React, Next.js, TypeScript, Node.js, and MongoDB.
+            </p>
+
+            <p>
+              I enjoy work that mixes clean UI, useful backend logic, and smooth
+              user experience. I like turning rough ideas into polished products,
+              fixing small interaction details, and learning better ways to
+              write maintainable code. Outside programming, I enjoy exploring
+              new tech, creative design ideas, and keeping my work practical and
+              simple for real users.
+            </p>
+          </div>
 
           <a
             href="/resume.pdf"

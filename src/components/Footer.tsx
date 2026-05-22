@@ -10,7 +10,7 @@ export default function Footer() {
     },
     {
       label: "GitHub",
-      href: "https://github.com/",
+      href: "https://github.com/GalibDev",
       icon: FaGithub,
     },
   ];

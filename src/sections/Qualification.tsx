@@ -18,46 +18,43 @@ const fallbackItems: Qualification[] = [
     id: "1",
     type: "education",
     title: "SSC",
-    institution: "Your School",
-    duration: "2015 - 2017",
+    institution: "Shishu Niketon High School",
+    duration: "2021 - 2022 | GPA 5.00",
     sort_order: 1,
   },
   {
     id: "2",
     type: "education",
     title: "HSC",
-    institution: "Your College",
-    duration: "2017 - 2019",
+    institution: "Rangpur Model College, Rangpur",
+    duration: "2023 - 2024 | GPA 5.00",
     sort_order: 2,
   },
   {
     id: "3",
     type: "education",
     title: "BSc in CSE",
-    institution: "Your University",
-    duration: "2020 - 2024",
+    institution:
+      "Shyamoli Engineering College, Affiliated with University of Dhaka",
+    duration: "2024 - Present",
     sort_order: 3,
+  },
+  {
+    id: "4",
+    type: "experience",
+    title: "Freelance Web Developer",
+    institution: "Local clients and small business websites",
+    duration: "2024 - Present",
+    sort_order: 4,
   },
 ];
 
 export default function Qualification() {
-  // =========================
-  // 01. ACTIVE TAB
-  // Experience / Education click korle change hobe
-  // =========================
   const [activeTab, setActiveTab] = useState<"experience" | "education">(
     "education"
   );
-
-  // =========================
-  // 02. QUALIFICATION DATA
-  // Dashboard theke data load hobe
-  // =========================
   const [items, setItems] = useState<Qualification[]>([]);
 
-  // =========================
-  // 03. LOAD DATA FROM SUPABASE
-  // =========================
   useEffect(() => {
     const fetchQualifications = async () => {
       const { data } = await supabase
@@ -71,32 +68,22 @@ export default function Qualification() {
     fetchQualifications();
   }, []);
 
-  // =========================
-  // 04. DATA FILTER
-  // activeTab onujayi only experience/education show korbe
-  // =========================
   const allItems = items.length > 0 ? items : fallbackItems;
-
   const displayItems = allItems.filter((item) => item.type === activeTab);
 
   return (
     <section
       id="qualification"
-      className="relative bg-transparent px-6 py-28 text-white"
+      className="relative bg-transparent px-4 py-20 text-white sm:px-6 sm:py-24 lg:py-28"
     >
-      {/* =========================
-          05. SECTION TITLE
-      ========================= */}
       <div className="mb-12 text-center">
-        <h2 className="text-4xl font-bold md:text-5xl">Qualification</h2>
+        <h2 className="text-3xl font-bold sm:text-4xl md:text-5xl">
+          Qualification
+        </h2>
         <p className="mt-3 text-sm text-white/50">My personal journey</p>
       </div>
 
-      {/* =========================
-          06. TAB BUTTONS
-          ekhane click korle Experience/Education change hobe
-      ========================= */}
-      <div className="mb-14 flex justify-center gap-6">
+      <div className="mb-12 flex flex-wrap justify-center gap-3 sm:mb-14 sm:gap-6">
         <button
           type="button"
           onClick={() => setActiveTab("experience")}
@@ -124,33 +111,31 @@ export default function Qualification() {
         </button>
       </div>
 
-      {/* =========================
-          07. TIMELINE
-      ========================= */}
       <div className="relative mx-auto max-w-3xl">
         {displayItems.length === 0 ? (
-          <div className="glass mx-auto max-w-md rounded-3xl p-8 text-center text-sm text-white/60">
-            No {activeTab} data found. Dashboard থেকে add করো।
+          <div className="glass mx-auto max-w-md rounded-3xl p-6 text-center text-sm text-white/60 sm:p-8">
+            No {activeTab} data found. Add it from the dashboard.
           </div>
         ) : (
           <>
-            <div className="absolute left-1/2 top-0 h-full w-px -translate-x-1/2 bg-white/30" />
+            <div className="absolute left-4 top-0 h-full w-px bg-white/30 md:left-1/2 md:-translate-x-1/2" />
 
-            <div className="space-y-14">
+            <div className="space-y-10 sm:space-y-14">
               {displayItems.map((item, index) => (
                 <div
                   key={item.id}
-                  className="relative grid grid-cols-2 gap-10"
+                  className="relative grid grid-cols-[2rem_1fr] gap-4 md:grid-cols-2 md:gap-10"
                 >
-                  {/* left/right alternating content */}
                   <div
                     className={
                       index % 2 === 0
-                        ? "pr-8 text-right"
-                        : "col-start-2 pl-8 text-left"
+                        ? "col-start-2 text-left md:col-start-1 md:pr-8 md:text-right"
+                        : "col-start-2 text-left md:pl-8"
                     }
                   >
-                    <h3 className="text-lg font-bold">{item.title}</h3>
+                    <h3 className="text-base font-bold sm:text-lg">
+                      {item.title}
+                    </h3>
 
                     <p className="mt-1 text-sm text-white/60">
                       {item.institution}
@@ -161,8 +146,7 @@ export default function Qualification() {
                     </p>
                   </div>
 
-                  {/* timeline dot */}
-                  <span className="absolute left-1/2 top-2 h-4 w-4 -translate-x-1/2 rounded-full bg-white shadow-[0_0_20px_rgba(255,255,255,0.8)]" />
+                  <span className="absolute left-4 top-2 h-4 w-4 -translate-x-1/2 rounded-full bg-white shadow-[0_0_20px_rgba(255,255,255,0.8)] md:left-1/2" />
                 </div>
               ))}
             </div>

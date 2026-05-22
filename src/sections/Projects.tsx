@@ -1,18 +1,21 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ExternalLink } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { ExternalLink, Info } from "lucide-react";
 import { FaGithub } from "react-icons/fa";
 import { supabase } from "@/lib/supabase";
+import { projects as fallbackProjects } from "@/data/projects";
 
 type Project = {
   id: string;
   title: string;
   description: string;
-  image: string | null;
+  image: string;
   tech: string[];
-  github: string | null;
-  live: string | null;
+  github: string;
+  live: string;
 };
 
 export default function Projects() {
@@ -26,8 +29,10 @@ export default function Projects() {
         .select("*")
         .order("created_at", { ascending: false });
 
-      if (!error && data) {
+      if (!error && data?.length) {
         setProjects(data);
+      } else {
+        setProjects(fallbackProjects);
       }
 
       setLoading(false);
@@ -39,11 +44,11 @@ export default function Projects() {
   return (
     <section
       id="projects"
-      className="relative bg-transparent px-6 py-28 text-white"
+      className="relative bg-transparent px-4 py-20 text-white sm:px-6 sm:py-24 lg:py-28"
     >
       <div className="mx-auto max-w-5xl">
         <div className="mb-14 text-center">
-          <h2 className="text-4xl font-bold md:text-5xl">Projects</h2>
+          <h2 className="text-3xl font-bold sm:text-4xl md:text-5xl">Projects</h2>
           <p className="mt-3 text-sm text-white/50">Recent Projects</p>
         </div>
 
@@ -63,11 +68,15 @@ export default function Projects() {
                 className="glass glass-hover overflow-hidden rounded-3xl"
               >
                 {project.image ? (
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="h-48 w-full object-cover"
-                  />
+                  <div className="relative h-48 w-full">
+                    <Image
+                      src={project.image}
+                      alt={project.title}
+                      fill
+                      sizes="(min-width: 1024px) 320px, (min-width: 768px) 50vw, 100vw"
+                      className="object-cover"
+                    />
+                  </div>
                 ) : (
                   <div className="flex h-48 w-full items-center justify-center bg-white/10 text-white/40">
                     No Image
@@ -92,7 +101,14 @@ export default function Projects() {
                     ))}
                   </div>
 
-                  <div className="mt-5 flex gap-3">
+                  <div className="mt-5 flex flex-wrap gap-3">
+                    <Link
+                      href={`/projects/${project.id}`}
+                      className="glass flex items-center gap-2 rounded-xl px-4 py-2 text-xs hover:bg-white/10"
+                    >
+                      <Info size={14} /> View Details
+                    </Link>
+
                     {project.github && (
                       <a
                         href={project.github}

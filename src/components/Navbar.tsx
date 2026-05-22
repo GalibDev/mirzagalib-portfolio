@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   Home,
   Code,
@@ -14,14 +15,19 @@ import {
   MessageSquareHeart,
   Menu,
   X,
+  UserRound,
+  Wrench,
 } from "lucide-react";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [moreOpen, setMoreOpen] = useState(false);
+  const pathname = usePathname();
+  const sectionHref = (hash: string) => (pathname === "/" ? hash : `/${hash}`);
 
   const navItems = [
     { label: "Home", href: "#home", icon: Home, color: "text-yellow-400" },
+    { label: "About", href: "#about", icon: UserRound, color: "text-white" },
     { label: "Tech Stack", href: "#tech", icon: Code, color: "text-cyan-400" },
     {
       label: "Qualification",
@@ -40,6 +46,12 @@ export default function Navbar() {
 
   const moreItems = [
     { label: "Skills", href: "#skills", icon: Star, color: "text-blue-400" },
+    {
+      label: "Services",
+      href: "#services",
+      icon: Wrench,
+      color: "text-orange-300",
+    },
     {
       label: "Reviews",
       href: "#testimonials",
@@ -66,7 +78,7 @@ export default function Navbar() {
       ========================= */}
       <nav className="fixed left-1/2 top-6 z-50 hidden -translate-x-1/2 lg:block">
         <div className="glass flex items-center gap-6 rounded-full px-6 py-3 shadow-xl">
-          <Link href="#home" className="font-bold text-white">
+          <Link href={sectionHref("#home")} className="font-bold text-white">
             MG
           </Link>
 
@@ -76,7 +88,7 @@ export default function Navbar() {
             return (
               <Link
                 key={item.href}
-                href={item.href}
+                href={sectionHref(item.href)}
                 className="flex items-center gap-2 text-sm text-white/70 transition hover:text-white"
               >
                 <Icon size={16} className={item.color} />
@@ -103,7 +115,11 @@ export default function Navbar() {
                   return (
                     <Link
                       key={item.href}
-                      href={item.href}
+                      href={
+                        item.href.startsWith("#")
+                          ? sectionHref(item.href)
+                          : item.href
+                      }
                       onClick={() => setMoreOpen(false)}
                       className="flex items-center gap-3 rounded-xl px-3 py-2 text-sm text-white/70 transition hover:bg-white/10 hover:text-white"
                     >
@@ -125,7 +141,7 @@ export default function Navbar() {
       <nav className="fixed left-0 top-0 z-50 w-full px-4 pt-4 lg:hidden">
         <div className="mobile-glass-nav flex items-center justify-between px-5 py-4">
           <Link
-            href="#home"
+            href={sectionHref("#home")}
             onClick={closeMobile}
             className="flex items-center gap-3"
           >
@@ -157,7 +173,11 @@ export default function Navbar() {
                 return (
                   <Link
                     key={item.href}
-                    href={item.href}
+                    href={
+                      item.href.startsWith("#")
+                        ? sectionHref(item.href)
+                        : item.href
+                    }
                     onClick={closeMobile}
                     className="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium text-white/75 transition hover:bg-white/10 hover:text-white"
                   >

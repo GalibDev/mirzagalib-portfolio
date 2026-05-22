@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { Mail, Send } from "lucide-react";
-import { FaLinkedin, FaTwitter } from "react-icons/fa";
+import { Mail, Phone, Send } from "lucide-react";
+import { FaGithub, FaLinkedin, FaWhatsapp } from "react-icons/fa";
 import { supabase } from "@/lib/supabase";
 
 export default function Contact() {
@@ -47,15 +47,16 @@ export default function Contact() {
       },
       body: JSON.stringify(form),
     });
+    const emailResult = await emailRes.json().catch(() => null);
 
     setLoading(false);
 
-    if (!emailRes.ok) {
-      setToast("Message database e save hoyeche, email geche.");
+    if (!emailRes.ok || emailResult?.success === false) {
+      setToast("Message saved, but email notification failed.");
       return;
     }
 
-    setToast("Message successfully send hoyeche!");
+    setToast("Message sent successfully!");
     setForm({ name: "", email: "", message: "" });
 
     setTimeout(() => setToast(""), 3000);
@@ -64,11 +65,13 @@ export default function Contact() {
   return (
     <section
       id="contact"
-      className="relative overflow-hidden bg-transparent px-6 py-28 text-white"
+      className="relative overflow-hidden bg-transparent px-4 py-20 text-white sm:px-6 sm:py-24 lg:py-28"
     >
       <div className="mx-auto max-w-5xl">
         <div className="mb-14 text-center">
-          <h2 className="text-4xl font-bold md:text-5xl">Get in Touch</h2>
+          <h2 className="text-3xl font-bold sm:text-4xl md:text-5xl">
+            Get in Touch
+          </h2>
           <p className="mt-3 text-sm text-white/50">Contact Me</p>
         </div>
 
@@ -106,7 +109,9 @@ export default function Contact() {
                 <h4 className="text-sm font-semibold tracking-widest">
                   LINKEDIN
                 </h4>
-                <p className="mt-2 text-xs text-white/60">md-mirza-galib-palash</p>
+                <p className="mt-2 text-xs text-white/60">
+                  md-mirza-galib-palash
+                </p>
                 <a
                   href="https://www.linkedin.com/in/md-mirza-galib-palash"
                   target="_blank"
@@ -118,18 +123,52 @@ export default function Contact() {
               </div>
 
               <div className="glass glass-hover rounded-3xl p-6 text-center">
-                <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-sky-500/20 text-sky-400">
-                  <FaTwitter size={22} />
+                <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-green-500/20 text-green-400">
+                  <FaWhatsapp size={22} />
                 </div>
                 <h4 className="text-sm font-semibold tracking-widest">
-                  TWITTER
+                  WHATSAPP
                 </h4>
-                <p className="mt-2 text-xs text-white/60">@MirzaGalib</p>
+                <p className="mt-2 text-xs text-white/60">015577088342</p>
                 <a
-                  href="#"
+                  href="https://wa.me/88015577088342"
+                  target="_blank"
+                  rel="noreferrer"
                   className="mt-4 inline-block text-xs text-white/70 hover:text-white"
                 >
                   Write me →
+                </a>
+              </div>
+
+              <div className="glass glass-hover rounded-3xl p-6 text-center">
+                <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-white/10 text-white">
+                  <FaGithub size={22} />
+                </div>
+                <h4 className="text-sm font-semibold tracking-widest">
+                  GITHUB
+                </h4>
+                <p className="mt-2 text-xs text-white/60">GalibDev</p>
+                <a
+                  href="https://github.com/GalibDev"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="mt-4 inline-block text-xs text-white/70 hover:text-white"
+                >
+                  View profile
+                </a>
+              </div>
+
+              <div className="glass glass-hover rounded-3xl p-6 text-center">
+                <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-purple-500/20 text-purple-300">
+                  <Phone size={22} />
+                </div>
+                <h4 className="text-sm font-semibold tracking-widest">PHONE</h4>
+                <p className="mt-2 text-xs text-white/60">015577088342</p>
+                <a
+                  href="tel:+88015577088342"
+                  className="mt-4 inline-block text-xs text-white/70 hover:text-white"
+                >
+                  Call me
                 </a>
               </div>
             </div>

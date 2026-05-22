@@ -120,6 +120,33 @@ body {
   border-radius: 50%;
 }
 
+.about-photo-frame::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: conic-gradient(
+    from 0deg,
+    rgba(56, 189, 248, 0.15),
+    rgba(168, 85, 247, 0.95),
+    rgba(255, 255, 255, 0.9),
+    rgba(56, 189, 248, 0.9),
+    rgba(168, 85, 247, 0.2)
+  );
+  animation: aboutPhotoRingSpin 9s linear infinite;
+}
+
+.about-photo-frame > * {
+  z-index: 1;
+  border-radius: inherit;
+}
+
+@keyframes aboutPhotoRingSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 /* =========================
    03. STAR BACKGROUND
    Global moving stars behind all sections

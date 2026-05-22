@@ -1,7 +1,17 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { ImagePlus, LogOut, Plus, Trash2, UploadCloud, X } from "lucide-react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import Image from "next/image";
+import {
+  Edit,
+  ImagePlus,
+  LogOut,
+  Plus,
+  Save,
+  Trash2,
+  UploadCloud,
+  X,
+} from "lucide-react";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 
@@ -12,8 +22,18 @@ type Project = {
   image: string | null;
   image_path: string | null;
   tech: string[];
-  github: string;
-  live: string;
+  github: string | null;
+  live: string | null;
+};
+
+const emptyForm = {
+  title: "",
+  description: "",
+  image: "",
+  image_path: "",
+  tech: "",
+  github: "",
+  live: "",
 };
 
 export default function AdminProjectsPage() {
@@ -25,16 +45,27 @@ export default function AdminProjectsPage() {
   const [uploading, setUploading] = useState(false);
   const [dragging, setDragging] = useState(false);
   const [toast, setToast] = useState("");
+  const [editId, setEditId] = useState("");
+  const [originalImagePath, setOriginalImagePath] = useState("");
+  const [form, setForm] = useState(emptyForm);
 
-  const [form, setForm] = useState({
-    title: "",
-    description: "",
-    image: "",
-    image_path: "",
-    tech: "",
-    github: "",
-    live: "",
-  });
+  const resetForm = useCallback(() => {
+    setForm(emptyForm);
+    setEditId("");
+    setOriginalImagePath("");
+
+    if (inputRef.current) inputRef.current.value = "";
+  }, []);
+
+  const fetchProjects = useCallback(async () => {
+    const { data } = await supabase
+      .from("projects")
+      .select("*")
+      .order("created_at", { ascending: false });
+
+    setProjects(data || []);
+    setLoading(false);
+  }, []);
 
   useEffect(() => {
     const init = async () => {
@@ -49,21 +80,11 @@ export default function AdminProjectsPage() {
     };
 
     init();
-  }, [router]);
-
-  const fetchProjects = async () => {
-    const { data } = await supabase
-      .from("projects")
-      .select("*")
-      .order("created_at", { ascending: false });
-
-    setProjects(data || []);
-    setLoading(false);
-  };
+  }, [fetchProjects, router]);
 
   const uploadImage = async (file: File) => {
     if (!file.type.startsWith("image/")) {
-      setToast("শুধু image file upload করা যাবে।");
+      setToast("Only image files can be uploaded.");
       return;
     }
 
@@ -89,6 +110,10 @@ export default function AdminProjectsPage() {
       return;
     }
 
+    if (form.image_path && form.image_path !== originalImagePath) {
+      await supabase.storage.from("project-images").remove([form.image_path]);
+    }
+
     const { data } = supabase.storage
       .from("project-images")
       .getPublicUrl(filePath);
@@ -100,7 +125,7 @@ export default function AdminProjectsPage() {
     }));
 
     setUploading(false);
-    setToast("Image upload hoyeche!");
+    setToast("Image uploaded.");
     setTimeout(() => setToast(""), 2500);
   };
 
@@ -118,7 +143,7 @@ export default function AdminProjectsPage() {
   };
 
   const removeSelectedImage = async () => {
-    if (form.image_path) {
+    if (form.image_path && form.image_path !== originalImagePath) {
       await supabase.storage.from("project-images").remove([form.image_path]);
     }
 
@@ -131,7 +156,7 @@ export default function AdminProjectsPage() {
     if (inputRef.current) inputRef.current.value = "";
   };
 
-  const addProject = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const techArray = form.tech
@@ -139,47 +164,81 @@ export default function AdminProjectsPage() {
       .map((item) => item.trim())
       .filter(Boolean);
 
-    const { error } = await supabase.from("projects").insert([
-      {
-        title: form.title,
-        description: form.description,
-        image: form.image,
-        image_path: form.image_path,
-        tech: techArray,
-        github: form.github,
-        live: form.live,
-      },
-    ]);
+    const payload = {
+      title: form.title,
+      description: form.description,
+      image: form.image || null,
+      image_path: form.image_path || null,
+      tech: techArray,
+      github: form.github,
+      live: form.live,
+    };
+
+    const { error } = editId
+      ? await supabase.from("projects").update(payload).eq("id", editId)
+      : await supabase.from("projects").insert([payload]);
 
     if (error) {
       setToast(error.message);
       return;
     }
 
-    setForm({
-      title: "",
-      description: "",
-      image: "",
-      image_path: "",
-      tech: "",
-      github: "",
-      live: "",
-    });
+    if (editId && originalImagePath && originalImagePath !== form.image_path) {
+      await supabase.storage.from("project-images").remove([originalImagePath]);
+    }
 
-    if (inputRef.current) inputRef.current.value = "";
-
-    setToast("Project add hoyeche!");
+    setToast(editId ? "Project updated." : "Project added.");
+    resetForm();
     fetchProjects();
     setTimeout(() => setToast(""), 2500);
   };
 
+  const startEdit = (project: Project) => {
+    setEditId(project.id);
+    setOriginalImagePath(project.image_path || "");
+    setForm({
+      title: project.title || "",
+      description: project.description || "",
+      image: project.image || "",
+      image_path: project.image_path || "",
+      tech: project.tech?.join(", ") || "",
+      github: project.github || "",
+      live: project.live || "",
+    });
+
+    if (inputRef.current) inputRef.current.value = "";
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const cancelEdit = async () => {
+    if (form.image_path && form.image_path !== originalImagePath) {
+      await supabase.storage.from("project-images").remove([form.image_path]);
+    }
+
+    resetForm();
+    setToast("Edit cancelled.");
+    setTimeout(() => setToast(""), 1800);
+  };
+
   const deleteProject = async (project: Project) => {
+    const confirmDelete = confirm("Delete this project?");
+    if (!confirmDelete) return;
+
     if (project.image_path) {
       await supabase.storage.from("project-images").remove([project.image_path]);
     }
 
-    await supabase.from("projects").delete().eq("id", project.id);
+    const { error } = await supabase.from("projects").delete().eq("id", project.id);
+
+    if (error) {
+      setToast(error.message);
+      return;
+    }
+
+    if (editId === project.id) resetForm();
+    setToast("Project deleted.");
     fetchProjects();
+    setTimeout(() => setToast(""), 2500);
   };
 
   const logout = async () => {
@@ -196,13 +255,13 @@ export default function AdminProjectsPage() {
   }
 
   return (
-    <section className="min-h-screen bg-transparent px-6 py-28 text-white">
+    <section className="min-h-screen bg-transparent px-4 py-24 text-white sm:px-6 sm:py-28">
       <div className="mx-auto max-w-6xl">
-        <div className="glass mb-8 flex items-center justify-between rounded-3xl p-6">
+        <div className="glass mb-8 flex flex-wrap items-center justify-between gap-4 rounded-3xl p-5 sm:p-6">
           <div>
             <h1 className="text-3xl font-bold">Manage Projects</h1>
             <p className="mt-2 text-sm text-white/50">
-              Drag, drop, upload and manage portfolio projects.
+              Drag, drop, upload, edit, and manage portfolio projects.
             </p>
           </div>
 
@@ -220,9 +279,10 @@ export default function AdminProjectsPage() {
           </div>
         )}
 
-        <form onSubmit={addProject} className="glass mb-10 rounded-3xl p-6">
+        <form onSubmit={handleSubmit} className="glass mb-10 rounded-3xl p-6">
           <h2 className="mb-6 flex items-center gap-2 text-xl font-semibold">
-            <Plus size={20} /> Add New Project
+            {editId ? <Edit size={20} /> : <Plus size={20} />}
+            {editId ? "Edit Project" : "Add New Project"}
           </h2>
 
           <div className="mb-6 grid gap-6 md:grid-cols-2">
@@ -247,11 +307,13 @@ export default function AdminProjectsPage() {
               />
 
               {form.image ? (
-                <div className="relative w-full">
-                  <img
+                <div className="relative h-56 w-full">
+                  <Image
                     src={form.image}
                     alt="project preview"
-                    className="h-56 w-full rounded-2xl object-cover"
+                    fill
+                    sizes="(min-width: 768px) 50vw, 100vw"
+                    className="rounded-2xl object-cover"
                   />
 
                   <button
@@ -261,6 +323,7 @@ export default function AdminProjectsPage() {
                       removeSelectedImage();
                     }}
                     className="absolute right-3 top-3 rounded-full bg-black/60 p-2 text-white"
+                    aria-label="Remove selected image"
                   >
                     <X size={16} />
                   </button>
@@ -270,7 +333,7 @@ export default function AdminProjectsPage() {
                   <UploadCloud size={42} className="mb-4 text-blue-400" />
                   <h3 className="font-semibold">Drag & Drop Image</h3>
                   <p className="mt-2 text-sm text-white/50">
-                    অথবা click করে direct upload করো
+                    Or click to upload directly
                   </p>
                   <p className="mt-3 text-xs text-white/35">
                     JPG, PNG, WEBP supported
@@ -293,7 +356,7 @@ export default function AdminProjectsPage() {
               />
 
               <input
-                placeholder="Tech stack: Next.js, TypeScript, Supabase"
+                placeholder="Tech stack: Next.js, JavaScript, Tailwind CSS"
                 value={form.tech}
                 onChange={(e) => setForm({ ...form, tech: e.target.value })}
                 className="glass w-full rounded-2xl bg-transparent px-4 py-3 outline-none"
@@ -326,24 +389,45 @@ export default function AdminProjectsPage() {
             </div>
           </div>
 
-          <button
-            type="submit"
-            disabled={uploading}
-            className="glass glass-hover rounded-2xl px-6 py-3 text-sm font-semibold disabled:opacity-60"
-          >
-            {uploading ? "Image uploading..." : "Add Project"}
-          </button>
+          <div className="flex flex-wrap gap-3">
+            <button
+              type="submit"
+              disabled={uploading}
+              className="glass glass-hover flex items-center gap-2 rounded-2xl px-6 py-3 text-sm font-semibold disabled:opacity-60"
+            >
+              {editId ? <Save size={16} /> : <Plus size={16} />}
+              {uploading
+                ? "Image uploading..."
+                : editId
+                  ? "Update Project"
+                  : "Add Project"}
+            </button>
+
+            {editId && (
+              <button
+                type="button"
+                onClick={cancelEdit}
+                className="rounded-2xl bg-white/10 px-6 py-3 text-sm font-semibold text-white/75 hover:bg-white/15"
+              >
+                Cancel Edit
+              </button>
+            )}
+          </div>
         </form>
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {projects.map((project) => (
             <div key={project.id} className="glass rounded-3xl p-5">
               {project.image ? (
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="mb-4 h-36 w-full rounded-2xl object-cover"
-                />
+                <div className="relative mb-4 h-36 w-full">
+                  <Image
+                    src={project.image}
+                    alt={project.title}
+                    fill
+                    sizes="(min-width: 1024px) 320px, (min-width: 768px) 50vw, 100vw"
+                    className="rounded-2xl object-cover"
+                  />
+                </div>
               ) : (
                 <div className="glass mb-4 flex h-36 items-center justify-center rounded-2xl">
                   <ImagePlus className="text-white/40" />
@@ -367,12 +451,21 @@ export default function AdminProjectsPage() {
                 ))}
               </div>
 
-              <button
-                onClick={() => deleteProject(project)}
-                className="mt-5 flex items-center gap-2 rounded-xl bg-red-500/20 px-4 py-2 text-sm text-red-300 hover:bg-red-500/30"
-              >
-                <Trash2 size={15} /> Delete
-              </button>
+              <div className="mt-5 flex flex-wrap gap-3">
+                <button
+                  onClick={() => startEdit(project)}
+                  className="glass glass-hover flex items-center gap-2 rounded-xl px-4 py-2 text-sm"
+                >
+                  <Edit size={15} /> Edit
+                </button>
+
+                <button
+                  onClick={() => deleteProject(project)}
+                  className="flex items-center gap-2 rounded-xl bg-red-500/20 px-4 py-2 text-sm text-red-300 hover:bg-red-500/30"
+                >
+                  <Trash2 size={15} /> Delete
+                </button>
+              </div>
             </div>
           ))}
         </div>

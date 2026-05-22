@@ -73,13 +73,13 @@ export default function About() {
             <div className="glass rounded-2xl p-5 text-center">
               <Briefcase className="mx-auto mb-3" size={22} />
               <h3 className="text-sm font-semibold">Experience</h3>
-              <p className="mt-1 text-xs text-white/50">3 Years Working</p>
+              <p className="mt-1 text-xs text-white/50">1+ Years Working</p>
             </div>
 
             <div className="glass rounded-2xl p-5 text-center">
               <Code2 className="mx-auto mb-3" size={22} />
               <h3 className="text-sm font-semibold">Completed</h3>
-              <p className="mt-1 text-xs text-white/50">10+ Projects</p>
+              <p className="mt-1 text-xs text-white/50">50+ Projects</p>
             </div>
 
             <div className="glass rounded-2xl p-5 text-center">

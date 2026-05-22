@@ -160,7 +160,7 @@ export default function Hero() {
               download
               className="spark-button inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-white"
             >
-              Download Resume <Download size={16} />
+              <span>Download Resume</span> <Download size={16} />
             </a>
           </div>
 

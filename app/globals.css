@@ -124,23 +124,43 @@ html {
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  border: 1px solid transparent;
-  background:
-    linear-gradient(rgba(8, 13, 34, 0.92), rgba(8, 13, 34, 0.92)) padding-box,
-    conic-gradient(
-        from var(--spark-angle, 0deg),
-        transparent 0deg,
-        rgba(56, 189, 248, 0.15) 70deg,
-        rgba(251, 146, 60, 0.95) 105deg,
-        rgba(250, 204, 21, 0.95) 124deg,
-        rgba(168, 85, 247, 0.75) 148deg,
-        transparent 220deg
-      )
-      border-box;
+  background: transparent;
   box-shadow:
-    0 0 22px rgba(251, 146, 60, 0.18),
+    0 0 0 1px rgba(255, 255, 255, 0.07),
+    0 0 28px rgba(255, 120, 28, 0.12),
     inset 0 1px 0 rgba(255, 255, 255, 0.16);
-  animation: sparkBorderSpin 5.5s linear infinite;
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+.spark-button::before {
+  content: "";
+  position: absolute;
+  inset: -90%;
+  z-index: -2;
+  background:
+    radial-gradient(
+      circle at 50% 7%,
+      #fff8c7 0 1.5%,
+      #ffd166 1.6% 3.2%,
+      rgba(255, 69, 0, 0.92) 3.3% 5%,
+      transparent 5.8%
+    ),
+    conic-gradient(
+      from 0deg,
+      transparent 0deg,
+      transparent 250deg,
+      rgba(255, 115, 0, 0.12) 286deg,
+      rgba(255, 183, 0, 0.62) 308deg,
+      #fff4ad 322deg,
+      #ff5a1f 333deg,
+      transparent 348deg,
+      transparent 360deg
+    );
+  filter: drop-shadow(0 0 8px rgba(255, 190, 60, 0.9))
+    drop-shadow(0 0 16px rgba(255, 82, 22, 0.55));
+  animation: weldSparkOrbit 3s linear infinite;
 }
 
 .spark-button::after {
@@ -149,23 +169,34 @@ html {
   inset: 2px;
   z-index: -1;
   border-radius: inherit;
-  background: radial-gradient(
-    circle at 72% 18%,
-    rgba(250, 204, 21, 0.22),
-    transparent 34%
-  );
-  opacity: 0.9;
+  background:
+    linear-gradient(rgba(8, 13, 34, 0.96), rgba(8, 13, 34, 0.96)),
+    radial-gradient(circle at 50% 0%, rgba(255, 147, 42, 0.18), transparent 38%);
 }
 
-@property --spark-angle {
-  syntax: "<angle>";
-  inherits: false;
-  initial-value: 0deg;
+.spark-button span,
+.spark-button svg {
+  position: relative;
+  z-index: 2;
 }
 
-@keyframes sparkBorderSpin {
+.spark-button:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 0 0 1px rgba(255, 203, 94, 0.2),
+    0 0 34px rgba(255, 120, 28, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
+.spark-button:hover::before {
+  animation-duration: 1.6s;
+  filter: drop-shadow(0 0 10px rgba(255, 229, 132, 1))
+    drop-shadow(0 0 22px rgba(255, 85, 20, 0.75));
+}
+
+@keyframes weldSparkOrbit {
   to {
-    --spark-angle: 360deg;
+    transform: rotate(360deg);
   }
 }
 

@@ -12,6 +12,10 @@ body {
   overflow-x: hidden;
 }
 
+html {
+  scroll-padding-top: 96px;
+}
+
 /* =========================
    02. GLASSMORPHISM
    Navbar, cards, modals, buttons, inputs
@@ -834,11 +838,128 @@ footer::before {
 /* Mobile size fix */
 @media (max-width: 768px) {
   .profile-orbit-system {
-    transform: scale(0.78);
+    width: min(100%, 330px);
+    height: 300px;
+    margin-inline: auto;
+    transform: none;
+  }
+
+  .neon-orbit {
+    width: 230px;
+    height: 230px;
+  }
+
+  .profile-image-wrap {
+    width: 178px;
+    height: 178px;
   }
 
   .orbit-card {
-    min-width: 115px;
-    padding: 12px 14px;
+    min-width: 104px;
+    padding: 10px 12px;
+    border-radius: 14px;
+  }
+
+  .orbit-card strong {
+    font-size: 22px;
+  }
+
+  .orbit-card span {
+    font-size: 11px;
+  }
+
+  .orbit-card-1 {
+    left: 0;
+    top: 58px;
+  }
+
+  .orbit-card-2 {
+    right: 0;
+    top: 128px;
+  }
+
+  .orbit-card-3 {
+    left: 70px;
+    bottom: 18px;
+  }
+
+  .floating-line,
+  .particle,
+  .shooting-star,
+  .mouse-glow,
+  .cursor-glow {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    min-width: 320px;
+  }
+
+  .glass,
+  .glass-strong,
+  .mobile-glass-nav,
+  .mobile-glass-menu {
+    border-radius: 18px;
+  }
+
+  .profile-orbit-system {
+    width: min(100%, 300px);
+    height: 285px;
+  }
+
+  .neon-orbit {
+    width: 210px;
+    height: 210px;
+  }
+
+  .profile-image-wrap {
+    width: 162px;
+    height: 162px;
+  }
+
+  .orbit-card {
+    min-width: 96px;
+    padding: 9px 10px;
+  }
+
+  .orbit-card-1 {
+    left: 0;
+    top: 58px;
+  }
+
+  .orbit-card-2 {
+    right: 0;
+    top: 124px;
+  }
+
+  .orbit-card-3 {
+    left: 62px;
+    bottom: 16px;
+  }
+}
+
+@media (max-width: 640px) {
+  html {
+    scroll-padding-top: 112px;
+  }
+
+  input,
+  textarea,
+  select,
+  button,
+  a {
+    min-width: 0;
+  }
+
+  h1,
+  h2,
+  h3,
+  p,
+  a,
+  button,
+  span {
+    overflow-wrap: anywhere;
   }
 }

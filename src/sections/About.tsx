@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { Download, Briefcase, Code2, Headphones } from "lucide-react";
+import { Briefcase, Code2, Headphones } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 
 export default function About() {
@@ -111,13 +111,6 @@ export default function About() {
             </p>
           </div>
 
-          <a
-            href="/resume.pdf"
-            download
-            className="glass glass-hover mt-8 inline-flex items-center gap-2 rounded-full px-7 py-4 text-sm font-medium"
-          >
-            Download Resume <Download size={16} />
-          </a>
         </div>
       </div>
     </section>

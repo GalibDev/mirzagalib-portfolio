@@ -212,7 +212,12 @@ html {
 }
 
 .about-photo-frame img {
+  border-radius: inherit;
   transform: scale(1.015);
+}
+
+.about-photo-frame.glass {
+  border-radius: 50%;
 }
 
 @keyframes aboutPhotoGlow {

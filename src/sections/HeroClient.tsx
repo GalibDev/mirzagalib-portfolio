@@ -1,6 +1,6 @@
 "use client";
 
-import { Download, Send } from "lucide-react";
+import { Download, Rocket, Send } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import type { HeroContent } from "@/types/public-content";
@@ -17,11 +17,6 @@ export default function HeroClient({ content }: HeroClientProps) {
   const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
-    const isMobile = window.matchMedia("(max-width: 768px)").matches;
-    if (isMobile) {
-      return;
-    }
-
     const word = words[wordIndex];
 
     const timer = setTimeout(() => {
@@ -47,7 +42,7 @@ export default function HeroClient({ content }: HeroClientProps) {
   return (
     <section
       id="home"
-      className="relative min-h-[100svh] overflow-hidden bg-transparent px-4 pb-12 pt-20 text-white sm:px-6 md:min-h-screen lg:pt-24"
+      className="relative min-h-[100svh] overflow-hidden bg-transparent px-4 pb-12 pt-16 text-white sm:px-6 md:min-h-screen lg:pt-24"
     >
       <div className="absolute left-0 top-20 h-80 w-80 rounded-full bg-blue-500/15 blur-[130px]" />
       <div className="absolute right-24 top-40 h-80 w-80 rounded-full bg-purple-500/15 blur-[130px]" />
@@ -58,7 +53,58 @@ export default function HeroClient({ content }: HeroClientProps) {
       <div className="particle right-[28%] top-[55%] animation-delay-4000" />
 
       <div className="relative mx-auto grid max-w-6xl grid-cols-1 items-start gap-7 pt-4 sm:gap-8 md:min-h-[78vh] md:grid-cols-2 md:items-center md:gap-14 md:pt-0">
-        <div className="text-center md:pl-8 md:text-left">
+        <div className="mobile-hero-card text-center md:hidden">
+          <div className="mx-auto mb-5 inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/[0.04] px-4 py-2 text-xs text-white/75">
+            <span className="h-2 w-2 rounded-full bg-emerald-400" />
+            Available for freelance work
+          </div>
+
+          <div className="mobile-profile-ring relative mx-auto mb-6">
+            <Image
+              src={content.image || "/profile.jpg"}
+              alt={content.name}
+              fill
+              priority
+              sizes="144px"
+              className="rounded-full object-cover"
+            />
+          </div>
+
+          <p className="mb-3 text-sm text-white/65">Hey, I am</p>
+          <h1 className="text-4xl font-extrabold leading-tight">
+            Mirza <span>Galib</span>
+          </h1>
+
+          <h2 className="mt-4 min-h-8 text-xl font-medium text-white/82">
+            I am a <span className="text-white">{text}</span>
+            <span className="ml-1 inline-block animate-pulse text-cyan-300">|</span>
+          </h2>
+
+          <p className="mx-auto mt-6 max-w-sm text-base leading-8 text-white/58">
+            I craft responsive, high-performance web apps with{" "}
+            <span className="font-semibold text-white">React, Next.js, Tailwind CSS</span>,
+            Node.js & MongoDB, focused on clean UI and seamless UX.
+          </p>
+
+          <div className="mt-8 flex flex-col items-center gap-4">
+            <a
+              href="#projects"
+              className="inline-flex min-h-14 w-full max-w-[280px] items-center justify-center gap-3 rounded-2xl bg-gradient-to-r from-blue-600 to-cyan-500 px-6 text-base font-semibold text-white shadow-[0_12px_30px_rgba(6,182,212,0.2)]"
+            >
+              <Rocket size={19} /> View Projects
+            </a>
+
+            <a
+              href="/resume.pdf"
+              download
+              className="inline-flex min-h-14 w-full max-w-[280px] items-center justify-center gap-3 rounded-2xl border border-white/12 bg-white/[0.03] px-6 text-base font-semibold text-white/90"
+            >
+              <Download size={19} /> Download Resume
+            </a>
+          </div>
+        </div>
+
+        <div className="hidden text-center md:block md:pl-8 md:text-left">
           <p className="mb-3 text-xs text-white/70 sm:text-sm md:mb-4">
             Hey, I am
           </p>

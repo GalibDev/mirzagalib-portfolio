@@ -26,8 +26,9 @@ export default function Projects() {
     const fetchProjects = async () => {
       const { data, error } = await supabase
         .from("projects")
-        .select("*")
-        .order("created_at", { ascending: false });
+        .select("id,title,description,image,tech,github,live")
+        .order("created_at", { ascending: false })
+        .limit(6);
 
       if (!error && data?.length) {
         setProjects(data);

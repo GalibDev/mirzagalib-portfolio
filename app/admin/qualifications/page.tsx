@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Edit, GraduationCap, LogOut, Plus, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
@@ -35,6 +35,25 @@ export default function AdminQualificationsPage() {
   });
 
   // =========================
+  // 03. FETCH QUALIFICATIONS
+  // =========================
+  const fetchQualifications = useCallback(async () => {
+    const { data, error } = await supabase
+      .from("qualifications")
+      .select("*")
+      .order("sort_order", { ascending: true });
+
+    if (error) {
+      setToast(error.message);
+      setLoading(false);
+      return;
+    }
+
+    setItems(data || []);
+    setLoading(false);
+  }, []);
+
+  // =========================
   // 02. ADMIN CHECK + DATA LOAD
   // =========================
   useEffect(() => {
@@ -50,26 +69,7 @@ export default function AdminQualificationsPage() {
     };
 
     init();
-  }, [router]);
-
-  // =========================
-  // 03. FETCH QUALIFICATIONS
-  // =========================
-  const fetchQualifications = async () => {
-    const { data, error } = await supabase
-      .from("qualifications")
-      .select("*")
-      .order("sort_order", { ascending: true });
-
-    if (error) {
-      setToast(error.message);
-      setLoading(false);
-      return;
-    }
-
-    setItems(data || []);
-    setLoading(false);
-  };
+  }, [fetchQualifications, router]);
 
   // =========================
   // 04. ADD OR UPDATE QUALIFICATION
@@ -184,7 +184,7 @@ export default function AdminQualificationsPage() {
   }
 
   return (
-    <section className="min-h-screen bg-transparent px-6 py-28 text-white">
+    <section className="min-h-screen bg-transparent px-4 py-24 text-white sm:px-6 sm:py-28">
       <div className="mx-auto max-w-6xl">
         {/* =========================
             09. PAGE HEADER

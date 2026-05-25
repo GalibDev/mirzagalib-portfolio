@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Edit, LogOut, Plus, Save, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
@@ -28,22 +28,7 @@ export default function AdminHeroStatsPage() {
     sort_order: 0,
   });
 
-  useEffect(() => {
-    const init = async () => {
-      const { data } = await supabase.auth.getUser();
-
-      if (!data.user) {
-        router.replace("/admin/login");
-        return;
-      }
-
-      fetchStats();
-    };
-
-    init();
-  }, [router]);
-
-  const fetchStats = async () => {
+  const fetchStats = useCallback(async () => {
     const { data, error } = await supabase
       .from("hero_stats")
       .select("*")
@@ -57,7 +42,22 @@ export default function AdminHeroStatsPage() {
 
     setStats(data || []);
     setLoading(false);
-  };
+  }, []);
+
+  useEffect(() => {
+    const init = async () => {
+      const { data } = await supabase.auth.getUser();
+
+      if (!data.user) {
+        router.replace("/admin/login");
+        return;
+      }
+
+      fetchStats();
+    };
+
+    init();
+  }, [fetchStats, router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -149,7 +149,7 @@ export default function AdminHeroStatsPage() {
   }
 
   return (
-    <section className="min-h-screen bg-transparent px-6 py-28 text-white">
+    <section className="min-h-screen bg-transparent px-4 py-24 text-white sm:px-6 sm:py-28">
       <div className="mx-auto max-w-6xl">
         <div className="glass mb-8 flex flex-wrap items-center justify-between gap-4 rounded-3xl p-6">
           <div>

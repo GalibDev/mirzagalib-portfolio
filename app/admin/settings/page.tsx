@@ -86,12 +86,12 @@ export default function AdminSettingsPage() {
   }
 
   return (
-    <section className="min-h-screen bg-transparent px-6 py-28 text-white">
+    <section className="min-h-screen bg-transparent px-4 py-24 text-white sm:px-6 sm:py-28">
       <div className="mx-auto max-w-3xl">
         {/* =========================
             05. PAGE HEADER
         ========================= */}
-        <div className="glass mb-8 flex items-center justify-between rounded-3xl p-6">
+        <div className="glass mb-8 flex flex-wrap items-center justify-between gap-4 rounded-3xl p-5 sm:p-6">
           <div>
             <h1 className="text-3xl font-bold">Website Settings</h1>
             <p className="mt-2 text-sm text-white/50">

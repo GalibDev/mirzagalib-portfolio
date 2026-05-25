@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { ImagePlus, LogOut, Trash2, UploadCloud, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
@@ -50,6 +51,15 @@ export default function AdminAssetsPage() {
   const [toast, setToast] = useState("");
 
   // =========================
+  // 04. FETCH ASSETS FROM SUPABASE
+  // =========================
+  const fetchAssets = useCallback(async () => {
+    const { data } = await supabase.from("site_assets").select("*");
+    setAssets(data || []);
+    setLoading(false);
+  }, []);
+
+  // =========================
   // 03. ADMIN CHECK + ASSETS LOAD
   // =========================
   useEffect(() => {
@@ -65,16 +75,7 @@ export default function AdminAssetsPage() {
     };
 
     init();
-  }, [router]);
-
-  // =========================
-  // 04. FETCH ASSETS FROM SUPABASE
-  // =========================
-  const fetchAssets = async () => {
-    const { data } = await supabase.from("site_assets").select("*");
-    setAssets(data || []);
-    setLoading(false);
-  };
+  }, [fetchAssets, router]);
 
   // =========================
   // 05. FIND SINGLE ASSET
@@ -259,12 +260,12 @@ export default function AdminAssetsPage() {
   }
 
   return (
-    <section className="min-h-screen bg-transparent px-6 py-28 text-white">
+    <section className="min-h-screen bg-transparent px-4 py-24 text-white sm:px-6 sm:py-28">
       <div className="mx-auto max-w-6xl">
         {/* =========================
             12. PAGE HEADER
         ========================= */}
-        <div className="glass mb-8 flex items-center justify-between rounded-3xl p-6">
+        <div className="glass mb-8 flex flex-wrap items-center justify-between gap-4 rounded-3xl p-5 sm:p-6">
           <div>
             <h1 className="text-3xl font-bold">Manage Website Images</h1>
             <p className="mt-2 text-sm text-white/50">
@@ -324,10 +325,12 @@ export default function AdminAssetsPage() {
                 >
                   {displayImage ? (
                     <div className="relative h-full w-full">
-                      <img
+                      <Image
                         src={displayImage}
                         alt={item.title}
-                        className="h-full w-full object-cover"
+                        fill
+                        sizes="(min-width: 768px) 50vw, 100vw"
+                        className="object-cover"
                       />
 
                       {preview && (

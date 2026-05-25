@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   CheckCircle,
   Edit,
@@ -33,27 +33,10 @@ export default function AdminReviewsPage() {
   const [loading, setLoading] = useState(true);
   const [toast, setToast] = useState("");
 
-  useEffect(() => {
-    const init = async () => {
-      const { data } = await supabase.auth.getUser();
-
-      if (!data.user) {
-        router.replace("/admin/login");
-        return;
-      }
-
-      await fetchTitle();
-      await fetchReviews();
-      setLoading(false);
-    };
-
-    init();
-  }, [router]);
-
   // =========================
   // 01. TITLE LOAD
   // =========================
-  const fetchTitle = async () => {
+  const fetchTitle = useCallback(async () => {
     const { data } = await supabase
       .from("site_settings")
       .select("value")
@@ -61,7 +44,7 @@ export default function AdminReviewsPage() {
       .single();
 
     if (data?.value) setTitle(data.value);
-  };
+  }, []);
 
   // =========================
   // 02. TITLE SAVE
@@ -87,7 +70,7 @@ export default function AdminReviewsPage() {
   // =========================
   // 03. REVIEWS LOAD
   // =========================
-  const fetchReviews = async () => {
+  const fetchReviews = useCallback(async () => {
     const { data, error } = await supabase
       .from("reviews")
       .select("*")
@@ -99,7 +82,24 @@ export default function AdminReviewsPage() {
     }
 
     setReviews(data || []);
-  };
+  }, []);
+
+  useEffect(() => {
+    const init = async () => {
+      const { data } = await supabase.auth.getUser();
+
+      if (!data.user) {
+        router.replace("/admin/login");
+        return;
+      }
+
+      await fetchTitle();
+      await fetchReviews();
+      setLoading(false);
+    };
+
+    init();
+  }, [fetchReviews, fetchTitle, router]);
 
   // =========================
   // 04. APPROVE / UNAPPROVE
@@ -154,7 +154,7 @@ export default function AdminReviewsPage() {
   }
 
   return (
-    <section className="min-h-screen bg-transparent px-6 py-28 text-white">
+    <section className="min-h-screen bg-transparent px-4 py-24 text-white sm:px-6 sm:py-28">
       <div className="mx-auto max-w-6xl">
         {/* =========================
             07. HEADER

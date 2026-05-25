@@ -59,7 +59,7 @@ export default function Qualification() {
     const fetchQualifications = async () => {
       const { data } = await supabase
         .from("qualifications")
-        .select("*")
+        .select("id,type,title,institution,duration,sort_order")
         .order("sort_order", { ascending: true });
 
       setItems(data || []);

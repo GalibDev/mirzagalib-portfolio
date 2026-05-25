@@ -32,37 +32,35 @@ export default function Testimonials() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    fetchTitle();
-    fetchReviews();
+    let mounted = true;
+
+    const loadTestimonials = async () => {
+      const [{ data: titleData }, { data: reviewData }] = await Promise.all([
+        supabase
+          .from("site_settings")
+          .select("value")
+          .eq("key", "testimonial_title")
+          .single(),
+        supabase
+          .from("reviews")
+          .select("id,name,email,rating,message,project_link,relation")
+          .eq("is_approved", true)
+          .order("created_at", { ascending: false })
+          .limit(3),
+      ]);
+
+      if (!mounted) return;
+
+      if (titleData?.value) setTitle(titleData.value);
+      setReviews(reviewData || []);
+    };
+
+    loadTestimonials();
+
+    return () => {
+      mounted = false;
+    };
   }, []);
-
-  // =========================
-  // 01. TESTIMONIAL TITLE LOAD
-  // Dashboard theke title edit kora jabe
-  // =========================
-  const fetchTitle = async () => {
-    const { data } = await supabase
-      .from("site_settings")
-      .select("value")
-      .eq("key", "testimonial_title")
-      .single();
-
-    if (data?.value) setTitle(data.value);
-  };
-
-  // =========================
-  // 02. APPROVED REVIEWS LOAD
-  // Sudhu approved reviews main website e show korbe
-  // =========================
-  const fetchReviews = async () => {
-    const { data } = await supabase
-      .from("reviews")
-      .select("id,name,email,rating,message,project_link,relation")
-      .eq("is_approved", true)
-      .order("created_at", { ascending: false });
-
-    setReviews(data || []);
-  };
 
   // =========================
   // 03. SUBMIT REVIEW
@@ -152,14 +150,16 @@ export default function Testimonials() {
   return (
     <section
       id="testimonials"
-      className="relative bg-transparent px-6 py-28 text-white"
+      className="relative bg-transparent px-4 py-20 text-white sm:px-6 sm:py-24 lg:py-28"
     >
       <div className="mx-auto max-w-6xl">
         {/* =========================
             05. SECTION TITLE
         ========================= */}
         <div className="mb-12 text-center">
-          <h2 className="text-4xl font-bold md:text-5xl">{title}</h2>
+          <h2 className="text-3xl font-bold sm:text-4xl md:text-5xl">
+            {title}
+          </h2>
           <p className="mt-3 text-sm text-white/50">Testimonials</p>
 
           <button
@@ -185,7 +185,7 @@ export default function Testimonials() {
         {showForm && (
           <form
             onSubmit={submitReview}
-            className="glass mx-auto mb-12 max-w-2xl rounded-3xl p-6"
+            className="glass mx-auto mb-12 max-w-2xl rounded-3xl p-5 sm:p-6"
           >
             <h3 className="mb-6 text-xl font-semibold">Write Your Review</h3>
 
@@ -278,7 +278,7 @@ export default function Testimonials() {
         {/* =========================
             08. REVIEW CARDS
         ========================= */}
-        <div className="grid gap-6 md:grid-cols-3">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {displayReviews.slice(0, 3).map((review) => (
             <div key={review.id} className="glass rounded-3xl p-6">
               <p className="text-sm leading-7 text-white/75">

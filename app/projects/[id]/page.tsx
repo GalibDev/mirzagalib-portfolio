@@ -8,8 +8,6 @@ import { ArrowLeft, ExternalLink } from "lucide-react";
 import { FaGithub } from "react-icons/fa";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import ClickEffect from "@/components/ClickEffect";
-import AnimationProvider from "@/components/AnimationProvider";
 import { supabase } from "@/lib/supabase";
 import { projects as fallbackProjects } from "@/data/projects";
 
@@ -68,8 +66,6 @@ export default function ProjectDetailsPage() {
 
   return (
     <main className="min-h-screen bg-transparent text-white">
-      <ClickEffect />
-      <AnimationProvider />
       <Navbar />
 
       <section className="relative px-4 pb-20 pt-32 sm:px-6 lg:pb-28 lg:pt-36">

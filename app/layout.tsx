@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import MouseGlow from "@/components/MouseGlow";
-import SmoothScroll from "@/components/SmoothScroll";
+import DesktopEffects from "@/components/DesktopEffects";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://mirzagalib.xyz"),
@@ -70,8 +69,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className="relative overflow-x-hidden bg-transparent text-white">
-        <SmoothScroll />
-        <MouseGlow />
+        <DesktopEffects />
 
         <div className="stars fixed inset-0 z-0 pointer-events-none" />
         <div className="particles pointer-events-none" />

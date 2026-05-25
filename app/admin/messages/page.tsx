@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { LogOut, MailOpen, Mail, Trash2, RefreshCw } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
@@ -21,23 +21,7 @@ export default function AdminMessagesPage() {
   const [loading, setLoading] = useState(true);
   const [toast, setToast] = useState("");
 
-  useEffect(() => {
-    checkAdminAndFetch();
-  }, []);
-
-  const checkAdminAndFetch = async () => {
-    const { data } = await supabase.auth.getUser();
-
-    if (!data.user) {
-      router.replace("/admin/login");
-      return;
-    }
-
-    await fetchMessages();
-    setLoading(false);
-  };
-
-  const fetchMessages = async () => {
+  const fetchMessages = useCallback(async () => {
     const { data, error } = await supabase
       .from("messages")
       .select("*")
@@ -49,7 +33,23 @@ export default function AdminMessagesPage() {
     }
 
     setMessages(data || []);
-  };
+  }, []);
+
+  useEffect(() => {
+    const checkAdminAndFetch = async () => {
+      const { data } = await supabase.auth.getUser();
+
+      if (!data.user) {
+        router.replace("/admin/login");
+        return;
+      }
+
+      await fetchMessages();
+      setLoading(false);
+    };
+
+    checkAdminAndFetch();
+  }, [fetchMessages, router]);
 
   const toggleRead = async (msg: Message) => {
     const { error } = await supabase
@@ -98,7 +98,7 @@ export default function AdminMessagesPage() {
   }
 
   return (
-    <section className="min-h-screen bg-transparent px-6 py-28 text-white">
+    <section className="min-h-screen bg-transparent px-4 py-24 text-white sm:px-6 sm:py-28">
       <div className="mx-auto max-w-6xl">
         <div className="glass mb-8 flex flex-wrap items-center justify-between gap-4 rounded-3xl p-6">
           <div>

@@ -26,44 +26,40 @@ export default function Hero() {
   const [heroStats, setHeroStats] = useState<HeroStat[]>([]);
 
   useEffect(() => {
-    const loadHeroName = async () => {
-      const { data } = await supabase
-        .from("site_settings")
-        .select("value")
-        .eq("key", "hero_name")
-        .single();
+    let mounted = true;
 
-      if (data?.value) setHeroName(data.value);
+    const loadHeroContent = async () => {
+      const [{ data: nameData }, { data: imageData }, { data: statsData }] =
+        await Promise.all([
+          supabase
+            .from("site_settings")
+            .select("value")
+            .eq("key", "hero_name")
+            .single(),
+          supabase
+            .from("site_assets")
+            .select("image")
+            .eq("key", "hero_profile")
+            .single(),
+          supabase
+            .from("hero_stats")
+            .select("id,label,sub_label,value,sort_order")
+            .order("sort_order", { ascending: true })
+            .limit(3),
+        ]);
+
+      if (!mounted) return;
+
+      if (nameData?.value) setHeroName(nameData.value);
+      if (imageData?.image) setHeroImage(imageData.image);
+      if (statsData) setHeroStats(statsData);
     };
 
-    loadHeroName();
-  }, []);
+    loadHeroContent();
 
-  useEffect(() => {
-    const loadHeroImage = async () => {
-      const { data } = await supabase
-        .from("site_assets")
-        .select("image")
-        .eq("key", "hero_profile")
-        .single();
-
-      if (data?.image) setHeroImage(data.image);
+    return () => {
+      mounted = false;
     };
-
-    loadHeroImage();
-  }, []);
-
-  useEffect(() => {
-    const loadHeroStats = async () => {
-      const { data } = await supabase
-        .from("hero_stats")
-        .select("*")
-        .order("sort_order", { ascending: true });
-
-      if (data) setHeroStats(data);
-    };
-
-    loadHeroStats();
   }, []);
 
   useEffect(() => {

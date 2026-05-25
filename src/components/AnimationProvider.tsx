@@ -3,25 +3,11 @@
 import { useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Lenis from "lenis";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function AnimationProvider() {
   useEffect(() => {
-    const lenis = new Lenis({
-      duration: 1.2,
-      smoothWheel: true,
-    });
-
-    function raf(time: number) {
-      lenis.raf(time);
-      ScrollTrigger.update();
-      requestAnimationFrame(raf);
-    }
-
-    requestAnimationFrame(raf);
-
     const cursorGlow = document.querySelector(".cursor-glow");
     const heroLeft = gsap.utils.toArray<HTMLElement>(".hero-left");
     const heroRight = gsap.utils.toArray<HTMLElement>(".hero-right");
@@ -86,7 +72,6 @@ export default function AnimationProvider() {
 
     return () => {
       window.removeEventListener("mousemove", moveCursor);
-      lenis.destroy();
       ScrollTrigger.getAll().forEach((t) => t.kill());
     };
   }, []);

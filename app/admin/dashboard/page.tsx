@@ -112,10 +112,10 @@ export default function AdminDashboard() {
   }
 
   return (
-    <section className="min-h-screen bg-transparent px-5 py-28 text-white">
+    <section className="min-h-screen bg-transparent px-4 py-24 text-white sm:px-5 sm:py-28">
       <div className="mx-auto max-w-6xl">
         {/* HEADER */}
-        <div className="glass mb-8 flex flex-wrap items-center justify-between gap-4 rounded-3xl p-6">
+        <div className="glass mb-8 flex flex-wrap items-center justify-between gap-4 rounded-3xl p-5 sm:p-6">
           <div>
             <h1 className="text-2xl font-bold md:text-3xl">Admin Dashboard</h1>
             <p className="mt-2 text-sm text-white/50">Logged in as {email}</p>
@@ -139,7 +139,7 @@ export default function AdminDashboard() {
               <Link
                 key={card.href}
                 href={card.href}
-                className="glass glass-hover relative block min-h-[165px] rounded-3xl p-6"
+                className="glass glass-hover relative block min-h-[165px] rounded-3xl p-5 sm:p-6"
               >
                 {card.title === "Messages" && unreadCount > 0 && (
                   <span className="absolute right-5 top-5 rounded-full bg-pink-500 px-3 py-1 text-xs font-semibold text-white">
@@ -159,7 +159,7 @@ export default function AdminDashboard() {
           })}
 
           {/* SERVICES FUTURE CARD */}
-          <div className="glass glass-hover block min-h-[165px] rounded-3xl p-6 opacity-80">
+          <div className="glass glass-hover block min-h-[165px] rounded-3xl p-5 opacity-80 sm:p-6">
             <Wrench size={30} className="text-orange-400" />
             <h2 className="mt-5 text-xl font-semibold">Services</h2>
             <p className="mt-2 max-w-xs text-sm leading-6 text-white/50">

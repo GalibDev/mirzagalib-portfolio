@@ -1,12 +1,5 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import AnimationProvider from "@/components/AnimationProvider";
-import ClickEffect from "@/components/ClickEffect";
-
-
-
-
-
 import Hero from "@/sections/Hero";
 import About from "@/sections/About";
 import Tech from "@/sections/Tech";
@@ -20,9 +13,6 @@ import Qualification from "@/sections/Qualification";
 export default function Home() {
   return (
     <main className="min-h-screen bg-transparent text-white">
-      <ClickEffect />
-      <AnimationProvider />
-
       <Navbar />
       <Hero />
       <About />

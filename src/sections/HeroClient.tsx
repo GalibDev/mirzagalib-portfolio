@@ -43,7 +43,7 @@ export default function HeroClient({ content }: HeroClientProps) {
   return (
     <section
       id="home"
-      className="relative min-h-[100svh] overflow-hidden bg-transparent px-4 pb-12 pt-28 text-white sm:px-6 md:min-h-screen md:pt-16 lg:pt-24"
+      className="relative min-h-[100svh] overflow-hidden bg-transparent px-4 pb-12 pt-24 text-white sm:px-6 md:min-h-screen md:pt-16 lg:pt-24"
     >
       <div className="absolute left-0 top-20 h-80 w-80 rounded-full bg-blue-500/15 blur-[130px]" />
       <div className="absolute right-24 top-40 h-80 w-80 rounded-full bg-purple-500/15 blur-[130px]" />

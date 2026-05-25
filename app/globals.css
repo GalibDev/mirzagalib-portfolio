@@ -792,9 +792,8 @@ footer::before {
 
 
 .mobile-menu-button {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.28);
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .mobile-menu-button:hover {
@@ -802,20 +801,12 @@ footer::before {
 }
 
 .mobile-topbar {
-  background:
-    linear-gradient(135deg, rgba(15, 23, 42, 0.98), rgba(20, 19, 42, 0.96)),
-    radial-gradient(circle at 12% 40%, rgba(34, 211, 238, 0.16), transparent 32%),
-    radial-gradient(circle at 72% 20%, rgba(139, 92, 246, 0.16), transparent 34%);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.13);
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.34);
+  background: #0b1020;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .mobile-brand-mark {
   background: linear-gradient(135deg, #22d3ee 0%, #2563eb 48%, #8b5cf6 100%);
-  box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.18),
-    0 14px 28px rgba(37, 99, 235, 0.28),
-    0 0 34px rgba(34, 211, 238, 0.22);
 }
 
 .mobile-menu-panel {
@@ -932,7 +923,7 @@ footer::before {
 /* Mobile size fix */
 @media (max-width: 768px) {
   html {
-    scroll-padding-top: 112px;
+    scroll-padding-top: 84px;
   }
 
   body {
@@ -943,12 +934,12 @@ footer::before {
   }
 
   .mobile-section-safe {
-    scroll-margin-top: 112px;
+    scroll-margin-top: 84px;
     padding-top: 80px;
   }
 
   section[id] {
-    scroll-margin-top: 112px;
+    scroll-margin-top: 84px;
   }
 
   .stars::before {
@@ -1076,7 +1067,7 @@ footer::before {
 
 @media (max-width: 640px) {
   html {
-    scroll-padding-top: 112px;
+    scroll-padding-top: 84px;
   }
 
   input,

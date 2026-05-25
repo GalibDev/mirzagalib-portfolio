@@ -135,17 +135,17 @@ export default function Navbar() {
       </nav>
 
       <nav className="fixed left-0 right-0 top-0 z-50 lg:hidden">
-        <div className="mobile-topbar flex items-center justify-between px-5 py-5">
+        <div className="mobile-topbar flex items-center justify-between px-4 py-3">
           <Link
             href={sectionHref("#home")}
             onClick={closeMobile}
-            className="flex min-w-0 items-center gap-4"
+            className="flex min-w-0 items-center gap-3"
             aria-label="Mirza Galib home"
           >
-            <span className="mobile-brand-mark flex h-16 w-16 shrink-0 items-center justify-center rounded-full text-xl font-extrabold text-white">
+            <span className="mobile-brand-mark flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-base font-extrabold text-white">
               MG
             </span>
-            <span className="truncate text-2xl font-bold text-white">
+            <span className="truncate text-xl font-bold text-white">
               Mirza Galib
             </span>
           </Link>
@@ -154,9 +154,9 @@ export default function Navbar() {
             type="button"
             onClick={() => setOpen((prev) => !prev)}
             aria-label="Open navigation menu"
-            className="mobile-menu-button flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl text-white transition"
+            className="mobile-menu-button flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-white transition"
           >
-            {open ? <X size={28} /> : <Menu size={30} />}
+            {open ? <X size={24} /> : <Menu size={26} />}
           </button>
         </div>
 

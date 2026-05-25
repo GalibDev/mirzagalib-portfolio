@@ -134,38 +134,20 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* =========================
-          MOBILE NAVBAR
-          MG + Mirza Galib + Menu button
-      ========================= */}
-      <nav className="fixed left-0 top-0 z-50 w-full px-4 pt-3 lg:hidden">
-        <div className="mobile-glass-nav flex items-center justify-between px-4 py-3">
-          <Link
-            href={sectionHref("#home")}
-            onClick={closeMobile}
-            className="flex items-center gap-3"
-          >
-            <span className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-sm font-bold text-white shadow-[0_0_25px_rgba(255,255,255,0.15)]">
-              MG
-            </span>
-
-            <span className="text-base font-bold text-white">Mirza Galib</span>
-          </Link>
-
+      <nav className="fixed right-4 top-4 z-50 lg:hidden">
+        <div className="flex justify-end">
           <button
             type="button"
             onClick={() => setOpen((prev) => !prev)}
-            className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/20"
+            aria-label="Open navigation menu"
+            className="mobile-menu-button flex h-11 w-11 items-center justify-center rounded-full text-white transition"
           >
             {open ? <X size={23} /> : <Menu size={25} />}
           </button>
         </div>
 
-        {/* =========================
-            MOBILE DROPDOWN MENU
-        ========================= */}
         {open && (
-          <div className="mobile-glass-menu mt-3 p-4">
+          <div className="mobile-menu-panel mt-3 w-[min(82vw,280px)] p-3">
             <div className="grid gap-2">
               {mobileItems.map((item) => {
                 const Icon = item.icon;
@@ -179,7 +161,7 @@ export default function Navbar() {
                         : item.href
                     }
                     onClick={closeMobile}
-                    className="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium text-white/75 transition hover:bg-white/10 hover:text-white"
+                    className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-white/75 transition hover:bg-white/10 hover:text-white"
                   >
                     <Icon size={18} className={item.color} />
                     {item.label}

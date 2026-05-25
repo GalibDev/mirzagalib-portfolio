@@ -17,6 +17,9 @@ export default function About() {
   // site_assets table er about_image key theke image fetch korbe
   // =========================
   useEffect(() => {
+    const isMobile = window.matchMedia("(max-width: 767px)").matches;
+    if (isMobile) return;
+
     const loadAboutImage = async () => {
       const { data, error } = await supabase
         .from("site_assets")
@@ -51,7 +54,7 @@ export default function About() {
             Dashboard image thakle show korbe
             na thakle MG fallback show korbe
         ========================= */}
-        <div className="flex justify-center">
+        <div className="hidden justify-center md:flex">
           <div className="about-photo-frame glass relative flex aspect-square w-full max-w-[360px] items-center justify-center overflow-hidden">
             {aboutImage ? (
               <Image

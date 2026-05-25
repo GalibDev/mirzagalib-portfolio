@@ -134,20 +134,34 @@ export default function Navbar() {
         </div>
       </nav>
 
-      <nav className="fixed right-4 top-4 z-50 lg:hidden">
-        <div className="flex justify-end">
+      <nav className="fixed left-0 right-0 top-0 z-50 lg:hidden">
+        <div className="mobile-topbar flex items-center justify-between px-5 py-5">
+          <Link
+            href={sectionHref("#home")}
+            onClick={closeMobile}
+            className="flex min-w-0 items-center gap-4"
+            aria-label="Mirza Galib home"
+          >
+            <span className="mobile-brand-mark flex h-16 w-16 shrink-0 items-center justify-center rounded-full text-xl font-extrabold text-white">
+              MG
+            </span>
+            <span className="truncate text-2xl font-bold text-white">
+              Mirza Galib
+            </span>
+          </Link>
+
           <button
             type="button"
             onClick={() => setOpen((prev) => !prev)}
             aria-label="Open navigation menu"
-            className="mobile-menu-button flex h-11 w-11 items-center justify-center rounded-full text-white transition"
+            className="mobile-menu-button flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl text-white transition"
           >
-            {open ? <X size={23} /> : <Menu size={25} />}
+            {open ? <X size={28} /> : <Menu size={30} />}
           </button>
         </div>
 
         {open && (
-          <div className="mobile-menu-panel mt-3 w-[min(82vw,280px)] p-3">
+          <div className="mobile-menu-panel mx-4 mt-3 p-3">
             <div className="grid gap-2">
               {mobileItems.map((item) => {
                 const Icon = item.icon;

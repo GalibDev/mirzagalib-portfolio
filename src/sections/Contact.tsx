@@ -79,7 +79,7 @@ export default function Contact() {
 
             <div className="space-y-5">
               <div className="glass glass-hover rounded-3xl p-6 text-center">
-                <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-red-500/20 text-red-400">
+                <div className="contact-icon contact-icon-email mx-auto mb-4">
                   <FaEnvelope size={22} />
                 </div>
                 <h4 className="text-sm font-semibold tracking-widest">EMAIL</h4>
@@ -95,7 +95,7 @@ export default function Contact() {
               </div>
 
               <div className="glass glass-hover rounded-3xl p-6 text-center">
-                <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-blue-500/20 text-blue-400">
+                <div className="contact-icon contact-icon-linkedin mx-auto mb-4">
                   <FaLinkedinIn size={22} />
                 </div>
                 <h4 className="text-sm font-semibold tracking-widest">
@@ -115,7 +115,7 @@ export default function Contact() {
               </div>
 
               <div className="glass glass-hover rounded-3xl p-6 text-center">
-                <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-green-500/20 text-green-400">
+                <div className="contact-icon contact-icon-whatsapp mx-auto mb-4">
                   <FaWhatsapp size={24} />
                 </div>
                 <h4 className="text-sm font-semibold tracking-widest">
@@ -133,7 +133,7 @@ export default function Contact() {
               </div>
 
               <div className="glass glass-hover rounded-3xl p-6 text-center">
-                <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-white/10 text-white">
+                <div className="contact-icon contact-icon-github mx-auto mb-4">
                   <FaGithub size={23} />
                 </div>
                 <h4 className="text-sm font-semibold tracking-widest">
@@ -151,7 +151,7 @@ export default function Contact() {
               </div>
 
               <div className="glass glass-hover rounded-3xl p-6 text-center">
-                <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-purple-500/20 text-purple-300">
+                <div className="contact-icon contact-icon-phone mx-auto mb-4">
                   <FaPhoneAlt size={20} />
                 </div>
                 <h4 className="text-sm font-semibold tracking-widest">PHONE</h4>
@@ -165,7 +165,7 @@ export default function Contact() {
               </div>
 
               <div className="glass glass-hover rounded-3xl p-6 text-center">
-                <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-cyan-500/20 text-cyan-300">
+                <div className="contact-icon contact-icon-location mx-auto mb-4">
                   <FaMapMarkerAlt size={22} />
                 </div>
                 <h4 className="text-sm font-semibold tracking-widest">

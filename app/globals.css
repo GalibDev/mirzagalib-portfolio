@@ -846,6 +846,66 @@ footer::before {
   color: transparent;
 }
 
+.contact-icon {
+  display: flex;
+  height: 58px;
+  width: 58px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 18px;
+  color: white;
+  position: relative;
+  overflow: hidden;
+  box-shadow:
+    0 16px 32px rgba(0, 0, 0, 0.22),
+    0 0 34px var(--contact-glow);
+}
+
+.contact-icon::before {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  border-radius: inherit;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.3), transparent 42%);
+  opacity: 0.85;
+}
+
+.contact-icon svg {
+  position: relative;
+  z-index: 1;
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.42));
+}
+
+.contact-icon-email {
+  --contact-glow: rgba(14, 165, 233, 0.45);
+  background: linear-gradient(135deg, #22d3ee, #2563eb);
+}
+
+.contact-icon-linkedin {
+  --contact-glow: rgba(37, 99, 235, 0.5);
+  background: linear-gradient(135deg, #38bdf8, #0a66c2);
+}
+
+.contact-icon-whatsapp {
+  --contact-glow: rgba(34, 197, 94, 0.48);
+  background: linear-gradient(135deg, #22c55e, #059669);
+}
+
+.contact-icon-github {
+  --contact-glow: rgba(148, 163, 184, 0.34);
+  background: linear-gradient(135deg, #475569, #111827);
+}
+
+.contact-icon-phone {
+  --contact-glow: rgba(168, 85, 247, 0.5);
+  background: linear-gradient(135deg, #a855f7, #7c3aed);
+}
+
+.contact-icon-location {
+  --contact-glow: rgba(20, 184, 166, 0.5);
+  background: linear-gradient(135deg, #10b981, #14b8a6);
+}
+
 
 
 

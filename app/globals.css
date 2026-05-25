@@ -923,7 +923,20 @@ footer::before {
 /* Mobile size fix */
 @media (max-width: 768px) {
   body::before {
-    opacity: 0.55;
+    display: none;
+  }
+
+  body {
+    background:
+      radial-gradient(circle at 12% 18%, rgba(59, 130, 246, 0.14), transparent 34%),
+      radial-gradient(circle at 86% 58%, rgba(168, 85, 247, 0.12), transparent 36%),
+      #050816;
+  }
+
+  .stars,
+  .particles,
+  .shooting-star {
+    display: none;
   }
 
   .stars::before {

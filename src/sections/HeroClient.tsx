@@ -98,7 +98,7 @@ export default function HeroClient({ content }: HeroClientProps) {
             <a
               href="/resume.pdf"
               download
-              className="inline-flex min-h-14 w-full max-w-[280px] items-center justify-center gap-3 rounded-2xl border border-white/12 bg-white/[0.03] px-6 text-base font-semibold text-white/90"
+              className="spark-button inline-flex min-h-[52px] w-full max-w-[260px] items-center justify-center gap-3 rounded-full px-6 text-sm font-semibold text-white"
             >
               <Download size={19} /> Download Resume
             </a>

@@ -5,6 +5,7 @@ import {
   FaEnvelope,
   FaGithub,
   FaLinkedinIn,
+  FaMapMarkerAlt,
   FaPaperPlane,
   FaPhoneAlt,
   FaWhatsapp,
@@ -160,6 +161,24 @@ export default function Contact() {
                   className="mt-4 inline-block text-xs text-white/70 hover:text-white"
                 >
                   Call me
+                </a>
+              </div>
+
+              <div className="glass glass-hover rounded-3xl p-6 text-center">
+                <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-cyan-500/20 text-cyan-300">
+                  <FaMapMarkerAlt size={22} />
+                </div>
+                <h4 className="text-sm font-semibold tracking-widest">
+                  LOCATION
+                </h4>
+                <p className="mt-2 text-xs text-white/60">Dhaka, Bangladesh</p>
+                <a
+                  href="https://www.google.com/maps/search/?api=1&query=Dhaka%2C%20Bangladesh"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="mt-4 inline-block text-xs text-white/70 hover:text-white"
+                >
+                  View map
                 </a>
               </div>
             </div>

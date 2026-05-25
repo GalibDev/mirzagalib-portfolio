@@ -1,7 +1,5 @@
-import type { IconType } from "react-icons";
-
 export type Tech = {
   name: string;
-  icon: IconType;
+  shortName: string;
   color: string;
 };

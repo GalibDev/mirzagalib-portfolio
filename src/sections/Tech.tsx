@@ -15,21 +15,18 @@ export default function Tech() {
         </div>
 
         <div className="mx-auto grid max-w-4xl grid-cols-3 gap-x-4 gap-y-7 sm:grid-cols-4 sm:gap-x-8 md:grid-cols-6 lg:grid-cols-8">
-          {techStack.map((tech) => {
-            const Icon = tech.icon;
-
-            return (
-              <div key={tech.name} className="reveal-card group text-center">
-                <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-xl backdrop-blur-xl transition duration-300 group-hover:-translate-y-1 group-hover:border-white/25 group-hover:bg-white/[0.08] sm:h-14 sm:w-14 sm:text-2xl">
-                  <Icon style={{ color: tech.color }} />
-                </div>
-
-                <p className="mt-2 text-[11px] text-white/65">
-                  {tech.name}
-                </p>
+          {techStack.map((tech) => (
+            <div key={tech.name} className="reveal-card group text-center">
+              <div
+                className="mx-auto flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-sm font-bold backdrop-blur-xl transition duration-300 group-hover:-translate-y-1 group-hover:border-white/25 group-hover:bg-white/[0.08] sm:h-14 sm:w-14 sm:text-base"
+                style={{ color: tech.color }}
+              >
+                {tech.shortName}
               </div>
-            );
-          })}
+
+              <p className="mt-2 text-[11px] text-white/65">{tech.name}</p>
+            </div>
+          ))}
         </div>
       </div>
     </section>

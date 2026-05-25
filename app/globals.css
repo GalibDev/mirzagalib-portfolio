@@ -998,6 +998,12 @@ footer::before {
     animation: none;
   }
 
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+  }
+
   .profile-orbit-system {
     width: min(100%, 330px);
     height: 270px;

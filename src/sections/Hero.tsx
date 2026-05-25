@@ -18,7 +18,7 @@ type HeroStat = {
 
 export default function Hero() {
   const [wordIndex, setWordIndex] = useState(0);
-  const [text, setText] = useState("");
+  const [text, setText] = useState("Full Stack Developer");
   const [deleting, setDeleting] = useState(false);
 
   const [heroName, setHeroName] = useState("Mirza Galib");
@@ -63,6 +63,11 @@ export default function Hero() {
   }, []);
 
   useEffect(() => {
+    const isMobile = window.matchMedia("(max-width: 768px)").matches;
+    if (isMobile) {
+      return;
+    }
+
     const word = words[wordIndex];
 
     const timer = setTimeout(() => {
@@ -137,7 +142,7 @@ export default function Hero() {
 
           <h2 className="mt-3 text-base text-white/80 sm:text-lg md:mt-5 md:text-xl">
             I am a <span className="text-white">{text}</span>
-            <span className="animate-pulse">|</span>
+            <span className="hidden animate-pulse md:inline">|</span>
           </h2>
 
           <p className="mx-auto mt-3 max-w-md text-sm leading-6 text-white/60 md:mx-0 md:mt-4 md:leading-7">

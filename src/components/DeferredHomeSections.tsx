@@ -27,16 +27,19 @@ export default function DeferredHomeSections() {
       return () => window.cancelAnimationFrame(frame);
     }
 
-    const load = () => setReady(true);
-    const timeout = window.setTimeout(load, 1400);
+    const load = () => {
+      window.requestAnimationFrame(() => setReady(true));
+    };
+    const handleScroll = () => {
+      if (window.scrollY > 260) load();
+    };
+    const timeout = window.setTimeout(load, 3600);
 
-    window.addEventListener("scroll", load, { once: true, passive: true });
-    window.addEventListener("touchstart", load, { once: true, passive: true });
+    window.addEventListener("scroll", handleScroll, { passive: true });
 
     return () => {
       window.clearTimeout(timeout);
-      window.removeEventListener("scroll", load);
-      window.removeEventListener("touchstart", load);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 

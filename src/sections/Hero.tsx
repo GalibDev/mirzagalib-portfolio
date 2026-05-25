@@ -115,7 +115,7 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="relative min-h-screen overflow-hidden bg-transparent px-4 pt-28 text-white sm:px-6 lg:pt-24"
+      className="relative min-h-[100svh] overflow-hidden bg-transparent px-4 pb-12 pt-28 text-white sm:px-6 md:min-h-screen lg:pt-24"
     >
       <div className="absolute left-0 top-20 h-80 w-80 rounded-full bg-blue-500/15 blur-[130px]" />
       <div className="absolute right-24 top-40 h-80 w-80 rounded-full bg-purple-500/15 blur-[130px]" />
@@ -125,25 +125,27 @@ export default function Hero() {
       <div className="particle right-[15%] top-[45%] animation-delay-2000" />
       <div className="particle right-[28%] top-[55%] animation-delay-4000" />
 
-      <div className="relative mx-auto grid min-h-screen max-w-6xl grid-cols-1 items-center gap-8 pt-10 sm:gap-10 md:min-h-[78vh] md:grid-cols-2 md:gap-14 md:pt-0">
+      <div className="relative mx-auto grid max-w-6xl grid-cols-1 items-start gap-7 pt-4 sm:gap-8 md:min-h-[78vh] md:grid-cols-2 md:items-center md:gap-14 md:pt-0">
         <div className="text-center md:pl-8 md:text-left">
-          <p className="mb-4 text-sm text-white/70">Hey, I am</p>
+          <p className="mb-3 text-xs text-white/70 sm:text-sm md:mb-4">
+            Hey, I am
+          </p>
 
-          <h1 className="text-4xl font-bold leading-tight sm:text-5xl md:text-6xl">
+          <h1 className="text-3xl font-bold leading-tight sm:text-5xl md:text-6xl">
             {heroName}
           </h1>
 
-          <h2 className="mt-5 text-lg text-white/80 md:text-xl">
+          <h2 className="mt-3 text-base text-white/80 sm:text-lg md:mt-5 md:text-xl">
             I am a <span className="text-white">{text}</span>
             <span className="animate-pulse">|</span>
           </h2>
 
-          <p className="mx-auto mt-4 max-w-md text-sm leading-7 text-white/60 md:mx-0">
+          <p className="mx-auto mt-3 max-w-md text-sm leading-6 text-white/60 md:mx-0 md:mt-4 md:leading-7">
             Turning ideas into stunning websites <br />
             Available for projects and collaborations
           </p>
 
-          <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row md:justify-start">
+          <div className="mt-5 flex flex-col items-center gap-3 sm:flex-row sm:justify-center md:mt-8 md:justify-start">
             <a
               href="#contact"
               className="inline-flex items-center justify-center gap-2 rounded-full border border-white/15 bg-white/10 px-6 py-3 text-sm font-medium text-white backdrop-blur-xl transition hover:bg-white/20"
@@ -160,7 +162,7 @@ export default function Hero() {
             </a>
           </div>
 
-          <div className="mt-8 flex items-center justify-center gap-5 text-white/60 md:justify-start">
+          <div className="mt-5 flex items-center justify-center gap-5 text-white/60 md:mt-8 md:justify-start">
             <a
               href="https://github.com/GalibDev"
               target="_blank"
@@ -182,7 +184,9 @@ export default function Hero() {
             </a>
           </div>
 
-          <p className="mt-8 text-xs text-white/60 md:mt-10">Scroll Down</p>
+          <p className="mt-8 hidden text-xs text-white/60 md:mt-10 md:block">
+            Scroll Down
+          </p>
         </div>
 
         <div className="relative flex justify-center md:justify-end">

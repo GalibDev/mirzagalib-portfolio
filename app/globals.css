@@ -924,19 +924,19 @@ footer::before {
 @media (max-width: 768px) {
   .profile-orbit-system {
     width: min(100%, 330px);
-    height: 300px;
+    height: 270px;
     margin-inline: auto;
     transform: none;
   }
 
   .neon-orbit {
-    width: 230px;
-    height: 230px;
+    width: 220px;
+    height: 220px;
   }
 
   .profile-image-wrap {
-    width: 178px;
-    height: 178px;
+    width: 170px;
+    height: 170px;
   }
 
   .orbit-card {
@@ -955,17 +955,17 @@ footer::before {
 
   .orbit-card-1 {
     left: 0;
-    top: 58px;
+    top: 46px;
   }
 
   .orbit-card-2 {
     right: 0;
-    top: 128px;
+    top: 112px;
   }
 
   .orbit-card-3 {
     left: 70px;
-    bottom: 18px;
+    bottom: 10px;
   }
 
   .floating-line,
@@ -990,38 +990,22 @@ footer::before {
   }
 
   .profile-orbit-system {
-    width: min(100%, 300px);
-    height: 285px;
+    width: min(100%, 280px);
+    height: 220px;
   }
 
   .neon-orbit {
-    width: 210px;
-    height: 210px;
+    width: 190px;
+    height: 190px;
   }
 
   .profile-image-wrap {
-    width: 162px;
-    height: 162px;
+    width: 148px;
+    height: 148px;
   }
 
-  .orbit-card {
-    min-width: 96px;
-    padding: 9px 10px;
-  }
-
-  .orbit-card-1 {
-    left: 0;
-    top: 58px;
-  }
-
-  .orbit-card-2 {
-    right: 0;
-    top: 124px;
-  }
-
-  .orbit-card-3 {
-    left: 62px;
-    bottom: 16px;
+  .stats-orbit {
+    display: none;
   }
 }
 

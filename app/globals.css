@@ -918,21 +918,11 @@ footer::before {
     scroll-padding-top: 72px;
   }
 
-  body::before {
-    display: none;
-  }
-
   body {
     background:
       radial-gradient(circle at 12% 18%, rgba(59, 130, 246, 0.14), transparent 34%),
       radial-gradient(circle at 86% 58%, rgba(168, 85, 247, 0.12), transparent 36%),
       #050816;
-  }
-
-  .stars,
-  .particles,
-  .shooting-star {
-    display: none;
   }
 
   .mobile-section-safe {
@@ -947,12 +937,6 @@ footer::before {
   .stars::before {
     background-size: 104px 104px;
     opacity: 0.34;
-    animation: none;
-  }
-
-  .stars::after,
-  .particles {
-    display: none;
   }
 
   .glass,
@@ -986,26 +970,9 @@ footer::before {
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.22);
   }
 
-  .spark-button::before,
-  .spark-button::after,
   .about-photo-frame::before,
   .about-photo-frame::after {
     display: none;
-  }
-
-  .neon-orbit::before,
-  .neon-orbit::after,
-  .stats-orbit,
-  .orbit-card,
-  .orbit-dot,
-  .wave-hand {
-    animation: none;
-  }
-
-  *,
-  *::before,
-  *::after {
-    scroll-behavior: auto !important;
   }
 
   .profile-orbit-system {
@@ -1054,9 +1021,6 @@ footer::before {
     bottom: 10px;
   }
 
-  .floating-line,
-  .particle,
-  .shooting-star,
   .mouse-glow,
   .cursor-glow {
     display: none;

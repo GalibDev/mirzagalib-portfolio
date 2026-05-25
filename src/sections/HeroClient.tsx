@@ -3,6 +3,7 @@
 import { Download, Rocket, Send } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { FaGithub, FaLinkedinIn } from "react-icons/fa";
 import type { HeroContent } from "@/types/public-content";
 
 const words = ["Full Stack Developer", "Problem Solver", "Web Designer"];
@@ -148,7 +149,7 @@ export default function HeroClient({ content }: HeroClientProps) {
               aria-label="GitHub"
               className="transition hover:text-white"
             >
-              <span className="text-sm font-bold">GH</span>
+              <FaGithub size={20} aria-hidden="true" />
             </a>
 
             <a
@@ -158,7 +159,7 @@ export default function HeroClient({ content }: HeroClientProps) {
               aria-label="LinkedIn"
               className="transition hover:text-white"
             >
-              <span className="text-sm font-bold">in</span>
+              <FaLinkedinIn size={20} aria-hidden="true" />
             </a>
           </div>
 

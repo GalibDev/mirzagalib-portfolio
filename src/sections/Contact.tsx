@@ -1,7 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { Mail, MessageCircle, Phone, Send } from "lucide-react";
+import {
+  FaEnvelope,
+  FaGithub,
+  FaLinkedinIn,
+  FaPaperPlane,
+  FaPhoneAlt,
+  FaWhatsapp,
+} from "react-icons/fa";
 
 export default function Contact() {
   const [form, setForm] = useState({
@@ -72,7 +79,7 @@ export default function Contact() {
             <div className="space-y-5">
               <div className="glass glass-hover rounded-3xl p-6 text-center">
                 <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-red-500/20 text-red-400">
-                  <Mail size={22} />
+                  <FaEnvelope size={22} />
                 </div>
                 <h4 className="text-sm font-semibold tracking-widest">EMAIL</h4>
                 <p className="mt-2 text-xs text-white/60">
@@ -88,7 +95,7 @@ export default function Contact() {
 
               <div className="glass glass-hover rounded-3xl p-6 text-center">
                 <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-blue-500/20 text-blue-400">
-                  <span className="text-sm font-bold">in</span>
+                  <FaLinkedinIn size={22} />
                 </div>
                 <h4 className="text-sm font-semibold tracking-widest">
                   LINKEDIN
@@ -108,7 +115,7 @@ export default function Contact() {
 
               <div className="glass glass-hover rounded-3xl p-6 text-center">
                 <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-green-500/20 text-green-400">
-                  <MessageCircle size={22} />
+                  <FaWhatsapp size={24} />
                 </div>
                 <h4 className="text-sm font-semibold tracking-widest">
                   WHATSAPP
@@ -126,7 +133,7 @@ export default function Contact() {
 
               <div className="glass glass-hover rounded-3xl p-6 text-center">
                 <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-white/10 text-white">
-                  <span className="text-sm font-bold">GH</span>
+                  <FaGithub size={23} />
                 </div>
                 <h4 className="text-sm font-semibold tracking-widest">
                   GITHUB
@@ -144,7 +151,7 @@ export default function Contact() {
 
               <div className="glass glass-hover rounded-3xl p-6 text-center">
                 <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-purple-500/20 text-purple-300">
-                  <Phone size={22} />
+                  <FaPhoneAlt size={20} />
                 </div>
                 <h4 className="text-sm font-semibold tracking-widest">PHONE</h4>
                 <p className="mt-2 text-xs text-white/60">015577088342</p>
@@ -199,7 +206,7 @@ export default function Contact() {
                 disabled={loading}
                 className="glass glass-hover inline-flex items-center gap-2 rounded-full px-8 py-4 text-sm font-medium disabled:opacity-60"
               >
-                {loading ? "Sending..." : "Send Message"} <Send size={16} />
+                {loading ? "Sending..." : "Send Message"} <FaPaperPlane size={14} />
               </button>
             </form>
           </div>

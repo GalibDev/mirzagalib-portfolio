@@ -1,39 +1,9 @@
-"use client";
-
-import { useEffect, useState } from "react";
 import Image from "next/image";
 import { Briefcase, Code2, Headphones } from "lucide-react";
-import { supabase } from "@/lib/supabase";
+import { getAboutImage } from "@/lib/public-data";
 
-export default function About() {
-  // =========================
-  // 01. ABOUT IMAGE STATE
-  // Dashboard theke uploaded about image ekhane load hobe
-  // =========================
-  const [aboutImage, setAboutImage] = useState("");
-
-  // =========================
-  // 02. LOAD ABOUT IMAGE FROM SUPABASE
-  // site_assets table er about_image key theke image fetch korbe
-  // =========================
-  useEffect(() => {
-    const isMobile = window.matchMedia("(max-width: 767px)").matches;
-    if (isMobile) return;
-
-    const loadAboutImage = async () => {
-      const { data, error } = await supabase
-        .from("site_assets")
-        .select("image")
-        .eq("key", "about_image")
-        .single();
-
-      if (!error && data?.image) {
-        setAboutImage(data.image);
-      }
-    };
-
-    loadAboutImage();
-  }, []);
+export default async function About() {
+  const aboutImage = await getAboutImage();
 
   return (
     <section

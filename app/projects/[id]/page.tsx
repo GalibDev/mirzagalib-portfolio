@@ -1,27 +1,9 @@
-"use client";
-
-import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useParams } from "next/navigation";
 import { ArrowLeft, ExternalLink } from "lucide-react";
-import { FaGithub } from "react-icons/fa";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { supabase } from "@/lib/supabase";
-import { projects as fallbackProjects } from "@/data/projects";
-
-type Project = {
-  id: string;
-  title: string;
-  description: string;
-  image: string;
-  tech: string[];
-  github: string;
-  live: string;
-  challenges?: string[];
-  improvements?: string[];
-};
+import { getProjectById } from "@/lib/public-data";
 
 const defaultChallenges = [
   "Keeping the interface responsive and polished across mobile, tablet, and desktop screens.",
@@ -35,34 +17,21 @@ const defaultImprovements = [
   "Expand testing coverage and optimize deployment performance over time.",
 ];
 
-export default function ProjectDetailsPage() {
-  const params = useParams<{ id: string }>();
-  const [project, setProject] = useState<Project | null>(null);
-  const [loading, setLoading] = useState(true);
+type ProjectDetailsPageProps = {
+  params: Promise<{ id: string }>;
+};
+
+export default async function ProjectDetailsPage({
+  params,
+}: ProjectDetailsPageProps) {
+  const { id } = await params;
+  const project = await getProjectById(id);
   const displayedChallenges = project?.challenges?.length
     ? project.challenges
     : defaultChallenges;
   const displayedImprovements = project?.improvements?.length
     ? project.improvements
     : defaultImprovements;
-
-  useEffect(() => {
-    const loadProject = async () => {
-      const { data } = await supabase
-        .from("projects")
-        .select("*")
-        .eq("id", params.id)
-        .single();
-
-      const fallback = fallbackProjects.find((item) => item.id === params.id);
-      setProject(data || fallback || null);
-      setLoading(false);
-    };
-
-    if (params.id) {
-      loadProject();
-    }
-  }, [params.id]);
 
   return (
     <main className="min-h-screen bg-transparent text-white">
@@ -77,11 +46,7 @@ export default function ProjectDetailsPage() {
             <ArrowLeft size={16} /> Back to Projects
           </Link>
 
-          {loading ? (
-            <div className="glass rounded-3xl p-8 text-center text-sm text-white/60">
-              Loading project details...
-            </div>
-          ) : !project ? (
+          {!project ? (
             <div className="glass rounded-3xl p-8 text-center">
               <h1 className="text-2xl font-bold">Project not found</h1>
               <p className="mt-3 text-sm text-white/60">
@@ -148,7 +113,8 @@ export default function ProjectDetailsPage() {
                       rel="noreferrer"
                       className="glass glass-hover inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm"
                     >
-                      <FaGithub /> Client Repo
+                      <span className="text-[10px] font-bold">GH</span> Client
+                      Repo
                     </a>
                   )}
                 </div>

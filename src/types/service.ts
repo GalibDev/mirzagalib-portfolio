@@ -1,7 +1,7 @@
-import type { IconType } from "react-icons";
+import type { LucideIcon } from "lucide-react";
 
 export type Service = {
   title: string;
   description: string;
-  icon: IconType;
+  icon: LucideIcon;
 };

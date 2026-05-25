@@ -1,4 +1,3 @@
-import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { Mail, MapPin } from "lucide-react";
 
 export default function Footer() {
@@ -6,12 +5,12 @@ export default function Footer() {
     {
       label: "LinkedIn",
       href: "https://www.linkedin.com/in/md-mirza-galib-palash",
-      icon: FaLinkedin,
+      icon: "in",
     },
     {
       label: "GitHub",
       href: "https://github.com/GalibDev",
-      icon: FaGithub,
+      icon: "GH",
     },
   ];
 
@@ -28,8 +27,6 @@ export default function Footer() {
 
             <div className="mt-5 flex justify-center gap-3 sm:justify-start">
               {socialLinks.map((item) => {
-                const Icon = item.icon;
-
                 return (
                   <a
                     key={item.label}
@@ -39,7 +36,7 @@ export default function Footer() {
                     aria-label={item.label}
                     className="glass glass-hover flex h-10 w-10 items-center justify-center rounded-full text-white/70 hover:text-white"
                   >
-                    <Icon size={18} />
+                    <span className="text-xs font-bold">{item.icon}</span>
                   </a>
                 );
               })}

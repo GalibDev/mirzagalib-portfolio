@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
+import { supabaseServer } from "@/lib/supabase-server";
 
 function escapeHtml(value: string) {
   return value.replace(/[&<>"']/g, (char) => {
@@ -29,16 +30,31 @@ export async function POST(req: Request) {
       );
     }
 
+    const { error: saveError } = await supabaseServer.from("messages").insert([
+      {
+        name,
+        email,
+        message,
+      },
+    ]);
+
+    if (saveError) {
+      return NextResponse.json(
+        { success: false, error: "Message save failed. Abar try koro." },
+        { status: 500 }
+      );
+    }
+
     const resendApiKey = process.env.RESEND_API_KEY;
     const adminEmail = process.env.ADMIN_EMAIL;
 
     if (!resendApiKey || !adminEmail) {
       return NextResponse.json(
         {
-          success: false,
+          success: true,
           error: "Email env missing. Message saved but email not sent.",
         },
-        { status: 503 }
+        { status: 200 }
       );
     }
 

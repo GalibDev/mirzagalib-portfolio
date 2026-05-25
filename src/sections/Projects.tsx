@@ -1,46 +1,10 @@
-"use client";
-
-import { useEffect, useState } from "react";
+import { ExternalLink, Info } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { ExternalLink, Info } from "lucide-react";
-import { FaGithub } from "react-icons/fa";
-import { supabase } from "@/lib/supabase";
-import { projects as fallbackProjects } from "@/data/projects";
+import { getPublicProjects } from "@/lib/public-data";
 
-type Project = {
-  id: string;
-  title: string;
-  description: string;
-  image: string;
-  tech: string[];
-  github: string;
-  live: string;
-};
-
-export default function Projects() {
-  const [projects, setProjects] = useState<Project[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchProjects = async () => {
-      const { data, error } = await supabase
-        .from("projects")
-        .select("id,title,description,image,tech,github,live")
-        .order("created_at", { ascending: false })
-        .limit(6);
-
-      if (!error && data?.length) {
-        setProjects(data);
-      } else {
-        setProjects(fallbackProjects);
-      }
-
-      setLoading(false);
-    };
-
-    fetchProjects();
-  }, []);
+export default async function Projects() {
+  const projects = await getPublicProjects();
 
   return (
     <section
@@ -53,11 +17,7 @@ export default function Projects() {
           <p className="mt-3 text-sm text-white/50">Recent Projects</p>
         </div>
 
-        {loading ? (
-          <div className="text-center text-sm text-white/50">
-            Loading projects...
-          </div>
-        ) : projects.length === 0 ? (
+        {projects.length === 0 ? (
           <div className="text-center text-sm text-white/50">
             No projects found.
           </div>
@@ -116,7 +76,7 @@ export default function Projects() {
                         target="_blank"
                         className="glass flex items-center gap-2 rounded-xl px-4 py-2 text-xs hover:bg-white/10"
                       >
-                        <FaGithub /> GitHub
+                        <span className="text-[10px] font-bold">GH</span> GitHub
                       </a>
                     )}
 

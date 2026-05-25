@@ -1,9 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Mail, Phone, Send } from "lucide-react";
-import { FaGithub, FaLinkedin, FaWhatsapp } from "react-icons/fa";
-import { supabase } from "@/lib/supabase";
+import { Mail, MessageCircle, Phone, Send } from "lucide-react";
 
 export default function Contact() {
   const [form, setForm] = useState({
@@ -26,33 +24,19 @@ export default function Contact() {
     setLoading(true);
     setToast("");
 
-    const { error } = await supabase.from("messages").insert([
-      {
-        name: form.name,
-        email: form.email,
-        message: form.message,
-      },
-    ]);
-
-    if (error) {
-      setLoading(false);
-      setToast("Message send hoyni. Abar try koro.");
-      return;
-    }
-
-    const emailRes = await fetch("/api/contact", {
+    const response = await fetch("/api/contact", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(form),
     });
-    const emailResult = await emailRes.json().catch(() => null);
+    const result = await response.json().catch(() => null);
 
     setLoading(false);
 
-    if (!emailRes.ok || emailResult?.success === false) {
-      setToast("Message saved, but email notification failed.");
+    if (!response.ok || result?.success === false) {
+      setToast(result?.error || "Message send hoyni. Abar try koro.");
       return;
     }
 
@@ -104,7 +88,7 @@ export default function Contact() {
 
               <div className="glass glass-hover rounded-3xl p-6 text-center">
                 <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-blue-500/20 text-blue-400">
-                  <FaLinkedin size={22} />
+                  <span className="text-sm font-bold">in</span>
                 </div>
                 <h4 className="text-sm font-semibold tracking-widest">
                   LINKEDIN
@@ -124,7 +108,7 @@ export default function Contact() {
 
               <div className="glass glass-hover rounded-3xl p-6 text-center">
                 <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-green-500/20 text-green-400">
-                  <FaWhatsapp size={22} />
+                  <MessageCircle size={22} />
                 </div>
                 <h4 className="text-sm font-semibold tracking-widest">
                   WHATSAPP
@@ -142,7 +126,7 @@ export default function Contact() {
 
               <div className="glass glass-hover rounded-3xl p-6 text-center">
                 <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-white/10 text-white">
-                  <FaGithub size={22} />
+                  <span className="text-sm font-bold">GH</span>
                 </div>
                 <h4 className="text-sm font-semibold tracking-widest">
                   GITHUB

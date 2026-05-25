@@ -138,24 +138,24 @@ export default function Navbar() {
           MOBILE NAVBAR
           MG + Mirza Galib + Menu button
       ========================= */}
-      <nav className="fixed left-0 top-0 z-50 w-full px-4 pt-4 lg:hidden">
-        <div className="mobile-glass-nav flex items-center justify-between px-5 py-4">
+      <nav className="fixed left-0 top-0 z-50 w-full px-4 pt-3 lg:hidden">
+        <div className="mobile-glass-nav flex items-center justify-between px-4 py-3">
           <Link
             href={sectionHref("#home")}
             onClick={closeMobile}
             className="flex items-center gap-3"
           >
-            <span className="flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-sm font-bold text-white shadow-[0_0_25px_rgba(255,255,255,0.15)]">
+            <span className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-sm font-bold text-white shadow-[0_0_25px_rgba(255,255,255,0.15)]">
               MG
             </span>
 
-            <span className="text-lg font-bold text-white">Mirza Galib</span>
+            <span className="text-base font-bold text-white">Mirza Galib</span>
           </Link>
 
           <button
             type="button"
             onClick={() => setOpen((prev) => !prev)}
-            className="flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/20"
+            className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/20"
           >
             {open ? <X size={23} /> : <Menu size={25} />}
           </button>

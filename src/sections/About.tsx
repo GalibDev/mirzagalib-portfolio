@@ -8,17 +8,17 @@ export default async function About() {
   return (
     <section
       id="about"
-      className="relative bg-transparent px-4 py-20 text-white sm:px-6 sm:py-24 lg:py-28"
+      className="mobile-section-safe relative bg-transparent px-4 py-14 text-white sm:px-6 sm:py-24 lg:py-28"
     >
       {/* =========================
           03. SECTION TITLE
       ========================= */}
-        <div className="mb-12 text-center sm:mb-16">
+        <div className="mb-8 text-center sm:mb-16">
           <h2 className="text-3xl font-bold sm:text-4xl md:text-5xl">About</h2>
         <p className="mt-3 text-sm text-white/50">My Introduction</p>
       </div>
 
-      <div className="mx-auto grid max-w-6xl items-center gap-12 md:grid-cols-2">
+      <div className="mx-auto grid max-w-6xl items-center gap-8 md:grid-cols-2 md:gap-12">
         {/* =========================
             04. LEFT IMAGE CARD
             Dashboard image thakle show korbe
@@ -45,20 +45,20 @@ export default async function About() {
             Stats + description + resume button
         ========================= */}
         <div>
-          <div className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
-            <div className="glass rounded-2xl p-5 text-center">
+          <div className="mb-6 grid grid-cols-3 gap-3 sm:mb-8 sm:gap-4">
+            <div className="glass rounded-2xl p-3 text-center sm:p-5">
               <Briefcase className="mx-auto mb-3" size={22} />
               <h3 className="text-sm font-semibold">Experience</h3>
               <p className="mt-1 text-xs text-white/50">1+ Years Working</p>
             </div>
 
-            <div className="glass rounded-2xl p-5 text-center">
+            <div className="glass rounded-2xl p-3 text-center sm:p-5">
               <Code2 className="mx-auto mb-3" size={22} />
               <h3 className="text-sm font-semibold">Completed</h3>
               <p className="mt-1 text-xs text-white/50">50+ Projects</p>
             </div>
 
-            <div className="glass rounded-2xl p-5 text-center">
+            <div className="glass rounded-2xl p-3 text-center sm:p-5">
               <Headphones className="mx-auto mb-3" size={22} />
               <h3 className="text-sm font-semibold">Support</h3>
               <p className="mt-1 text-xs text-white/50">Online 24/7</p>

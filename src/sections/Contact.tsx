@@ -49,10 +49,10 @@ export default function Contact() {
   return (
     <section
       id="contact"
-      className="relative overflow-hidden bg-transparent px-4 py-20 text-white sm:px-6 sm:py-24 lg:py-28"
+      className="mobile-section-safe relative overflow-visible bg-transparent px-4 py-14 text-white sm:px-6 sm:py-24 md:overflow-hidden lg:py-28"
     >
       <div className="mx-auto max-w-5xl">
-        <div className="mb-14 text-center">
+        <div className="mb-8 text-center sm:mb-14">
           <h2 className="text-3xl font-bold sm:text-4xl md:text-5xl">
             Get in Touch
           </h2>

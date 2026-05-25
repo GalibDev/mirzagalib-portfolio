@@ -19,20 +19,20 @@ export default function QualificationClient({
   return (
     <section
       id="qualification"
-      className="relative bg-transparent px-4 py-20 text-white sm:px-6 sm:py-24 lg:py-28"
+      className="mobile-section-safe relative bg-transparent px-4 py-14 text-white sm:px-6 sm:py-24 lg:py-28"
     >
-      <div className="mb-12 text-center">
+      <div className="mb-8 text-center sm:mb-12">
         <h2 className="text-3xl font-bold sm:text-4xl md:text-5xl">
           Qualification
         </h2>
         <p className="mt-3 text-sm text-white/50">My personal journey</p>
       </div>
 
-      <div className="mb-12 flex flex-wrap justify-center gap-3 sm:mb-14 sm:gap-6">
+      <div className="mb-9 flex flex-wrap justify-center gap-3 sm:mb-14 sm:gap-6">
         <button
           type="button"
           onClick={() => setActiveTab("experience")}
-          className={`flex items-center gap-2 rounded-full px-5 py-3 text-sm font-semibold transition ${
+          className={`flex items-center gap-2 rounded-full px-4 py-3 text-sm font-semibold transition sm:px-5 ${
             activeTab === "experience"
               ? "glass text-white"
               : "text-white/60 hover:text-white"
@@ -45,7 +45,7 @@ export default function QualificationClient({
         <button
           type="button"
           onClick={() => setActiveTab("education")}
-          className={`flex items-center gap-2 rounded-full px-5 py-3 text-sm font-semibold transition ${
+          className={`flex items-center gap-2 rounded-full px-4 py-3 text-sm font-semibold transition sm:px-5 ${
             activeTab === "education"
               ? "glass text-white"
               : "text-white/60 hover:text-white"
@@ -65,7 +65,7 @@ export default function QualificationClient({
           <>
             <div className="absolute left-4 top-0 h-full w-px bg-white/30 md:left-1/2 md:-translate-x-1/2" />
 
-            <div className="space-y-10 sm:space-y-14">
+            <div className="space-y-8 sm:space-y-14">
               {displayItems.map((item, index) => (
                 <div
                   key={item.id}

@@ -67,10 +67,10 @@ export default function TestimonialsClient({
   return (
     <section
       id="testimonials"
-      className="relative bg-transparent px-4 py-20 text-white sm:px-6 sm:py-24 lg:py-28"
+      className="mobile-section-safe relative bg-transparent px-4 py-14 text-white sm:px-6 sm:py-24 lg:py-28"
     >
       <div className="mx-auto max-w-6xl">
-        <div className="mb-12 text-center">
+        <div className="mb-8 text-center sm:mb-12">
           <h2 className="text-3xl font-bold sm:text-4xl md:text-5xl">
             {title}
           </h2>

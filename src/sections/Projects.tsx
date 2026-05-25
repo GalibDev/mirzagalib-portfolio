@@ -9,10 +9,10 @@ export default async function Projects() {
   return (
     <section
       id="projects"
-      className="relative bg-transparent px-4 py-20 text-white sm:px-6 sm:py-24 lg:py-28"
+      className="mobile-section-safe relative bg-transparent px-4 py-14 text-white sm:px-6 sm:py-24 lg:py-28"
     >
       <div className="mx-auto max-w-5xl">
-        <div className="mb-14 text-center">
+        <div className="mb-8 text-center sm:mb-14">
           <h2 className="text-3xl font-bold sm:text-4xl md:text-5xl">Projects</h2>
           <p className="mt-3 text-sm text-white/50">Recent Projects</p>
         </div>

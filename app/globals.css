@@ -13,7 +13,11 @@ body {
 }
 
 html {
-  scroll-padding-top: 96px;
+  scroll-padding-top: 112px;
+}
+
+.mobile-section-safe {
+  scroll-margin-top: 112px;
 }
 
 /* =========================
@@ -922,6 +926,10 @@ footer::before {
 
 /* Mobile size fix */
 @media (max-width: 768px) {
+  html {
+    scroll-padding-top: 104px;
+  }
+
   body::before {
     display: none;
   }
@@ -937,6 +945,15 @@ footer::before {
   .particles,
   .shooting-star {
     display: none;
+  }
+
+  .mobile-section-safe {
+    scroll-margin-top: 104px;
+    padding-top: 112px;
+  }
+
+  section[id] {
+    scroll-margin-top: 104px;
   }
 
   .stars::before {
@@ -959,6 +976,16 @@ footer::before {
     -webkit-backdrop-filter: none;
     border-color: rgba(255, 255, 255, 0.18);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.22);
+  }
+
+  .mobile-glass-nav {
+    border-radius: 22px;
+  }
+
+  .mobile-glass-menu {
+    max-height: calc(100svh - 104px);
+    overflow-y: auto;
+    border-radius: 22px;
   }
 
   .glass::before,
@@ -1093,7 +1120,7 @@ footer::before {
 
 @media (max-width: 640px) {
   html {
-    scroll-padding-top: 112px;
+    scroll-padding-top: 104px;
   }
 
   input,

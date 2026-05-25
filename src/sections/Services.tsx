@@ -83,18 +83,18 @@ export default function Services() {
   return (
     <section
       id="services"
-      className="relative overflow-hidden bg-transparent px-4 py-20 text-white sm:px-6 sm:py-24 lg:py-28"
+      className="mobile-section-safe relative overflow-visible bg-transparent px-4 py-14 text-white sm:px-6 sm:py-24 md:overflow-hidden lg:py-28"
     >
       <div className="absolute left-0 top-1/3 h-80 w-80 rounded-full bg-blue-500/10 blur-[120px]" />
       <div className="absolute right-0 bottom-10 h-80 w-80 rounded-full bg-emerald-500/10 blur-[120px]" />
 
       <div className="reveal mx-auto max-w-5xl">
-        <div className="mb-14 text-center">
+        <div className="mb-8 text-center sm:mb-14">
           <h2 className="text-3xl font-bold sm:text-4xl md:text-5xl">Services</h2>
           <p className="mt-3 text-sm text-white/50">What I offer</p>
         </div>
 
-        <div className="grid justify-items-center gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3 lg:gap-8">
+        <div className="grid justify-items-center gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3 lg:gap-8">
           {services.map((service) => {
             const Icon = service.icon;
 
@@ -102,15 +102,15 @@ export default function Services() {
               <button
                 key={service.title}
                 onClick={() => setActiveService(service)}
-                className="reveal-card glass glass-hover h-[210px] w-full rounded-3xl p-6 text-left sm:h-[230px] sm:max-w-[230px] sm:p-7"
+                className="reveal-card glass glass-hover h-auto min-h-[150px] w-full rounded-3xl p-5 text-left sm:h-[230px] sm:max-w-[230px] sm:p-7"
               >
-                <Icon className="mb-10" size={30} />
+                <Icon className="mb-6 sm:mb-10" size={30} />
 
                 <h3 className="text-lg font-semibold leading-snug">
                   {service.title}
                 </h3>
 
-                <p className="mt-6 text-xs text-white/70">View More</p>
+                <p className="mt-4 text-xs text-white/70 sm:mt-6">View More</p>
               </button>
             );
           })}

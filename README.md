@@ -1,36 +1,99 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# MD Mirza Galib Palash Portfolio
 
-## Getting Started
+Official portfolio website of **MD Mirza Galib Palash**, also known as **Mirza Galib**, a MERN stack and full stack web developer based in Dhaka, Bangladesh.
 
-First, run the development server:
+Live website: [https://mirzagalib.xyz](https://mirzagalib.xyz)
+
+## About
+
+This portfolio presents Mirza Galib's web development work, technical skills, education, experience, services, testimonials, and contact information. It is built to help clients, recruiters, collaborators, and search engines understand his professional identity as a React, Next.js, Node.js, MongoDB, and TypeScript developer.
+
+## SEO Focus
+
+The site is optimized for personal-brand and developer portfolio searches such as:
+
+- MD Mirza Galib Palash
+- Mirza Galib Palash
+- Mirza Galib
+- Mirza Galib portfolio
+- Mirza Galib developer
+- MERN Stack Developer in Dhaka
+- Full Stack Developer in Bangladesh
+- React Developer and Next.js Developer
+
+SEO features include:
+
+- Next.js Metadata API with title, description, canonical URL, Open Graph, and Twitter card metadata
+- Google Search Console verification meta tag
+- Person, WebSite, ProfilePage, and CreativeWork JSON-LD structured data
+- Generated `sitemap.xml` with homepage and project pages
+- Generated `robots.txt` with public crawl rules and sitemap reference
+- Noindex metadata for admin routes
+- Project-specific metadata for portfolio detail pages
+
+## Features
+
+- Responsive portfolio homepage
+- Animated hero section
+- About, technologies, skills, qualifications, services, projects, testimonials, and contact sections
+- Project detail pages with live demo and GitHub repository links
+- Admin pages for managing portfolio content
+- Contact form API route
+- Supabase-ready public data layer with local fallback content
+- SEO-friendly metadata and structured data
+
+## Tech Stack
+
+- Next.js 16
+- React 19
+- TypeScript
+- Tailwind CSS
+- Supabase
+- GSAP
+- Lenis
+- Lucide React
+- React Icons
+- Resend
+
+## Local Development
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Run lint checks:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run lint
+```
 
-## Learn More
+Create a production build:
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm run build
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Important Routes
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- `/` - Portfolio homepage
+- `/projects/[id]` - Project detail pages
+- `/sitemap.xml` - Search engine sitemap
+- `/robots.txt` - Crawler rules
+- `/admin` - Admin area, blocked from indexing
 
-## Deploy on Vercel
+## Contact
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Website: [https://mirzagalib.xyz](https://mirzagalib.xyz)
+- LinkedIn: [md-mirza-galib-palash](https://www.linkedin.com/in/md-mirza-galib-palash)
+- GitHub: [GalibDev](https://github.com/GalibDev)
+- Email: [mirza.galib.palash@gmail.com](mailto:mirza.galib.palash@gmail.com)

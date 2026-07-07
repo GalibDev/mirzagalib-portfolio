@@ -1,9 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
+import type { Metadata } from "next";
 import { ArrowLeft, ExternalLink } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { getProjectById } from "@/lib/public-data";
+import { absoluteUrl, displayName, personName } from "@/lib/seo";
+import { localProjects } from "@/data/local-portfolio";
 
 const defaultChallenges = [
   "Keeping the interface responsive and polished across mobile, tablet, and desktop screens.",
@@ -21,6 +24,65 @@ type ProjectDetailsPageProps = {
   params: Promise<{ id: string }>;
 };
 
+export function generateStaticParams() {
+  return localProjects.map((project) => ({
+    id: project.id,
+  }));
+}
+
+export async function generateMetadata({
+  params,
+}: ProjectDetailsPageProps): Promise<Metadata> {
+  const { id } = await params;
+  const project = await getProjectById(id);
+
+  if (!project) {
+    return {
+      title: "Project Not Found",
+      robots: {
+        index: false,
+        follow: false,
+      },
+    };
+  }
+
+  const title = `${project.title} by ${displayName}`;
+  const description = `${project.description.slice(0, 155)}${
+    project.description.length > 155 ? "..." : ""
+  }`;
+  const url = absoluteUrl(`/projects/${project.id}`);
+  const images = project.image
+    ? [
+        {
+          url: project.image,
+          alt: `${project.title} project by ${personName}`,
+        },
+      ]
+    : undefined;
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: url,
+    },
+    openGraph: {
+      title,
+      description,
+      url,
+      type: "article",
+      siteName: `${personName} Portfolio`,
+      images,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: project.image ? [project.image] : undefined,
+    },
+  };
+}
+
 export default async function ProjectDetailsPage({
   params,
 }: ProjectDetailsPageProps) {
@@ -32,9 +94,37 @@ export default async function ProjectDetailsPage({
   const displayedImprovements = project?.improvements?.length
     ? project.improvements
     : defaultImprovements;
+  const projectStructuredData = project
+    ? {
+        "@context": "https://schema.org",
+        "@type": "CreativeWork",
+        "@id": absoluteUrl(`/projects/${project.id}#project`),
+        name: project.title,
+        description: project.description,
+        image: project.image || undefined,
+        url: absoluteUrl(`/projects/${project.id}`),
+        creator: {
+          "@type": "Person",
+          name: personName,
+          url: absoluteUrl("/"),
+        },
+        keywords: project.tech.join(", "),
+        codeRepository: project.github || undefined,
+        sameAs: project.live || undefined,
+      }
+    : null;
 
   return (
     <main className="min-h-screen bg-transparent text-white">
+      {projectStructuredData && (
+        <script
+          type="application/ld+json"
+          suppressHydrationWarning
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(projectStructuredData),
+          }}
+        />
+      )}
       <Navbar />
 
       <section className="relative px-4 pb-20 pt-32 sm:px-6 lg:pb-28 lg:pt-36">

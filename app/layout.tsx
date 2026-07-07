@@ -1,42 +1,44 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import DesktopEffects from "@/components/DesktopEffects";
+import {
+  displayName,
+  personName,
+  profileImage,
+  seoKeywords,
+  siteDescription,
+  siteTitle,
+  siteUrl,
+  socialLinks,
+} from "@/lib/seo";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://mirzagalib.xyz"),
+  metadataBase: new URL(siteUrl),
   title: {
-    default: "Mirza Galib | Full Stack Developer",
-    template: "%s | Mirza Galib",
+    default: siteTitle,
+    template: `%s | ${displayName}`,
   },
-  description:
-    "Portfolio of Mirza Galib, a full stack developer building responsive, scalable, and user-focused web applications with React, Next.js, TypeScript, and Node.js.",
-  keywords: [
-    "Mirza Galib",
-    "Full Stack Developer",
-    "React Developer",
-    "Next.js Developer",
-    "TypeScript",
-    "Node.js",
-    "Portfolio",
-    "Dhaka developer",
-  ],
-  authors: [{ name: "Mirza Galib" }],
-  creator: "Mirza Galib",
+  description: siteDescription,
+  keywords: seoKeywords,
+  authors: [{ name: personName, url: siteUrl }],
+  creator: personName,
+  publisher: personName,
+  applicationName: `${displayName} Portfolio`,
+  category: "portfolio",
   alternates: {
     canonical: "/",
   },
   openGraph: {
-    title: "Mirza Galib | Full Stack Developer",
-    description:
-      "Explore Mirza Galib's portfolio, projects, skills, and contact details for modern web development work.",
+    title: siteTitle,
+    description: siteDescription,
     url: "/",
-    siteName: "Mirza Galib Portfolio",
+    siteName: `${personName} Portfolio`,
     images: [
       {
-        url: "/profile.jpg",
+        url: profileImage,
         width: 1200,
         height: 630,
-        alt: "Mirza Galib",
+        alt: `${personName} - MERN Stack Developer`,
       },
     ],
     locale: "en_US",
@@ -44,10 +46,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Mirza Galib | Full Stack Developer",
-    description:
-      "Full stack developer portfolio featuring React, Next.js, TypeScript, and Node.js projects.",
-    images: ["/profile.jpg"],
+    title: siteTitle,
+    description: siteDescription,
+    images: [profileImage],
   },
   robots: {
     index: true,
@@ -57,7 +58,22 @@ export const metadata: Metadata = {
       follow: true,
       "max-image-preview": "large",
       "max-snippet": -1,
+      "max-video-preview": -1,
     },
+  },
+  icons: {
+    icon: "/favicon.ico",
+  },
+  other: {
+    "profile:first_name": "Mirza",
+    "profile:last_name": "Galib Palash",
+    "article:author": socialLinks.linkedin,
+    "og:see_also": [socialLinks.linkedin, socialLinks.github],
+    "google-site-verification": "MixbFmWfM-djtkN7Q2-ei2IqzqWUFP9GTE-EwpDEVjs",
+    "msapplication-TileColor": "#020617",
+    "theme-color": "#020617",
+    "contact:email": "mirza.galib.palash@gmail.com",
+    "portfolio:location": "Dhaka, Bangladesh",
   },
 };
 

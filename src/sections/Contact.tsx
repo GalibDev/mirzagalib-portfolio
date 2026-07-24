@@ -121,9 +121,9 @@ export default function Contact() {
                 <h4 className="text-sm font-semibold tracking-widest">
                   WHATSAPP
                 </h4>
-                <p className="mt-2 text-xs text-white/60">015577088342</p>
+                <p className="mt-2 text-xs text-white/60">01577088342</p>
                 <a
-                  href="https://wa.me/88015577088342"
+                  href="https://wa.me/8801577088342"
                   target="_blank"
                   rel="noreferrer"
                   className="mt-4 inline-block text-xs text-white/70 hover:text-white"
@@ -155,9 +155,9 @@ export default function Contact() {
                   <FaPhoneAlt size={20} />
                 </div>
                 <h4 className="text-sm font-semibold tracking-widest">PHONE</h4>
-                <p className="mt-2 text-xs text-white/60">015577088342</p>
+                <p className="mt-2 text-xs text-white/60">01577088342</p>
                 <a
-                  href="tel:+88015577088342"
+                  href="tel:+8801577088342"
                   className="mt-4 inline-block text-xs text-white/70 hover:text-white"
                 >
                   Call me

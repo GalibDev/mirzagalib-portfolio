@@ -40,82 +40,128 @@ export const localAboutImage =
 
 export const localProjects: Project[] = [
   {
-    id: "c24e478e-b5f6-4abd-bb8f-f7c8465cd69c",
-    title: "GitHub Issues Tracker",
+    id: "fundora",
+    title: "Fundora - Crowdfunding Platform",
     description:
-      "Developed a GitHub Issues Tracker web application that enables users to search repositories, view issue details, filter issues by status, and manage issue tracking efficiently using the GitHub API.",
-    image:
-      "https://wzvksvbjkunqdjwawsvh.supabase.co/storage/v1/object/public/project-images/projects/1779476442326-qsw51oa9xy.png",
-    tech: ["HTML", "CSS", "JavaScript", "GitHub API", "GitHub Pages"],
-    github: "https://github.com/GalibDev/github-issue-tracker",
-    live: "https://galibdev.github.io/github-issue-tracker",
+      "A full-stack crowdfunding platform where supporters fund campaigns with Stripe-powered credits, creators manage campaigns and withdrawals, and administrators moderate users, payments, reports, and approvals.",
+    image: "/project-images/fundora.svg",
+    tech: ["Next.js", "TypeScript", "Express.js", "MongoDB", "Stripe"],
+    github: "https://github.com/GalibDev/Fundora",
+    live: "https://fundora-hazel.vercel.app",
+    challenges: [
+      "Designing secure role-aware workflows for supporters, creators, and administrators.",
+      "Keeping Stripe Checkout, signed webhooks, credit balances, refunds, and withdrawals consistent.",
+      "Coordinating the separate Next.js client and Express API across Vercel and Render deployments.",
+    ],
+    improvements: [
+      "Add recurring donations and more flexible campaign funding models.",
+      "Expand creator analytics with conversion, retention, and funding-source insights.",
+      "Add automated fraud signals and stronger moderation tools for campaigns and transactions.",
+    ],
   },
   {
-    id: "94931af6-8ae8-4806-8bf8-7939ca2430a1",
-    title: "GATRIX - Robotics Group Showcase Website",
+    id: "jersey-shop",
+    title: "NOVALO Jersey Store",
     description:
-      "Designed and developed a modern robotics team showcase platform featuring project highlights, team introductions, achievements, gallery sections, multilingual support, and responsive UI design for an engaging user experience.",
+      "A responsive football jersey e-commerce application with product discovery, cart, wishlist, checkout, order tracking, customer accounts, and a protected admin dashboard for complete store management.",
     image:
-      "https://wzvksvbjkunqdjwawsvh.supabase.co/storage/v1/object/public/project-images/projects/1779475928420-7zqo5vygost.png",
-    tech: [
-      "React.js",
-      "Tailwind CSS",
-      "JavaScript",
-      "Responsive Design",
-      "Firebase",
+      "https://raw.githubusercontent.com/GalibDev/jersey-shop/main/public/products/argentina.jpg",
+    tech: ["Next.js", "TypeScript", "Tailwind CSS", "Supabase", "Zustand"],
+    github: "https://github.com/GalibDev/jersey-shop",
+    live: "https://www.novalo.xyz",
+    challenges: [
+      "Keeping cart and wishlist state predictable across product, checkout, and account flows.",
+      "Building secure customer and admin authentication around Supabase data and storage.",
+      "Creating responsive product galleries, quick views, size selection, and order tracking for small screens.",
     ],
-    github: "https://github.com/GalibDev",
+    improvements: [
+      "Add a production payment gateway with verified payment and refund handling.",
+      "Introduce inventory alerts, discount campaigns, and advanced product filtering.",
+      "Expand sales analytics and automate customer order-status notifications.",
+    ],
+  },
+  {
+    id: "gatrix",
+    title: "GATRIX - Robotics Club Platform",
+    description:
+      "A modern robotics club platform for publishing projects, team profiles, achievements, galleries, notices, AI FAQs, and community updates through a CMS-driven administration dashboard.",
+    image:
+      "https://raw.githubusercontent.com/GalibDev/gatrix/main/src/assets/group1.jpeg",
+    tech: ["React 19", "Vite", "Tailwind CSS", "Supabase", "Framer Motion"],
+    github: "https://github.com/GalibDev/gatrix",
     live: "https://gatrix.xyz",
-  },
-  {
-    id: "21abd595-54c0-446a-9ddd-7f2399539d09",
-    title: "KeenKeeper - Personal Relationship Management App",
-    description:
-      "KeenKeeper is a modern React-based web application designed to manage and track personal relationships efficiently. It helps users organize contacts, monitor interactions, and analyze engagement patterns through a clean and user-friendly interface.",
-    image:
-      "https://wzvksvbjkunqdjwawsvh.supabase.co/storage/v1/object/public/project-images/projects/1779475363524-ehgnocidx49.png",
-    tech: ["React", "React Router", "Vite", "Tailwind CSS", "Recharts"],
-    github: "https://github.com/GalibDev/keen-keeper",
-    live: "https://voluble-dasik-5510bd.netlify.app/",
-  },
-  {
-    id: "1489c255-98b6-450e-bfd6-fa6ec33b840f",
-    title: "Digital Products Marketplace",
-    description:
-      "Developed a responsive digital marketplace for selling AI tools and digital products with product listings, cart management, pricing plans, and modern UI/UX using Next.js and Tailwind CSS.",
-    image:
-      "https://wzvksvbjkunqdjwawsvh.supabase.co/storage/v1/object/public/project-images/projects/1779472484788-u7xahth4r2i.png",
-    tech: [
-      "React.js",
-      "Tailwind CSS",
-      "DaisyUI",
-      "JavaScript",
-      "React Toastify",
+    challenges: [
+      "Turning many content types into a consistent CMS without making the admin workflow confusing.",
+      "Balancing motion-heavy robotics visuals with fast loading and accessible responsive layouts.",
+      "Managing authentication, database content, media storage, contact messages, and notices through Supabase.",
     ],
-    github: "https://github.com/GalibDev/digitools",
-    live: "https://scintillating-centaur-93eafb.netlify.app/",
+    improvements: [
+      "Add event registration, attendance tracking, and member-specific dashboards.",
+      "Introduce richer project case studies with technical documents and progress timelines.",
+      "Improve media delivery with automated image optimization and gallery categorization.",
+    ],
   },
   {
-    id: "c0dc91f3-3b69-4e46-ba8e-cdbb8fcacfee",
-    title: "NOVALO - Premium Football Jersey E-commerce Website",
+    id: "recipehub-client",
+    title: "RecipeHub - Recipe Sharing Platform",
     description:
-      "Built a modern and responsive football jersey e-commerce website for a client. Developed complete frontend UI and backend integration including product showcase, promotional banners, cart system, mobile responsive navigation, and admin project management features. Focused on clean user experience, fast performance, and modern design aesthetics using Next.js and TypeScript.",
-    image:
-      "https://wzvksvbjkunqdjwawsvh.supabase.co/storage/v1/object/public/project-images/projects/1779464920578-7k8aq86gfbx.png",
-    tech: ["Next.js", "TypeScript", "Tailwind CSS", "Supabase"],
-    github: "https://github.com/GalibDev",
-    live: "https://novalo.xyz",
+      "A full-stack recipe sharing platform with recipe publishing, favorites, purchases, Stripe Checkout, Google sign-in, protected user dashboards, and administrator moderation tools.",
+    image: "/project-images/recipehub.svg",
+    tech: ["Next.js", "TypeScript", "MongoDB", "Better Auth", "Stripe"],
+    github: "https://github.com/GalibDev/recipehub-client",
+    live: "https://recipehub-client-seven.vercel.app",
+    challenges: [
+      "Combining Google sign-in with secure HTTP-only JWT sessions and reload-safe route protection.",
+      "Implementing recipe CRUD, favorites, reports, purchases, and moderation in one coherent data model.",
+      "Handling Stripe confirmation and server-side filtering and pagination without disrupting the browsing experience.",
+    ],
+    improvements: [
+      "Add nutritional analysis, serving-size calculations, and ingredient-based search.",
+      "Introduce creator profiles, following, collections, and personalized recipe recommendations.",
+      "Add image moderation and richer cooking steps with video support.",
+    ],
   },
   {
-    id: "a802cabf-6809-4519-8e0d-c0c79569ceea",
-    title: "IdeaVault",
+    id: "flightops-client",
+    title: "FlightOps - Airline Operations Platform",
     description:
-      "IdeaVault is a modern idea management web app where users can save, organize, and manage their project ideas in one secure place. It includes authentication, a clean dashboard, responsive UI, and database-powered idea storage for fast access across devices.",
+      "A full-stack airline operations and flight discovery platform where travellers search and book flights, operators manage listings, and administrators control approvals, users, payments, messages, and audit activity.",
     image:
-      "https://wzvksvbjkunqdjwawsvh.supabase.co/storage/v1/object/public/project-images/projects/1779389747910-beuags1ut3v.png",
-    tech: ["Next.js", "JavaScript", "Tailwind CSS"],
-    github: "https://github.com/GalibDev/idea-vault-client",
-    live: "https://idea-vault-client-sigma.vercel.app",
+      "https://raw.githubusercontent.com/GalibDev/flightops-client/main/docs/screenshots/home.png",
+    tech: ["Next.js 16", "TypeScript", "MongoDB", "Stripe", "Recharts"],
+    github: "https://github.com/GalibDev/flightops-client",
+    live: "https://flightops-client.vercel.app",
+    challenges: [
+      "Modeling flights, approvals, bookings, payments, messages, and audit logs with clear role boundaries.",
+      "Synchronizing seat reservations with Stripe Checkout and signed webhook results.",
+      "Building detailed search, filtering, pagination, charts, and an AI travel assistant without overwhelming the interface.",
+    ],
+    improvements: [
+      "Add real-time seat maps, fare classes, and reservation-hold expiration.",
+      "Integrate external flight-status data and operational disruption notifications.",
+      "Expand operator analytics with route performance, load factor, and revenue reporting.",
+    ],
+  },
+  {
+    id: "intellihub-ai",
+    title: "IntelliHub AI - Agentic SaaS Workspace",
+    description:
+      "An agentic AI SaaS workspace for discovering AI tools, context-aware chat, explainable recommendations, content generation, document analysis, favorites, reviews, and analytics.",
+    image:
+      "https://raw.githubusercontent.com/GalibDev/intellihub-ai/main/docs/screenshots/home.jpg",
+    tech: ["Next.js", "TypeScript", "Express.js", "MongoDB", "Gemini AI"],
+    github: "https://github.com/GalibDev/intellihub-ai",
+    live: "https://intellihub-ai-client.vercel.app",
+    challenges: [
+      "Keeping AI provider credentials and document processing server-side while supporting responsive streaming-like interactions.",
+      "Designing context-aware conversations, recommendations, content generation, and document analysis as consistent workflows.",
+      "Securing a separate Next.js client and Express API with rotating JWT sessions, validation, rate limits, and role checks.",
+    ],
+    improvements: [
+      "Add provider fallback, usage budgets, observability, and per-feature token analytics.",
+      "Support collaborative workspaces with shared conversations, documents, and generated assets.",
+      "Introduce semantic search and retrieval across saved tools, documents, and conversation history.",
+    ],
   },
 ];
 

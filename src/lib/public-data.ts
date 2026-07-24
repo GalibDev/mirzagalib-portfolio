@@ -17,6 +17,28 @@ import type {
 import type { Project } from "@/types/project";
 
 const includeSupabaseExtras = process.env.SUPABASE_PUBLIC_EXTRAS === "true";
+const portfolioProjectsKey = "portfolio_projects";
+
+function parseSavedProjects(value: unknown): Project[] | null {
+  if (typeof value !== "string") return null;
+
+  try {
+    const projects = JSON.parse(value);
+    return Array.isArray(projects) ? (projects as Project[]) : null;
+  } catch {
+    return null;
+  }
+}
+
+async function getSavedProjects(): Promise<Project[] | null> {
+  const { data } = await supabaseServer
+    .from("site_settings")
+    .select("value")
+    .eq("key", portfolioProjectsKey)
+    .maybeSingle();
+
+  return parseSavedProjects(data?.value);
+}
 
 function mergeById<T extends { id: string }>(base: T[], extra: T[]) {
   const baseIds = new Set(base.map((item) => item.id));
@@ -33,6 +55,12 @@ export async function getAboutImage(): Promise<string> {
 
 export const getPublicProjects = unstable_cache(
   async (): Promise<Project[]> => {
+    const savedProjects = await getSavedProjects();
+
+    if (savedProjects) {
+      return savedProjects;
+    }
+
     if (!includeSupabaseExtras) {
       return localProjects;
     }
@@ -50,6 +78,13 @@ export const getPublicProjects = unstable_cache(
 
 export const getProjectById = unstable_cache(
   async (id: string): Promise<Project | null> => {
+    const savedProjects = await getSavedProjects();
+    const savedProject = savedProjects?.find((item) => item.id === id);
+
+    if (savedProjects) {
+      return savedProject || null;
+    }
+
     const localProject = localProjects.find((item) => item.id === id);
 
     if (localProject || !includeSupabaseExtras) {

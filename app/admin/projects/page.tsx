@@ -25,14 +25,15 @@ type Project = {
   tech: string[];
   github: string | null;
   live: string | null;
-  source: "local" | "supabase";
+  challenges?: string[];
+  improvements?: string[];
 };
 
 const builtInProjects: Project[] = localProjects.map((project) => ({
   ...project,
   image_path: null,
-  source: "local",
 }));
+const portfolioProjectsKey = "portfolio_projects";
 
 const emptyForm = {
   title: "",
@@ -67,22 +68,32 @@ export default function AdminProjectsPage() {
 
   const fetchProjects = useCallback(async () => {
     const { data } = await supabase
-      .from("projects")
-      .select("*")
-      .order("created_at", { ascending: false });
+      .from("site_settings")
+      .select("value")
+      .eq("key", portfolioProjectsKey)
+      .maybeSingle();
 
-    const databaseProjects: Project[] = (data || []).map((project) => ({
-      ...project,
-      source: "supabase",
-    }));
-    const databaseIds = new Set(databaseProjects.map((project) => project.id));
-
-    setProjects([
-      ...builtInProjects.filter((project) => !databaseIds.has(project.id)),
-      ...databaseProjects,
-    ]);
+    try {
+      const savedProjects = data?.value ? JSON.parse(data.value) : null;
+      setProjects(Array.isArray(savedProjects) ? savedProjects : builtInProjects);
+    } catch {
+      setProjects(builtInProjects);
+    }
     setLoading(false);
   }, []);
+
+  const saveProjects = async (nextProjects: Project[]) => {
+    const { error } = await supabase.from("site_settings").upsert(
+      {
+        key: portfolioProjectsKey,
+        value: JSON.stringify(nextProjects),
+      },
+      { onConflict: "key" }
+    );
+
+    if (!error) setProjects(nextProjects);
+    return error;
+  };
 
   useEffect(() => {
     const init = async () => {
@@ -181,7 +192,10 @@ export default function AdminProjectsPage() {
       .map((item) => item.trim())
       .filter(Boolean);
 
-    const payload = {
+    const existingProject = projects.find((project) => project.id === editId);
+    const payload: Project = {
+      ...(existingProject || {}),
+      id: editId || crypto.randomUUID(),
       title: form.title,
       description: form.description,
       image: form.image || null,
@@ -190,10 +204,10 @@ export default function AdminProjectsPage() {
       github: form.github,
       live: form.live,
     };
-
-    const { error } = editId
-      ? await supabase.from("projects").update(payload).eq("id", editId)
-      : await supabase.from("projects").insert([payload]);
+    const nextProjects = editId
+      ? projects.map((project) => (project.id === editId ? payload : project))
+      : [...projects, payload];
+    const error = await saveProjects(nextProjects);
 
     if (error) {
       setToast(error.message);
@@ -206,7 +220,6 @@ export default function AdminProjectsPage() {
 
     setToast(editId ? "Project updated." : "Project added.");
     resetForm();
-    fetchProjects();
     setTimeout(() => setToast(""), 2500);
   };
 
@@ -245,7 +258,8 @@ export default function AdminProjectsPage() {
       await supabase.storage.from("project-images").remove([project.image_path]);
     }
 
-    const { error } = await supabase.from("projects").delete().eq("id", project.id);
+    const nextProjects = projects.filter((item) => item.id !== project.id);
+    const error = await saveProjects(nextProjects);
 
     if (error) {
       setToast(error.message);
@@ -254,7 +268,6 @@ export default function AdminProjectsPage() {
 
     if (editId === project.id) resetForm();
     setToast("Project deleted.");
-    fetchProjects();
     setTimeout(() => setToast(""), 2500);
   };
 
@@ -278,7 +291,7 @@ export default function AdminProjectsPage() {
           <div>
             <h1 className="text-3xl font-bold">Manage Projects</h1>
             <p className="mt-2 text-sm text-white/50">
-              View built-in portfolio projects and manage Supabase projects.
+              Add, edit, delete, and manage every public portfolio project.
             </p>
           </div>
 
@@ -453,18 +466,6 @@ export default function AdminProjectsPage() {
 
               <h3 className="text-lg font-semibold">{project.title}</h3>
 
-              <span
-                className={`mt-3 inline-flex rounded-full px-3 py-1 text-[11px] font-medium ${
-                  project.source === "local"
-                    ? "bg-cyan-500/15 text-cyan-200"
-                    : "bg-emerald-500/15 text-emerald-200"
-                }`}
-              >
-                {project.source === "local"
-                  ? "Built-in portfolio project"
-                  : "Admin-managed project"}
-              </span>
-
               <p className="mt-2 line-clamp-3 text-sm text-white/60">
                 {project.description}
               </p>
@@ -480,27 +481,21 @@ export default function AdminProjectsPage() {
                 ))}
               </div>
 
-              {project.source === "supabase" ? (
-                <div className="mt-5 flex flex-wrap gap-3">
-                  <button
-                    onClick={() => startEdit(project)}
-                    className="glass glass-hover flex items-center gap-2 rounded-xl px-4 py-2 text-sm"
-                  >
-                    <Edit size={15} /> Edit
-                  </button>
+              <div className="mt-5 flex flex-wrap gap-3">
+                <button
+                  onClick={() => startEdit(project)}
+                  className="glass glass-hover flex items-center gap-2 rounded-xl px-4 py-2 text-sm"
+                >
+                  <Edit size={15} /> Edit
+                </button>
 
-                  <button
-                    onClick={() => deleteProject(project)}
-                    className="flex items-center gap-2 rounded-xl bg-red-500/20 px-4 py-2 text-sm text-red-300 hover:bg-red-500/30"
-                  >
-                    <Trash2 size={15} /> Delete
-                  </button>
-                </div>
-              ) : (
-                <p className="mt-5 text-xs leading-5 text-white/45">
-                  This project is version-controlled with the portfolio source.
-                </p>
-              )}
+                <button
+                  onClick={() => deleteProject(project)}
+                  className="flex items-center gap-2 rounded-xl bg-red-500/20 px-4 py-2 text-sm text-red-300 hover:bg-red-500/30"
+                >
+                  <Trash2 size={15} /> Delete
+                </button>
+              </div>
             </div>
           ))}
         </div>

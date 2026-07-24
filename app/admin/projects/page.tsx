@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import {
   Edit,
+  GripVertical,
   ImagePlus,
   LogOut,
   Plus,
@@ -53,6 +54,8 @@ export default function AdminProjectsPage() {
   const [loading, setLoading] = useState(true);
   const [uploading, setUploading] = useState(false);
   const [dragging, setDragging] = useState(false);
+  const [draggedProjectId, setDraggedProjectId] = useState("");
+  const [savingOrder, setSavingOrder] = useState(false);
   const [toast, setToast] = useState("");
   const [editId, setEditId] = useState("");
   const [originalImagePath, setOriginalImagePath] = useState("");
@@ -287,6 +290,49 @@ export default function AdminProjectsPage() {
     setTimeout(() => setToast(""), 2500);
   };
 
+  const reorderProject = async (projectId: string, targetIndex: number) => {
+    const currentIndex = projects.findIndex((item) => item.id === projectId);
+
+    if (
+      currentIndex < 0 ||
+      targetIndex < 0 ||
+      targetIndex >= projects.length ||
+      currentIndex === targetIndex ||
+      savingOrder
+    ) {
+      return;
+    }
+
+    const nextProjects = [...projects];
+    const [movedProject] = nextProjects.splice(currentIndex, 1);
+    nextProjects.splice(targetIndex, 0, movedProject);
+
+    setSavingOrder(true);
+    setToast("");
+    const error = await saveProjects(nextProjects);
+    setSavingOrder(false);
+
+    if (error) {
+      setToast(error.message);
+      return;
+    }
+
+    setToast("Project order updated.");
+    setTimeout(() => setToast(""), 1800);
+  };
+
+  const handleProjectDrop = async (
+    event: React.DragEvent<HTMLDivElement>,
+    targetIndex: number
+  ) => {
+    event.preventDefault();
+    const projectId =
+      event.dataTransfer.getData("text/project-id") || draggedProjectId;
+    setDraggedProjectId("");
+
+    if (projectId) await reorderProject(projectId, targetIndex);
+  };
+
   const logout = async () => {
     await supabase.auth.signOut();
     router.replace("/admin/login");
@@ -308,6 +354,10 @@ export default function AdminProjectsPage() {
             <h1 className="text-3xl font-bold">Manage Projects</h1>
             <p className="mt-2 text-sm text-white/50">
               Add, edit, delete, and manage every public portfolio project.
+            </p>
+            <p className="mt-1 text-xs text-white/35">
+              Drag the handle or choose a position number to change the public
+              project order.
             </p>
           </div>
 
@@ -462,8 +512,63 @@ export default function AdminProjectsPage() {
         </form>
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {projects.map((project) => (
-            <div key={project.id} className="glass rounded-3xl p-5">
+          {projects.map((project, index) => (
+            <div
+              key={project.id}
+              onDragOver={(event) => event.preventDefault()}
+              onDrop={(event) => handleProjectDrop(event, index)}
+              className={`glass rounded-3xl p-5 transition ${
+                draggedProjectId === project.id
+                  ? "scale-[0.98] opacity-50"
+                  : ""
+              }`}
+            >
+              <div className="mb-4 flex items-center justify-between gap-3">
+                <div className="flex items-center gap-2">
+                  <span className="flex h-8 min-w-8 items-center justify-center rounded-full bg-cyan-500/15 px-2 text-sm font-bold text-cyan-200">
+                    {index + 1}
+                  </span>
+                  <label className="flex items-center gap-2 text-xs text-white/45">
+                    Position
+                    <select
+                      value={index + 1}
+                      disabled={savingOrder}
+                      onChange={(event) =>
+                        reorderProject(project.id, Number(event.target.value) - 1)
+                      }
+                      className="rounded-lg border border-white/15 bg-slate-950 px-2 py-1 text-xs text-white outline-none disabled:opacity-50"
+                      aria-label={`Position for ${project.title}`}
+                    >
+                      {projects.map((_, positionIndex) => (
+                        <option
+                          key={positionIndex}
+                          value={positionIndex + 1}
+                        >
+                          {positionIndex + 1}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                </div>
+
+                <div
+                  draggable={!savingOrder}
+                  onDragStart={(event) => {
+                    event.dataTransfer.effectAllowed = "move";
+                    event.dataTransfer.setData("text/project-id", project.id);
+                    setDraggedProjectId(project.id);
+                  }}
+                  onDragEnd={() => setDraggedProjectId("")}
+                  role="button"
+                  tabIndex={0}
+                  title="Drag to change project order"
+                  aria-label={`Drag ${project.title} to reorder`}
+                  className="cursor-grab rounded-xl border border-white/10 bg-white/5 p-2 text-white/50 transition hover:bg-white/10 hover:text-white active:cursor-grabbing"
+                >
+                  <GripVertical size={19} aria-hidden="true" />
+                </div>
+              </div>
+
               {project.image ? (
                 <div className="relative mb-4 h-36 w-full">
                   <Image

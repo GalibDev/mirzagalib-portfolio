@@ -3,7 +3,7 @@
 import { Download, Rocket, Send } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { FaGithub, FaLinkedinIn } from "react-icons/fa";
+import { FaFacebookF, FaGithub, FaLinkedinIn } from "react-icons/fa";
 import type { HeroContent } from "@/types/public-content";
 
 const words = ["Full Stack Developer", "Problem Solver", "Web Designer"];
@@ -161,11 +161,25 @@ export default function HeroClient({ content }: HeroClientProps) {
             >
               <FaLinkedinIn size={20} aria-hidden="true" />
             </a>
+
+            <a
+              href="https://www.facebook.com/share/18v68PTX8Y/?mibextid=wwXIfr"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Facebook"
+              className="transition hover:text-white"
+            >
+              <FaFacebookF size={19} aria-hidden="true" />
+            </a>
           </div>
 
-          <p className="mt-8 hidden text-xs text-white/60 md:mt-10 md:block">
+          <a
+            href="#about"
+            aria-label="Scroll to About section"
+            className="mt-8 hidden w-fit text-xs text-white/60 transition hover:text-white md:mt-10 md:block"
+          >
             Scroll Down
-          </p>
+          </a>
         </div>
 
         <div className="relative hidden justify-center sm:flex md:justify-end">

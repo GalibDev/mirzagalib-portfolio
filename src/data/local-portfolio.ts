@@ -106,7 +106,7 @@ export const localProjects: Project[] = [
     title: "RecipeHub - Recipe Sharing Platform",
     description:
       "A full-stack recipe sharing platform with recipe publishing, favorites, purchases, Stripe Checkout, Google sign-in, protected user dashboards, and administrator moderation tools.",
-    image: "/project-images/recipehub.svg",
+    image: "/project-images/recipehub-home.png",
     tech: ["Next.js", "TypeScript", "MongoDB", "Better Auth", "Stripe"],
     github: "https://github.com/GalibDev/recipehub-client",
     live: "https://recipehub-client-seven.vercel.app",

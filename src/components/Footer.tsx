@@ -1,5 +1,5 @@
 import { Mail, MapPin } from "lucide-react";
-import { FaGithub, FaLinkedinIn } from "react-icons/fa";
+import { FaFacebookF, FaGithub, FaLinkedinIn } from "react-icons/fa";
 
 export default function Footer() {
   const socialLinks = [
@@ -12,6 +12,11 @@ export default function Footer() {
       label: "GitHub",
       href: "https://github.com/GalibDev",
       icon: FaGithub,
+    },
+    {
+      label: "Facebook",
+      href: "https://www.facebook.com/share/18v68PTX8Y/?mibextid=wwXIfr",
+      icon: FaFacebookF,
     },
   ];
 

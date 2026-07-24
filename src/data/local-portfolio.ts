@@ -44,7 +44,7 @@ export const localProjects: Project[] = [
     title: "Fundora - Crowdfunding Platform",
     description:
       "A full-stack crowdfunding platform where supporters fund campaigns with Stripe-powered credits, creators manage campaigns and withdrawals, and administrators moderate users, payments, reports, and approvals.",
-    image: "/project-images/fundora.svg",
+    image: "/project-images/fundora-home.png",
     tech: ["Next.js", "TypeScript", "Express.js", "MongoDB", "Stripe"],
     github: "https://github.com/GalibDev/Fundora",
     live: "https://fundora-hazel.vercel.app",

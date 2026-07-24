@@ -13,6 +13,7 @@ import {
   X,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { localProjects } from "@/data/local-portfolio";
 import { supabase } from "@/lib/supabase";
 
 type Project = {
@@ -24,7 +25,14 @@ type Project = {
   tech: string[];
   github: string | null;
   live: string | null;
+  source: "local" | "supabase";
 };
+
+const builtInProjects: Project[] = localProjects.map((project) => ({
+  ...project,
+  image_path: null,
+  source: "local",
+}));
 
 const emptyForm = {
   title: "",
@@ -63,7 +71,16 @@ export default function AdminProjectsPage() {
       .select("*")
       .order("created_at", { ascending: false });
 
-    setProjects(data || []);
+    const databaseProjects: Project[] = (data || []).map((project) => ({
+      ...project,
+      source: "supabase",
+    }));
+    const databaseIds = new Set(databaseProjects.map((project) => project.id));
+
+    setProjects([
+      ...builtInProjects.filter((project) => !databaseIds.has(project.id)),
+      ...databaseProjects,
+    ]);
     setLoading(false);
   }, []);
 
@@ -261,7 +278,7 @@ export default function AdminProjectsPage() {
           <div>
             <h1 className="text-3xl font-bold">Manage Projects</h1>
             <p className="mt-2 text-sm text-white/50">
-              Drag, drop, upload, edit, and manage portfolio projects.
+              View built-in portfolio projects and manage Supabase projects.
             </p>
           </div>
 
@@ -436,6 +453,18 @@ export default function AdminProjectsPage() {
 
               <h3 className="text-lg font-semibold">{project.title}</h3>
 
+              <span
+                className={`mt-3 inline-flex rounded-full px-3 py-1 text-[11px] font-medium ${
+                  project.source === "local"
+                    ? "bg-cyan-500/15 text-cyan-200"
+                    : "bg-emerald-500/15 text-emerald-200"
+                }`}
+              >
+                {project.source === "local"
+                  ? "Built-in portfolio project"
+                  : "Admin-managed project"}
+              </span>
+
               <p className="mt-2 line-clamp-3 text-sm text-white/60">
                 {project.description}
               </p>
@@ -451,21 +480,27 @@ export default function AdminProjectsPage() {
                 ))}
               </div>
 
-              <div className="mt-5 flex flex-wrap gap-3">
-                <button
-                  onClick={() => startEdit(project)}
-                  className="glass glass-hover flex items-center gap-2 rounded-xl px-4 py-2 text-sm"
-                >
-                  <Edit size={15} /> Edit
-                </button>
+              {project.source === "supabase" ? (
+                <div className="mt-5 flex flex-wrap gap-3">
+                  <button
+                    onClick={() => startEdit(project)}
+                    className="glass glass-hover flex items-center gap-2 rounded-xl px-4 py-2 text-sm"
+                  >
+                    <Edit size={15} /> Edit
+                  </button>
 
-                <button
-                  onClick={() => deleteProject(project)}
-                  className="flex items-center gap-2 rounded-xl bg-red-500/20 px-4 py-2 text-sm text-red-300 hover:bg-red-500/30"
-                >
-                  <Trash2 size={15} /> Delete
-                </button>
-              </div>
+                  <button
+                    onClick={() => deleteProject(project)}
+                    className="flex items-center gap-2 rounded-xl bg-red-500/20 px-4 py-2 text-sm text-red-300 hover:bg-red-500/30"
+                  >
+                    <Trash2 size={15} /> Delete
+                  </button>
+                </div>
+              ) : (
+                <p className="mt-5 text-xs leading-5 text-white/45">
+                  This project is version-controlled with the portfolio source.
+                </p>
+              )}
             </div>
           ))}
         </div>

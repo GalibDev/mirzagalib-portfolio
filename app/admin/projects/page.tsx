@@ -91,7 +91,23 @@ export default function AdminProjectsPage() {
       { onConflict: "key" }
     );
 
-    if (!error) setProjects(nextProjects);
+    if (!error) {
+      setProjects(nextProjects);
+
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+
+      if (session?.access_token) {
+        await fetch("/api/admin/projects/revalidate", {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${session.access_token}`,
+          },
+        });
+      }
+    }
+
     return error;
   };
 

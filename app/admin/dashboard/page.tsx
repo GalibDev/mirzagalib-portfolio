@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import {
   BadgePlus,
+  FileText,
   FolderKanban,
   GraduationCap,
   Image,
@@ -37,6 +38,13 @@ const cards = [
     href: "/admin/assets",
     icon: Image,
     color: "text-cyan-400",
+  },
+  {
+    title: "Resume",
+    desc: "Upload and replace the downloadable resume PDF.",
+    href: "/admin/resume",
+    icon: FileText,
+    color: "text-rose-400",
   },
   {
     title: "Qualifications",

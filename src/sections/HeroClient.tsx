@@ -10,9 +10,10 @@ const words = ["Full Stack Developer", "Problem Solver", "Web Designer"];
 
 type HeroClientProps = {
   content: HeroContent;
+  resumeUrl: string;
 };
 
-export default function HeroClient({ content }: HeroClientProps) {
+export default function HeroClient({ content, resumeUrl }: HeroClientProps) {
   const [wordIndex, setWordIndex] = useState(0);
   const [text, setText] = useState("Full Stack Developer");
   const [deleting, setDeleting] = useState(false);
@@ -96,7 +97,7 @@ export default function HeroClient({ content }: HeroClientProps) {
             </a>
 
             <a
-              href="/resume.pdf"
+              href={resumeUrl}
               download
               className="spark-button inline-flex min-h-[52px] w-full max-w-[260px] items-center justify-center gap-3 rounded-full px-6 text-sm font-semibold text-white"
             >
@@ -133,7 +134,7 @@ export default function HeroClient({ content }: HeroClientProps) {
             </a>
 
             <a
-              href="/resume.pdf"
+              href={resumeUrl}
               download
               className="spark-button inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-white"
             >

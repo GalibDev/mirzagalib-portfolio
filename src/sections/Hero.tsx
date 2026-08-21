@@ -1,8 +1,8 @@
-import { getHeroContent } from "@/lib/public-data";
+import { getHeroContent, getResumeUrl } from "@/lib/public-data";
 import HeroClient from "@/sections/HeroClient";
 
 export default async function Hero() {
-  const content = await getHeroContent();
+  const [content, resumeUrl] = await Promise.all([getHeroContent(), getResumeUrl()]);
 
-  return <HeroClient content={content} />;
+  return <HeroClient content={content} resumeUrl={resumeUrl} />;
 }

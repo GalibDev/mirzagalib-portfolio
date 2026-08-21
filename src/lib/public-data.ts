@@ -18,6 +18,23 @@ import type { Project } from "@/types/project";
 
 const includeSupabaseExtras = process.env.SUPABASE_PUBLIC_EXTRAS === "true";
 const portfolioProjectsKey = "portfolio_projects";
+const resumeUrlKey = "resume_url";
+
+export const getResumeUrl = unstable_cache(
+  async (): Promise<string> => {
+    const { data } = await supabaseServer
+      .from("site_settings")
+      .select("value")
+      .eq("key", resumeUrlKey)
+      .maybeSingle();
+
+    return typeof data?.value === "string" && data.value.trim()
+      ? data.value
+      : "/resume.pdf";
+  },
+  ["public-resume-url"],
+  { revalidate: 300, tags: ["public-content", "resume"] }
+);
 
 function parseSavedProjects(value: unknown): Project[] | null {
   if (typeof value !== "string") return null;
